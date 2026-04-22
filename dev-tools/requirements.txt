@@ -1,0 +1,2 @@
+# Translation tool dependencies
+translatepy>=2.3
