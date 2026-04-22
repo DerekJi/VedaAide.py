@@ -1,0 +1,17 @@
+# Ignore all the contents of the qdrant_storage folder (vector database data)
+qdrant_storage/*
+
+# But do not ignore the .gitkeep file, to keep the folder present
+!qdrant_storage/.gitkeep
+
+# Ignore all the contents of the langfuse_storage folder (LangFuse database data)
+langfuse_storage/*
+
+# But do not ignore the .gitkeep file, to keep the folder present
+!langfuse_storage/.gitkeep
+
+# Ignore all the contents of the .temp folder (temporary AI-generated files)
+.temp/**
+
+# But do not ignore the .gitkeep file, to keep the folder present
+!.temp/README.md

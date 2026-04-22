@@ -1,0 +1,60 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: vedaaide
+
+# =========================================================
+# 本机环境：Podman Desktop + Kind Extension
+# 集群名：k8s-new  |  Namespace：vedaaide-dev
+# 使用 kind load docker-image，无需本地 Registry
+# =========================================================
+
+build:
+  artifacts:
+  - image: vedaaide
+    # 使用 Podman 构建（本机无 Docker）
+    custom:
+      buildCommand: podman build -t $IMAGE -f infra/docker/Dockerfile.dev .
+      dependencies:
+        paths:
+        - src/**/*.py
+        - config/**/*.yaml
+        - infra/docker/Dockerfile.dev
+        - pyproject.toml
+
+  # kind load：构建后自动加载到 Kind 集群
+  local:
+    push: false
+    useDockerCLI: false
+
+deploy:
+  kubectl:
+    defaultNamespace: vedaaide-dev
+
+portForward:
+- resourceType: service
+  resourceName: vedaaide-api
+  namespace: vedaaide-dev
+  port: 8080
+  localPort: 8080
+
+# 代码热同步（Python 文件直接同步，无需重建镜像）
+sync:
+  manual:
+  - src: "src/**/*.py"
+    dest: /app/src
+    strip: src/
+  - src: "config/**/*.yaml"
+    dest: /app/config
+    strip: config/
+
+# 忽略无需同步的文件
+profiles:
+- name: debug
+  activation:
+  - command: debug
+  patches:
+  - op: add
+    path: /deploy/kubectl/flags
+    value:
+      global: [--namespace=vedaaide-dev]
