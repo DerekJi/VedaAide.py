@@ -15,3 +15,16 @@ langfuse_storage/*
 
 # But do not ignore the .gitkeep file, to keep the folder present
 !.temp/README.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+.env
+.pytest_cache/
