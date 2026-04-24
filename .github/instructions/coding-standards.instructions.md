@@ -94,17 +94,149 @@ api_key = config.get("azure_openai.api_key")
 
 All I/O operations must use `async/await`; prohibit blocking calls in async context.
 
-## Module Size
+## Module Size and Organization
 
-- Target: < 300 lines; limit: 500 lines
-- Must split modules if exceeding limit
+### File Size Guidelines
+
+**Following SRP (Single Responsibility Principle)** — similar to enterprise patterns in .NET:
+
+| Metric | Target | Maximum |
+|--------|--------|---------|
+| Lines per file | < 200 | 300 lines |
+| Lines per class | < 150 | 250 lines |
+| Lines per function | < 30 | 50 lines |
+
+**Mandatory split if exceeding**: 300 lines per file
+
+### Refactoring Strategy
+
+When splitting modules, follow this pattern:
+
+```
+module/
+├── __init__.py          # Package exports
+├── base.py              # Abstract base classes, interfaces
+├── models.py            # Data classes, domain models (~100 lines)
+├── core.py              # Main logic/algorithms (~150 lines)
+├── utils.py             # Helper functions (~80 lines)
+├── exporter.py          # Output/serialization logic (~100 lines)
+└── __main__.py          # CLI entry point (if applicable)
+```
+
+### Real-world Example: Data Generator Refactoring
+
+**Before (single file, 480 lines):**
+```
+data_generator.py
+  ├── DataRepository (static data)
+  ├── ResumeRecord (model)
+  ├── JobPostingRecord (model)
+  ├── ResumeGenerator (logic)
+  ├── JobPostingGenerator (logic)
+  ├── DataExporter (output)
+  └── main() (script)
+```
+
+**After (modular structure):**
+```
+generator/
+├── __init__.py
+├── models.py            # ResumeRecord, JobPostingRecord (~50 lines)
+├── repository.py        # DataRepository (~100 lines)
+├── resume.py            # ResumeGenerator (~150 lines)
+├── job_posting.py       # JobPostingGenerator (~150 lines)
+├── exporter.py          # DataExporter (~80 lines)
+└── __main__.py          # main() script (~30 lines)
+```
+
+**Benefits:**
+- ✅ Each file has single, clear responsibility
+- ✅ Easy to test individual components
+- ✅ Easier to reuse (e.g., import just `ResumeGenerator`)
+- ✅ Easier to maintain and extend
+- ✅ Follows Python package conventions
+
+### Naming Conventions for Modules
+
+```python
+# ✅ Good module organization
+src/
+├── core/
+│   ├── llm/
+│   │   ├── __init__.py
+│   │   ├── base.py              # LLMProvider (abstract)
+│   │   ├── openai.py            # OpenAIProvider
+│   │   └── azure.py             # AzureOpenAIProvider
+│   └── retrieval/
+│       ├── __init__.py
+│       ├── models.py            # Document, SearchResult classes
+│       ├── hybrid_search.py      # HybridSearchEngine
+│       └── ranker.py            # ResultRanker
+```
+
+### Import Structure
+
+```python
+# src/core/llm/__init__.py
+from .base import LLMProvider
+from .openai import OpenAIProvider
+from .azure import AzureOpenAIProvider
+
+__all__ = ["LLMProvider", "OpenAIProvider", "AzureOpenAIProvider"]
+```
+
+This allows clean imports:
+```python
+from src.core.llm import OpenAIProvider  # ✅ Good
+# Instead of:
+from src.core.llm.openai import OpenAIProvider  # ❌ Couples to impl
+```
+
+## Code Quality Tools
+
+### Automated Formatting and Linting
+
+All code must pass these checks **before submission**:
+
+```bash
+make verify  # Runs all checks
+
+# Or individually:
+make format      # black + isort
+make lint        # pylint
+make type-check  # mypy
+make test        # pytest with coverage
+```
+
+### Development Workflow
+
+1. **Before committing**: `make format` (auto-fixes issues)
+2. **Before pushing**: `make verify` (catches all issues)
+3. **Pre-commit hooks** automatically run on commit:
+   ```bash
+   pre-commit install  # Setup once
+   ```
 
 ## Pre-PR Checklist
 
-Before submitting, confirm:
-- [ ] All functions have type hints
-- [ ] All public methods have Docstrings
-- [ ] No `print()` statements (use logger)
-- [ ] No hardcoded keys or configs
-- [ ] `black src/ && isort src/ && pylint src/ && mypy src/` all pass
-- [ ] Unit test coverage ≥ 80%
+Before submitting pull request, confirm:
+
+- [ ] All functions have complete type hints
+- [ ] All public methods/classes have Google-style Docstrings
+- [ ] No `print()` statements (use `logging` module)
+- [ ] No hardcoded API keys or configs
+- [ ] No `sys.path.insert()` (use proper package imports)
+- [ ] File size: < 300 lines (split if needed)
+- [ ] Class size: < 250 lines
+- [ ] All checks pass: `make verify`
+- [ ] Unit test coverage: ≥ 80%
+
+### Running the Full Check Suite
+
+```bash
+# Automatic format + linting + type checking + tests
+make verify
+
+# Expected output:
+# ✅ All quality checks passed!
+```

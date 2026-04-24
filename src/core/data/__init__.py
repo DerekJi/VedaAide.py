@@ -22,11 +22,10 @@ from .data_loader import (
     DataLoader,
     DataSource,
     DataSourceFactory,
-    StaticDataSource,
     GeneratedDataSource,
-    KaggleDataSource,
     HuggingFaceDataSource,
-    get_sample_data,
+    KaggleDataSource,
+    StaticDataSource,
 )
 
 __all__ = [
@@ -37,5 +36,4 @@ __all__ = [
     "GeneratedDataSource",
     "KaggleDataSource",
     "HuggingFaceDataSource",
-    "get_sample_data",
 ]

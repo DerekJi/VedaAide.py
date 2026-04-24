@@ -1,0 +1,51 @@
+# Pre-commit hooks for VedaAide project
+# Install hooks: pre-commit install
+# Run manually: pre-commit run --all-files
+
+repos:
+  # Black code formatter
+  - repo: https://github.com/psf/black
+    rev: 23.1.0
+    hooks:
+      - id: black
+        language_version: python3.11
+        args: ["--line-length=100"]
+
+  # isort - import sorting
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: ["--profile=black", "--line-length=100"]
+
+  # Trailing whitespace and fix-byte-order-marker
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+        args: ['--unsafe']
+      - id: check-json
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: name-tests-test
+        args: ['--pytest-test-first']
+
+  # pylint - linting
+  - repo: https://github.com/PyCQA/pylint
+    rev: pylint-2.16.4
+    hooks:
+      - id: pylint
+        args: ["--max-line-length=100"]
+        stages: [commit]
+
+  # mypy - type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.0.0
+    hooks:
+      - id: mypy
+        args: [--no-implicit-optional, --warn-redundant-casts]
+        additional_dependencies:
+          - types-PyYAML
+          - types-requests

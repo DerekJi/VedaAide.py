@@ -3,7 +3,10 @@
 ## Python Style Guide
 
 ### PEP 8 Compliance
-- Line length limit: **100 characters** (not 79)
+- **Line length limit: 100 characters** (not 79)
+  - PEP 8's 79-character limit is legacy (Python 2.7 era for old terminal widths)
+  - Modern standard: 88-120 characters (Black default: 88, we use: 100)
+  - Configured in: `pyproject.toml` (Black/isort), `.flake8` (Flake8)
 - Indentation: 4 spaces
 - Naming:
   - Classes: `PascalCase`
@@ -315,11 +318,11 @@ poetry run pylint src/
 # MyPy - Type checking
 poetry run mypy src/
 
-# Flake8 - Style checking
+# Flake8 - Style checking (configured for 100 chars in .flake8)
 poetry run flake8 src/
 
 # All checks
-poetry run black --check src/ && poetry run pylint src/ && poetry run mypy src/
+poetry run black --check src/ && poetry run isort --check-only src/ && poetry run pylint src/ && poetry run mypy src/ && poetry run flake8 src/
 ```
 
 ### Testing
