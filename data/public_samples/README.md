@@ -143,6 +143,256 @@ To expand the datasets:
 3. Update dataset statistics in this README
 4. Commit changes with clear messages
 
+## Dataset Management Strategy
+
+VedaAide supports a **three-tier data strategy** to balance quick development with robust evaluation:
+
+### 🎯 Tier 1: Static Sample Data (Committed to Git)
+
+**Location**: `data/public_samples/` (5 samples per type)
+
+```python
+from src.core.data import DataLoader
+
+loader = DataLoader(source="static")
+resumes = loader.get_resumes()        # 5 samples
+jobs = loader.get_jobs()              # 5 samples
+qa_pairs = loader.get_qa_pairs()      # 5 samples
+```
+
+**Characteristics**:
+- ✅ Always available, zero dependencies
+- ✅ Fast (instant load)
+- ✅ Small (~7 KB total)
+- ✅ Suitable for demos and documentation
+- ❌ Too small for comprehensive testing
+
+**Use Cases**:
+- Quick feature demonstrations
+- Documentation examples
+- CI/CD smoke tests
+- Onboarding new developers
+
+---
+
+### 🔧 Tier 2: Synthetic Data Generation (Development & Testing)
+
+**Location**: `scripts/data/data_generator.py` (configurable count)
+
+```python
+from src.core.data import DataLoader
+
+# Generate 1000 resumes and 1000 jobs
+loader = DataLoader(source="generated", seed=42)
+resumes = loader.get_resumes(count=1000)
+jobs = loader.get_jobs(count=1000)
+
+# Or generate with different seed for variety
+loader2 = DataLoader(source="generated", seed=123)
+more_jobs = loader2.get_jobs(count=500)
+```
+
+**Characteristics**:
+- ✅ Highly configurable (any count)
+- ✅ Reproducible (with seed)
+- ✅ Diverse scenarios and variations
+- ✅ Fast generation (seconds to minutes)
+- ✅ No external dependencies
+- ⚠️ Synthetic data (not real-world)
+- ⚠️ May not capture edge cases
+
+**Generator Features**:
+- Based on combinatorial permutations of job levels, tech stacks, and locations
+- Realistic but fictional companies, names, and descriptions
+- Salary ranges match market levels by experience
+- Customizable through `DataRepository` class
+
+**Command Line Usage**:
+```bash
+# Generate to JSON
+python scripts/data/data_generator.py \
+  --resumes 1000 \
+  --jobs 1000 \
+  --output-dir data/working_datasets \
+  --format json \
+  --seed 42
+
+# Generate to JSONL (better for large datasets)
+python scripts/data/data_generator.py \
+  --resumes 10000 \
+  --jobs 10000 \
+  --output-dir data/working_datasets \
+  --format jsonl
+```
+
+**Use Cases**:
+- Local development and iteration
+- Unit and integration tests
+- Performance benchmarking
+- Testing edge cases with custom seeds
+- CI/CD pipeline testing (moderate scale)
+
+---
+
+### 📊 Tier 3: Public Datasets (Real-World Evaluation)
+
+**Location**: Download on-demand from Kaggle, Hugging Face, or GitHub
+
+```python
+from src.core.data import DataLoader
+
+# From Kaggle (requires API key setup)
+loader = DataLoader(source="kaggle", dataset_id="...")
+jobs = loader.get_jobs(count=100000)
+
+# From Hugging Face Hub
+loader = DataLoader(source="huggingface", repo_id="...")
+resumes = loader.get_resumes(count=50000)
+```
+
+**Data Sources**:
+
+#### Kaggle
+- **Dataset**: "Job Postings from LinkedIn, Indeed, Glassdoor"
+- **Records**: 100K-500K jobs across multiple regions
+- **Size**: 50-200 MB
+- **Setup**:
+  ```bash
+  pip install kaggle
+  # Download API key from https://www.kaggle.com/settings/account
+  # Place at ~/.kaggle/kaggle.json
+  chmod 600 ~/.kaggle/kaggle.json
+  ```
+- **Cost**: Free (requires account)
+
+#### Hugging Face Hub
+- **Search**: https://huggingface.co/datasets?task_ids=task_ids,task_ids-other
+- **Setup**:
+  ```bash
+  pip install huggingface-hub
+  # Automatic login
+  huggingface-cli login
+  ```
+- **Cost**: Free
+
+#### GitHub Public Datasets
+- **Examples**: 
+  - atulapra/Job-Market-Data
+  - Other community job datasets
+- **Setup**: `git clone` or download ZIP
+- **Cost**: Free
+
+**Characteristics**:
+- ✅ Real-world data (actual job postings, resumes)
+- ✅ Large scale (100K-500K+ records)
+- ✅ Diverse industries and regions
+- ✅ Production-ready
+- ❌ Network dependency (first-time download)
+- ❌ External dependencies (API keys, quotas)
+- ❌ Slower to load (larger files)
+
+**Use Cases**:
+- Final evaluation and benchmarking
+- Production model validation
+- Real-world edge case discovery
+- Research and publications
+- Performance profiling at scale
+
+---
+
+### 📈 Recommended Workflow
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Development Lifecycle                     │
+└─────────────────────────────────────────────────────────────┘
+
+Day 1-2: Quick Prototyping
+  ↓
+  DataLoader(source="static")
+  - Verify basic functionality
+  - Test RAG pipeline structure
+  - Validate output format
+
+Day 3-5: Development & Testing
+  ↓
+  DataLoader(source="generated", seed=42)
+  loader.get_jobs(count=1000)
+  - Iterate on algorithms
+  - Test retrieval quality
+  - Profile performance locally
+
+Week 1-2: Integration Testing
+  ↓
+  Mix Tier 2 + Tier 3:
+    - Generated: Quick feedback loop
+    - Kaggle: Realistic edge cases
+  - Validate against real data
+  - Fine-tune hyperparameters
+
+Production Deployment
+  ↓
+  DataLoader(source="kaggle")  # or huggingface
+  loader.get_jobs(count=100000)
+  - Final validation
+  - Scale testing
+  - Production benchmarking
+```
+
+---
+
+### 🎛️ DataLoader API Reference
+
+```python
+from src.core.data import DataLoader, get_sample_data
+
+# Create a loader
+loader = DataLoader(source="generated", seed=42)
+
+# Load different data types
+resumes = loader.get_resumes(count=1000)
+jobs = loader.get_jobs(count=1000)
+qa_pairs = loader.get_qa_pairs(count=500)
+
+# Quick function for one-off loads
+jobs = get_sample_data("jobs", source="static", count=10)
+
+# List available sources
+sources = DataLoader.available_sources()
+# ['static', 'generated', 'kaggle', 'huggingface', 'hf']
+
+# Show source information
+print(DataLoader.info())  # All sources
+print(DataLoader.info("generated"))  # Specific source
+
+# Command line
+$ python -m src.core.data --source generated --type jobs --count 1000 --seed 42
+$ python -m src.core.data --list
+$ python -m src.core.data --info
+```
+
+---
+
+### 🔮 Future Extensions
+
+The factory pattern enables easy addition of new sources:
+
+```python
+# Example: Add a custom data source
+class CustomDataSource(DataSource):
+    def load_resumes(self, count=5, **kwargs):
+        # Your implementation
+        pass
+
+# Register it
+DataSourceFactory.register("custom", CustomDataSource)
+
+# Use it
+loader = DataLoader(source="custom")
+```
+
+---
+
 ## Quality Standards
 
 All data in this directory:

@@ -16,6 +16,16 @@ langfuse_storage/*
 # But do not ignore the .gitkeep file, to keep the folder present
 !.temp/README.md
 
+# Ignore generated working datasets (Tier 2 data)
+data/working_datasets/
+
+# But do not ignore the .gitkeep file, to keep the folder present
+!data/working_datasets/.gitkeep
+
+# Ignore external downloaded datasets (Tier 3 data)
+data/external_datasets/
+!data/external_datasets/.gitkeep
+
 # Python
 __pycache__/
 *.py[cod]
