@@ -96,15 +96,38 @@ This document breaks down each phase of the project roadmap into specific, actio
 
 ---
 
-### Task 1.5: Import and Prepare Sample Data
+### Task 1.5: Prepare Public Sample Datasets
 
 **Objective**
-- [ ] Prepare sample resumes and project documents
+- [ ] Collect or generate publicly available sample data (no private information)
+- [ ] Create 3 data types: Mock resumes (≥ 20), Job postings (≥ 15), English reading comprehension questions (≥ 50)
+- [ ] Version control and documentation for datasets
+
+**Acceptance Criteria**
+- [ ] All data files organized in data/public_samples/ directory with clear structure
+- [ ] Mock resumes: Well-formatted, covering various industries and positions
+- [ ] Job postings: Consistent format including position, requirements, benefits, etc.
+- [ ] Reading comprehension: Standard format with questions, options, answers and explanations
+- [ ] Data management documentation updated (data/public_samples/README.md, bilingual)
+- [ ] Datasets usable for RAG system evaluation and optional user testing
+
+**Estimated Hours**: 3 | **Priority**: P0
+
+**Resources**
+- data/public_samples/
+- data/public_samples/README.md
+
+---
+
+### Task 1.6: Import and Prepare Deidentified Data
+
+**Objective**
+- [ ] Import user's own data or use public datasets from Task 1.5
 - [ ] Process with deidentification tool
 - [ ] Build multi-dimensional data model using LlamaIndex
 
 **Acceptance Criteria**
-- [ ] Dataset contains ≥ 10 deidentified resumes
+- [ ] Dataset contains ≥ 10 deidentified documents (resumes or similar)
 - [ ] All sensitive information masked
 - [ ] Data versioning and timestamps recorded
 - [ ] All documents indexed in Qdrant (verify vector count)
@@ -118,7 +141,7 @@ This document breaks down each phase of the project roadmap into specific, actio
 
 ---
 
-### Task 1.6: Verify Basic RAG Pipeline
+### Task 1.7: Verify Basic RAG Pipeline
 
 **Objective**
 - [ ] Implement simple RAG: Query → Retrieval → Generation

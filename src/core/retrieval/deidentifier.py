@@ -19,7 +19,7 @@ Usage:
 """
 
 import re
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Optional
 from dataclasses import dataclass
 from enum import Enum
 import logging
@@ -45,11 +45,13 @@ class SensitiveMatch:
     text: str
     start: int
     end: int
-    mask: str = None
+    mask: Optional[str] = None
     
     def __post_init__(self):
         if self.mask is None:
             self.mask = f"[{self.type.value}]"
+        else:
+            self.mask = str(self.mask)
 
 
 class Deidentifier:
@@ -255,8 +257,8 @@ class Deidentifier:
         for match in reversed(matches):
             if keep_originals and logger.isEnabledFor(logging.DEBUG):
                 logger.debug(f"Masking {match.type.value}: {match.text}")
-            result = result[:match.start] + match.mask + result[match.end:]
-        
+            mask_str = match.mask if match.mask is not None else f"[{match.type.value}]"
+            result = result[:match.start] + mask_str + result[match.end:]
         return result
     
     def deidentify_batch(self, texts: List[str]) -> List[str]:

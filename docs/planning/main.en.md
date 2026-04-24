@@ -103,7 +103,8 @@ Build an intelligent Agent system that can simulate personalized interview conve
 
 **Data Processing**
 - Build deidentification tool: identify and mask SSN, phone, email, addresses, etc.
-- Structure and ingest resume, projects using LlamaIndex
+- Prepare public sample datasets (mock resumes, job postings, English reading comprehension, etc.)
+- Structure and ingest resume, projects using LlamaIndex (support user's own data or public datasets)
 - Build multi-dimensional data model (resume, projects, Q&A, blogs)
 - Establish data versioning for evaluation tracking
 
