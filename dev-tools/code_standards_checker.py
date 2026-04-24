@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# cspell: ignore htmlcov
 """
 Code Standards Checker for VedaAide Project
 
@@ -288,7 +289,7 @@ class CodeStandardsChecker:
                         suggestion=sugg,
                     )
 
-    def _check_docstrings(self, file_path: Path, lines: List[str]) -> None:
+    def _check_docstrings(self, file_path: Path, lines: List[str]) -> None:  # noqa: C901
         """Check if public functions and classes have docstrings."""
         for line_num, line in enumerate(lines, 1):
             # Check class definitions
@@ -355,9 +356,9 @@ class CodeStandardsChecker:
         if import_lines:
             # Check order: stdlib, third-party, local
             categories: Dict[str, List[tuple]] = {
-                "stdlib": [],  # type: ignore
-                "third_party": [],  # type: ignore
-                "local": [],  # type: ignore
+                "stdlib": [],  # type: ignore[assignment]
+                "third_party": [],  # type: ignore[assignment]
+                "local": [],  # type: ignore[assignment]
             }
             stdlib_names = {
                 "os",
@@ -371,12 +372,12 @@ class CodeStandardsChecker:
                 "collections",
             }
 
-            for line_num, line in import_lines:
+            for line_num, line in import_lines:  # noqa: C901
                 match = re.match(r"^import\s+([a-zA-Z_][a-zA-Z0-9_.]*)", line)
                 if match is not None:
                     module = match.group(1).split(".")[0]
                     if module in stdlib_names:
-                        categories["stdlib"].append((line_num, line))
+                        categories["stdlib"].append((line_num, line))  # type: ignore[index]
                     elif line.startswith("from src.") or line.startswith("import src."):
                         categories["local"].append((line_num, line))
                     else:
@@ -544,7 +545,7 @@ class CodeStandardsChecker:
         s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
         return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower()
 
-    def generate_report(self) -> str:
+    def generate_report(self) -> str:  # noqa: C901
         """Generate a text report."""
         report: List[str] = []
         report.append("=" * 80)
@@ -595,7 +596,7 @@ class CodeStandardsChecker:
         # By category
         report.append("\n\n📋 Issues by Category")
         report.append("-" * 80)
-        by_category: Dict[str, List[Issue]] = defaultdict(list)  # type: ignore
+        by_category: Dict[str, List[Issue]] = defaultdict(list)  # type: ignore[assignment]
         for issue in self.result.issues:
             by_category[issue.category].append(issue)
 
@@ -608,7 +609,7 @@ class CodeStandardsChecker:
         # By file
         report.append("\n\n📁 Issues by File")
         report.append("-" * 80)
-        by_file: Dict[str, List[Issue]] = defaultdict(list)  # type: ignore
+        by_file: Dict[str, List[Issue]] = defaultdict(list)  # type: ignore[assignment]
         for issue in self.result.issues:
             by_file[issue.file].append(issue)
 
