@@ -57,8 +57,8 @@ class CheckResult:
     errors: int = 0
     warnings: int = 0
     info: int = 0
-    issues: List[Issue] = field(default_factory=list)  # type: ignore
-    files_checked: List[str] = field(default_factory=list)  # type: ignore
+    issues: List[Issue] = field(default_factory=list)
+    files_checked: List[str] = field(default_factory=list)
 
 
 class CodeStandardsChecker:
@@ -356,9 +356,9 @@ class CodeStandardsChecker:
         if import_lines:
             # Check order: stdlib, third-party, local
             categories: Dict[str, List[tuple]] = {
-                "stdlib": [],  # type: ignore[assignment]
-                "third_party": [],  # type: ignore[assignment]
-                "local": [],  # type: ignore[assignment]
+                "stdlib": [],
+                "third_party": [],
+                "local": [],
             }
             stdlib_names = {
                 "os",
@@ -377,7 +377,7 @@ class CodeStandardsChecker:
                 if match is not None:
                     module = match.group(1).split(".")[0]
                     if module in stdlib_names:
-                        categories["stdlib"].append((line_num, line))  # type: ignore[index]
+                        categories["stdlib"].append((line_num, line))
                     elif line.startswith("from src.") or line.startswith("import src."):
                         categories["local"].append((line_num, line))
                     else:
@@ -596,7 +596,7 @@ class CodeStandardsChecker:
         # By category
         report.append("\n\n📋 Issues by Category")
         report.append("-" * 80)
-        by_category: Dict[str, List[Issue]] = defaultdict(list)  # type: ignore[assignment]
+        by_category: Dict[str, List[Issue]] = defaultdict(list)
         for issue in self.result.issues:
             by_category[issue.category].append(issue)
 
@@ -609,7 +609,7 @@ class CodeStandardsChecker:
         # By file
         report.append("\n\n📁 Issues by File")
         report.append("-" * 80)
-        by_file: Dict[str, List[Issue]] = defaultdict(list)  # type: ignore[assignment]
+        by_file: Dict[str, List[Issue]] = defaultdict(list)
         for issue in self.result.issues:
             by_file[issue.file].append(issue)
 
@@ -681,7 +681,7 @@ def main() -> None:
     import sys
 
     if hasattr(sys.stdout, "reconfigure"):
-        sys.stdout.reconfigure(encoding="utf-8")  # type: ignore
+        sys.stdout.reconfigure(encoding="utf-8")
     print(report)
 
     # Save report to file
