@@ -38,26 +38,40 @@ class Issue:
     suggestion: str = ""
 
     def __str__(self) -> str:
-        return f"[{self.severity.upper()}] {self.category} - {self.message}\n  File: {self.file}:{self.line}\n  Suggestion: {self.suggestion}"
+        """Return string representation of the issue."""
+        severity = self.severity.upper()
+        return (
+            f"[{severity}] {self.category} - {self.message}\n"
+            f"  File: {self.file}:{self.line}\n"
+            f"  Suggestion: {self.suggestion}"
+        )
 
 
 @dataclass
 class CheckResult:
-    """Result of a complete code check"""
+    """Result of a complete code check."""
 
     total_files: int = 0
     total_issues: int = 0
     errors: int = 0
     warnings: int = 0
     info: int = 0
-    issues: List[Issue] = field(default_factory=list)
-    files_checked: List[str] = field(default_factory=list)
+    issues: List[Issue] = field(default_factory=list)  # type: ignore
+    files_checked: List[str] = field(default_factory=list)  # type: ignore
 
 
 class CodeStandardsChecker:
     """Main checker class for code standards"""
 
-    def __init__(self, root_dir: str = ".", exclude_dirs: Optional[List[str]] = None):
+    def __init__(
+        self, root_dir: str = ".", exclude_dirs: Optional[List[str]] = None
+    ) -> None:
+        """Initialize the code standards checker.
+
+        Args:
+            root_dir: Root directory to check (default: current directory).
+            exclude_dirs: Directories to exclude from checks.
+        """
         self.root_dir: Path = Path(root_dir)
         self.exclude_dirs: List[str] = exclude_dirs or [
             ".venv",
@@ -170,21 +184,28 @@ class CodeStandardsChecker:
         max_lines: int = self.coding_standards["max_file_lines"]
         line_count: int = len([line for line in lines if line.strip()])
 
-        if line_count > max_lines:
-            self._add_issue(
-                severity="warning",
-                category="File Size",
-                file=str(file_path),
-                line=0,
-                column=0,
-                message=f"File exceeds {max_lines} lines (total: {line_count} lines)",
-                suggestion="Split into smaller modules following SRP principle. Create subdirectory with modules.",
-            )
+            if line_count > max_lines:
+                msg = f"File exceeds {max_lines} lines (total: {line_count} lines)"
+                sugg = (
+                    "Split into smaller modules following SRP principle. "
+                    "Create subdirectory with modules."
+                )
+                self._add_issue(
+                    severity="warning",
+                    category="File Size",
+                    file=str(file_path),
+                    line=0,
+                    column=0,
+                    message=msg,
+                    suggestion=sugg,
+                )
 
-    def _check_naming_conventions(self, file_path: Path, lines: List[str]) -> None:
-        """Check naming conventions (PascalCase, snake_case, UPPER_SNAKE_CASE)"""
+    def _check_naming_conventions(
+        self, file_path: Path, lines: List[str]
+    ) -> None:
+        """Check naming conventions (PascalCase, snake_case, UPPER_SNAKE_CASE)."""
         class_pattern = re.compile(r"^class\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*[:\(]")
-        function_pattern = re.compile(r"^def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(")
+        func_pattern = re.compile(r"^def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(")
 
         for line_num, line in enumerate(lines, 1):
             # Check class names
@@ -204,7 +225,7 @@ class CodeStandardsChecker:
                     )
 
             # Check function names
-            func_match = function_pattern.search(line)
+            func_match = func_pattern.search(line)
             if func_match is not None:
                 func_name = func_match.group(1)
                 if not self._is_snake_case(func_name) and func_name != "__init__":
@@ -220,9 +241,9 @@ class CodeStandardsChecker:
                     )
 
     def _check_type_hints(self, file_path: Path, lines: List[str]) -> None:
-        """Check if functions have type hints"""
+        """Check if functions have type hints."""
         function_pattern = re.compile(
-            r"^\s*def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\((.*?)\)\s*(->\s*[^:]+)?:"
+            r"^\s*def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\((.*?)\)\s*(->[\s\w\[\],\.\|]*)?:"
         )
 
         for line_num, line in enumerate(lines, 1):
@@ -251,19 +272,24 @@ class CodeStandardsChecker:
 
                 # Check parameter types
                 if params and ":" not in params and params.strip() != "self":
+                    msg = f"Function '{func_name}' parameters missing type hints"
+                    sugg = (
+                        f"Add parameter types: "
+                        f"def {func_name}(param: Type) -> ReturnType:"
+                    )
                     self._add_issue(
                         severity="error",
                         category="Type Hints",
                         file=str(file_path),
                         line=line_num,
                         column=0,
-                        message=f"Function '{func_name}' parameters missing type hints",
+                        message=msg,
                         code_example=line.strip(),
-                        suggestion=f"Add parameter types: def {func_name}(param: Type) -> ReturnType:",
+                        suggestion=sugg,
                     )
 
     def _check_docstrings(self, file_path: Path, lines: List[str]) -> None:
-        """Check if public functions and classes have docstrings"""
+        """Check if public functions and classes have docstrings."""
         for line_num, line in enumerate(lines, 1):
             # Check class definitions
             if re.match(r"^\s*class\s+([A-Z][a-zA-Z0-9_]*)\s*[:\(]", line):
@@ -273,6 +299,10 @@ class CodeStandardsChecker:
                         class_match = re.search(r"class\s+([A-Z][a-zA-Z0-9_]*)", line)
                         if class_match is not None:
                             class_name = class_match.group(1)
+                            sugg = (
+                                f'Add docstring: class {class_name}:\n'
+                                f'    """Description of class."""'
+                            )
                             self._add_issue(
                                 severity="warning",
                                 category="Documentation",
@@ -281,7 +311,7 @@ class CodeStandardsChecker:
                                 column=0,
                                 message=f"Class '{class_name}' missing docstring",
                                 code_example=line.strip(),
-                                suggestion=f'Add docstring: class {class_name}:\n    """Description of class."""',
+                                suggestion=sugg,
                             )
 
             # Check function definitions (not private)
@@ -295,19 +325,23 @@ class CodeStandardsChecker:
                         if func_match is not None:
                             func_name = func_match.group(1)
                             if func_name not in ["__init__", "__str__"]:
-                                self._add_issue(
-                                    severity="warning",
-                                    category="Documentation",
-                                    file=str(file_path),
-                                    line=line_num,
-                                    column=0,
-                                    message=f"Function '{func_name}' missing docstring",
-                                    code_example=line.strip(),
-                                    suggestion="Add Google-style docstring with Args, Returns, Raises",
-                                )
+                                    msg = f"Function '{func_name}' missing docstring"
+                                    sugg = (
+                                        "Add Google-style docstring with "
+                                        "Args, Returns, Raises"
+                                    )
+                                    self._add_issue(
+                                        severity="warning",
+                                        category="Documentation",
+                                        file=str(file_path),
+                                        line=line_num,
+                                        column=0,
+                                        message=msg,
+                                        code_example=line.strip(),
+                                        suggestion=sugg,
 
     def _check_imports(self, file_path: Path, lines: List[str]) -> None:
-        """Check import order and organization"""
+        """Check import order and organization."""
         import_lines = []
         import_start = None
 
@@ -320,9 +354,9 @@ class CodeStandardsChecker:
         if import_lines:
             # Check order: stdlib, third-party, local
             categories: Dict[str, List[tuple]] = {
-                "stdlib": [],
-                "third_party": [],
-                "local": [],
+                "stdlib": [],  # type: ignore
+                "third_party": [],  # type: ignore
+                "local": [],  # type: ignore
             }
             stdlib_names = {
                 "os",
@@ -348,7 +382,7 @@ class CodeStandardsChecker:
                         categories["third_party"].append((line_num, line))
 
     def _check_prohibited_patterns(self, file_path: Path, lines: List[str]) -> None:
-        """Check for prohibited patterns"""
+        """Check for prohibited patterns."""
         for line_num, line in enumerate(lines, 1):
             # Check for print() usage
             if re.search(r"print\s*\(", line) and not line.strip().startswith("#"):
@@ -365,9 +399,9 @@ class CodeStandardsChecker:
 
             # Check for hardcoded API keys or credentials
             if (
-                re.search(r'api_key\s*=\s*["\']', line)
-                or re.search(r'password\s*=\s*["\']', line)
-                or re.search(r'secret\s*=\s*["\']', line)
+                re.search(r"api_key\s*=\s*[\"']", line)
+                or re.search(r"password\s*=\s*[\"']", line)
+                or re.search(r"secret\s*=\s*[\"']", line)
             ):
                 self._add_issue(
                     severity="error",
@@ -394,10 +428,14 @@ class CodeStandardsChecker:
                 )
 
     def _check_exception_handling(self, file_path: Path, lines: List[str]) -> None:
-        """Check exception handling patterns"""
+        """Check exception handling patterns."""
         for line_num, line in enumerate(lines, 1):
             # Check for bare except
             if re.search(r"except\s*:", line):
+                sugg = (
+                    "Catch specific exceptions: "
+                    "except ValueError: or except (KeyError, ValueError):"
+                )
                 self._add_issue(
                     severity="error",
                     category="Exception Handling",
@@ -406,7 +444,7 @@ class CodeStandardsChecker:
                     column=line.find("except"),
                     message="Bare except clause detected",
                     code_example=line.strip(),
-                    suggestion="Catch specific exceptions: except ValueError: or except (KeyError, ValueError):",
+                    suggestion=sugg,
                 )
 
             # Check for except Exception
@@ -423,7 +461,7 @@ class CodeStandardsChecker:
                 )
 
     def _check_code_smells(self, file_path: Path, lines: List[str]) -> None:
-        """Check for code smells and potential issues"""
+        """Check for code smells and potential issues."""
         # Check for hardcoded service instantiation (dependency injection violation)
         for line_num, line in enumerate(lines, 1):
             if re.search(r"self\.\w+\s*=\s*\w+\(", line) and not line.strip().startswith("#"):
@@ -432,15 +470,20 @@ class CodeStandardsChecker:
                     service in line
                     for service in ["OpenAI", "AzureOpenAI", "PostgreSQL", "MongoDB"]
                 ):
+                    msg = "Hardcoded service instantiation detected"
+                    sugg = (
+                        "Inject dependencies via constructor: "
+                        "def __init__(self, service: ServiceType)"
+                    )
                     self._add_issue(
                         severity="error",
                         category="Dependency Injection",
                         file=str(file_path),
                         line=line_num,
                         column=line.find("self."),
-                        message="Hardcoded service instantiation detected",
+                        message=msg,
                         code_example=line.strip(),
-                        suggestion="Inject dependencies via constructor: def __init__(self, service: ServiceType)",
+                        suggestion=sugg,
                     )
 
     def _add_issue(
@@ -454,7 +497,7 @@ class CodeStandardsChecker:
         code_example: str = "",
         suggestion: str = "",
     ) -> None:
-        """Add an issue to the result"""
+        """Add an issue to the result."""
         issue = Issue(
             severity=severity,
             category=category,
@@ -476,37 +519,38 @@ class CodeStandardsChecker:
             self.result.info += 1
 
     def _calculate_stats(self) -> None:
-        """Calculate statistics"""
+        """Calculate statistics."""
         pass
 
     @staticmethod
     def _is_pascal_case(name: str) -> bool:
-        """Check if name is PascalCase"""
+        """Check if name is PascalCase."""
         return bool(re.match(r"^[A-Z][a-zA-Z0-9]*$", name))
 
     @staticmethod
     def _is_snake_case(name: str) -> bool:
-        """Check if name is snake_case"""
+        """Check if name is snake_case."""
         return bool(re.match(r"^[a-z_][a-z0-9_]*$", name))
 
     @staticmethod
     def _to_pascal_case(name: str) -> str:
-        """Convert to PascalCase"""
+        """Convert to PascalCase."""
         return "".join(word.capitalize() for word in name.split("_"))
 
     @staticmethod
     def _to_snake_case(name: str) -> str:
-        """Convert to snake_case"""
+        """Convert to snake_case."""
         s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
         return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower()
 
     def generate_report(self) -> str:
-        """Generate a text report"""
-        report: list[str] = []
+        """Generate a text report."""
+        report: List[str] = []
         report.append("=" * 80)
         report.append("Code Standards Audit Report")
         report.append("=" * 80)
-        report.append(f"\nGenerated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        report.append(f"\nGenerated: {now_str}\n")
 
         # Summary
         report.append("📊 Overview")
@@ -550,7 +594,7 @@ class CodeStandardsChecker:
         # By category
         report.append("\n\n📋 Issues by Category")
         report.append("-" * 80)
-        by_category: Dict[str, list[Issue]] = defaultdict(list)
+        by_category: Dict[str, List[Issue]] = defaultdict(list)  # type: ignore
         for issue in self.result.issues:
             by_category[issue.category].append(issue)
 
@@ -563,7 +607,7 @@ class CodeStandardsChecker:
         # By file
         report.append("\n\n📁 Issues by File")
         report.append("-" * 80)
-        by_file: Dict[str, list[Issue]] = defaultdict(list)
+        by_file: Dict[str, List[Issue]] = defaultdict(list)  # type: ignore
         for issue in self.result.issues:
             by_file[issue.file].append(issue)
 
@@ -605,7 +649,10 @@ class CodeStandardsChecker:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Code Standards Checker for VedaAide Project")
+    """Main entry point for code standards checker."""
+    parser = argparse.ArgumentParser(
+        description="Code Standards Checker for VedaAide Project"
+    )
     parser.add_argument("--file", type=str, help="Check specific file")
     parser.add_argument("--dir", type=str, help="Check specific directory")
     parser.add_argument(
@@ -632,7 +679,7 @@ def main() -> None:
     import sys
 
     if hasattr(sys.stdout, "reconfigure"):
-        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stdout.reconfigure(encoding="utf-8")  # type: ignore
     print(report)
 
     # Save report to file
@@ -643,7 +690,8 @@ def main() -> None:
     print(f"\n✅ Report saved to: {report_file}")
 
     # Exit with appropriate code
-    sys.exit(0 if checker.result.errors == 0 else 1)
+    exit_code = 0 if checker.result.errors == 0 else 1
+    sys.exit(exit_code)
 
 
 if __name__ == "__main__":
