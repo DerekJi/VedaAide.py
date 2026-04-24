@@ -184,21 +184,21 @@ class CodeStandardsChecker:
         max_lines: int = self.coding_standards["max_file_lines"]
         line_count: int = len([line for line in lines if line.strip()])
 
-            if line_count > max_lines:
-                msg = f"File exceeds {max_lines} lines (total: {line_count} lines)"
-                sugg = (
-                    "Split into smaller modules following SRP principle. "
-                    "Create subdirectory with modules."
-                )
-                self._add_issue(
-                    severity="warning",
-                    category="File Size",
-                    file=str(file_path),
-                    line=0,
-                    column=0,
-                    message=msg,
-                    suggestion=sugg,
-                )
+        if line_count > max_lines:
+            msg = f"File exceeds {max_lines} lines (total: {line_count} lines)"
+            sugg = (
+                "Split into smaller modules following SRP principle. "
+                "Create subdirectory with modules."
+            )
+            self._add_issue(
+                severity="warning",
+                category="File Size",
+                file=str(file_path),
+                line=0,
+                column=0,
+                message=msg,
+                suggestion=sugg,
+            )
 
     def _check_naming_conventions(
         self, file_path: Path, lines: List[str]
@@ -325,20 +325,21 @@ class CodeStandardsChecker:
                         if func_match is not None:
                             func_name = func_match.group(1)
                             if func_name not in ["__init__", "__str__"]:
-                                    msg = f"Function '{func_name}' missing docstring"
-                                    sugg = (
-                                        "Add Google-style docstring with "
-                                        "Args, Returns, Raises"
-                                    )
-                                    self._add_issue(
-                                        severity="warning",
-                                        category="Documentation",
-                                        file=str(file_path),
-                                        line=line_num,
-                                        column=0,
-                                        message=msg,
-                                        code_example=line.strip(),
-                                        suggestion=sugg,
+                                msg = f"Function '{func_name}' missing docstring"
+                                sugg = (
+                                    "Add Google-style docstring with "
+                                    "Args, Returns, Raises"
+                                )
+                                self._add_issue(
+                                    severity="warning",
+                                    category="Documentation",
+                                    file=str(file_path),
+                                    line=line_num,
+                                    column=0,
+                                    message=msg,
+                                    code_example=line.strip(),
+                                    suggestion=sugg,
+                                )
 
     def _check_imports(self, file_path: Path, lines: List[str]) -> None:
         """Check import order and organization."""
