@@ -199,7 +199,7 @@ class TestBatchProcessing:
         deidentifier = Deidentifier()
         texts = [
             f"Person {i}: Email is user{i}@example.com, "
-            f"Phone: (555) 123-{i:04d}, SSN: {100+i:03d}-{i:02d}-{1000+i:04d}"
+            f"Phone: (555) 123-{i:04d}, SSN: {100 + i:03d}-{i:02d}-{1000 + i:04d}"
             for i in range(1000)
         ]
 

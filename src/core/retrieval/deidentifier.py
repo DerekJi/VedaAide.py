@@ -11,7 +11,7 @@ Usage:
     >>> text = "John Doe, SSN: 123-45-6789, Phone: (555) 123-4567"
     >>> deidentified = deidentifier.deidentify(text)
     John Doe, SSN: [SSN], Phone: [PHONE]
-    
+
     # Verify no sensitive info leaked
     >>> is_safe = deidentifier.verify_deidentification(text, deidentified)
     True
