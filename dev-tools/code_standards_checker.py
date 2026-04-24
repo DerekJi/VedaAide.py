@@ -18,11 +18,13 @@ Usage:
 
 import argparse
 import re
+import sys
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime
+from io import TextIOWrapper
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 
 @dataclass
@@ -57,7 +59,7 @@ class CheckResult:
     errors: int = 0
     warnings: int = 0
     info: int = 0
-    issues: List[Issue] = field(default_factory=list)
+    issues: List["Issue"] = field(default_factory=list)
     files_checked: List[str] = field(default_factory=list)
 
 
@@ -344,8 +346,8 @@ class CodeStandardsChecker:
 
     def _check_imports(self, file_path: Path, lines: List[str]) -> None:
         """Check import order and organization."""
-        import_lines = []
-        import_start = None
+        import_lines: List[Tuple[int, str]] = []
+        import_start: Optional[int] = None
 
         for line_num, line in enumerate(lines, 1):
             if re.match(r"^\s*(import|from)\s+", line):
@@ -355,7 +357,7 @@ class CodeStandardsChecker:
 
         if import_lines:
             # Check order: stdlib, third-party, local
-            categories: Dict[str, List[tuple]] = {
+            categories: Dict[str, List[Tuple[int, str]]] = {
                 "stdlib": [],
                 "third_party": [],
                 "local": [],
@@ -678,9 +680,8 @@ def main() -> None:
 
     # Generate and print report
     report = checker.generate_report()
-    import sys
 
-    if hasattr(sys.stdout, "reconfigure"):
+    if isinstance(sys.stdout, TextIOWrapper):
         sys.stdout.reconfigure(encoding="utf-8")
     print(report)
 

@@ -16,7 +16,7 @@ import argparse
 import os
 import sys
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional
 
 import requests
 
@@ -48,12 +48,12 @@ def check_ollama_health() -> bool:
         return False
 
 
-def get_available_models() -> list:
+def get_available_models() -> List[str]:
     """Get list of available Ollama models."""
     try:
         response = requests.get("http://localhost:11434/api/tags", timeout=5)
         if response.status_code == 200:
-            data = response.json()
+            data: dict = response.json()
             return [model["name"] for model in data.get("models", [])]
     except Exception as e:
         print(f"Warning: Could not fetch model list: {e}")
@@ -281,7 +281,7 @@ def translate_file(  # noqa: C901
         return False
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Batch translate markdown files using local Ollama models",
         formatter_class=argparse.RawDescriptionHelpFormatter,

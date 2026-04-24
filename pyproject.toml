@@ -60,7 +60,11 @@ warn_no_return = true
 warn_unreachable = true
 strict_equality = true
 follow_imports = "normal"
-ignore_missing_imports = false
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "translatepy.*"
+ignore_missing_imports = true
 
 [tool.pylint.messages_control]
 disable = [

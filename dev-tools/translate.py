@@ -168,7 +168,7 @@ def translate_file(  # noqa: C901
         return False
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Batch translate markdown files using translatepy",
         formatter_class=argparse.RawDescriptionHelpFormatter,

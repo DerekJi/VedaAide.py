@@ -25,14 +25,15 @@ install:
 	poetry install
 
 format:
-	poetry run black src tests scripts
-	poetry run isort src tests scripts
+	poetry run black src tests scripts dev-tools
+	poetry run isort src tests scripts dev-tools
 
 lint:
 	poetry run pylint src tests
+	poetry run flake8 src tests dev-tools
 
 type-check:
-	poetry run mypy src
+	poetry run mypy src dev-tools
 
 test:
 	poetry run pytest --cov
