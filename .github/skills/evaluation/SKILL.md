@@ -270,7 +270,7 @@ class RAGTask(dspy.Module):
         self.generate_answer = dspy.ChainOfThought(
             "context, question -> answer"
         )
-    
+
     def forward(self, context, question):
         return self.generate_answer.forward(
             context=context,

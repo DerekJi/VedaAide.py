@@ -4,7 +4,7 @@ import json
 import logging
 from dataclasses import asdict
 from pathlib import Path
-from typing import Any, List, Union
+from typing import List, Union
 
 from .models import JobPostingRecord, ResumeRecord
 

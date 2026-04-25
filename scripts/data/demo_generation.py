@@ -3,14 +3,12 @@
 
 This script demonstrates:
 - Generating 1000 sample resumes
-- Generating 500 sample job postings  
+- Generating 500 sample job postings
 - Displaying generated data format and statistics
 """
 
-import json
 import logging
 from pathlib import Path
-from typing import Any, Dict, List
 
 from scripts.data.generator import DataExporter, JobPostingGenerator, ResumeGenerator
 
@@ -104,7 +102,7 @@ def print_statistics(output_dir: Path) -> None:
         except (IOError, OSError) as e:
             logger.error(f"Failed to read {file_path}: {e}")
 
-    print(f"\nTotal:")
+    print("\nTotal:")
     print(f"  Files: {total_files}")
     print(f"  Size: {total_size/1024/1024:.2f} MB")
 

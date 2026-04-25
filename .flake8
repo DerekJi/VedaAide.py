@@ -12,10 +12,10 @@ indent-size = 4
 # E203: whitespace before ':' (conflicts with Black)
 # W503: line break before binary operator (conflicts with Black)
 # W504: line break after binary operator (conflicts with Black)
-ignore = E203, W503, W504
+ignore = E203, E226, W503, W504
 
 # Exclude directories
-exclude = 
+exclude =
     .git,
     __pycache__,
     .venv,

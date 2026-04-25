@@ -259,10 +259,10 @@ class TestEdgeCases:
         """Test None input handling."""
         deidentifier = Deidentifier()
 
-        matches = deidentifier.detect(None)
+        matches = deidentifier.detect(None)  # type: ignore[arg-type]
         assert not matches
 
-        result = deidentifier.deidentify(None)
+        result = deidentifier.deidentify(None)  # type: ignore[arg-type]
         assert result is None
 
     def test_text_with_no_pii(self) -> None:

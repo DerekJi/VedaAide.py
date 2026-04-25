@@ -9,7 +9,7 @@ applyTo: "**"
 ### Symptom
 When running Python in Windows bash (Git Bash/MSYS2), you get this error:
 ```
-Python was not found; run without arguments to install from the Microsoft Store, 
+Python was not found; run without arguments to install from the Microsoft Store,
 or disable this shortcut from Settings > Apps > Advanced app settings > App execution aliases.
 ```
 

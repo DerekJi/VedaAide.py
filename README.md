@@ -202,15 +202,15 @@ def generate_answer(
 ) -> str:
     """
     Generate answer using contexts with deidentification.
-    
+
     Args:
         query: User question
         contexts: Retrieved context chunks
         metadata: Optional metadata for filtering
-    
+
     Returns:
         Generated answer with deidentified content
-    
+
     Raises:
         ValueError: If contexts are empty
         PII_EXPOSURE_ERROR: If deidentification fails
@@ -333,13 +333,13 @@ VedaAide is configured for **VSCode Copilot Chat**:
 
 ```
 Copilot detects your question → loads project context automatically
-"How do I write a retrieval function?" 
+"How do I write a retrieval function?"
 → Loads: project context + RAG development guide + coding standards
 ```
 
 **Available Skills:**
 - `rag-engineering` - Retrieval and generation best practices
-- `testing` - Unit, integration, E2E testing strategies  
+- `testing` - Unit, integration, E2E testing strategies
 - `cloud-native` - Skaffold and Kubernetes workflows
 - `evaluation` - RAGAS metrics and DSPy optimization
 

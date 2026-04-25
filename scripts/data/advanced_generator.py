@@ -13,9 +13,8 @@ import json
 import logging
 import random
 from dataclasses import dataclass
-from enum import Enum
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 # 配置日志
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")

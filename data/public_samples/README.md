@@ -276,7 +276,7 @@ resumes = loader.get_resumes(count=50000)
 - **Cost**: Free
 
 #### GitHub Public Datasets
-- **Examples**: 
+- **Examples**:
   - atulapra/Job-Market-Data
   - Other community job datasets
 - **Setup**: `git clone` or download ZIP
@@ -420,5 +420,5 @@ These datasets are provided as part of the VedaAide project for evaluation and t
 
 ---
 
-**Last Updated**: 2026-04-24  
+**Last Updated**: 2026-04-24
 **Maintainer**: VedaAide Team

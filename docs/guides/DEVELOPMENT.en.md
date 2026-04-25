@@ -201,13 +201,13 @@ All public functions and classes must have docstrings:
 ```python
 def process_resume(resume_data: Dict[str, Any]) -> Resume:
     """Process and validate resume data.
-    
+
     Args:
         resume_data: Raw resume data dictionary.
-    
+
     Returns:
         Processed Resume object.
-    
+
     Raises:
         ValueError: If resume data is invalid.
     """

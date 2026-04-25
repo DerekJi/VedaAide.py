@@ -7,8 +7,8 @@
 - **能力展示**：不仅演示功能价值，还通过可观测性、可评估性、安全性等方面体现高水准的开发和工程能力
 - **学习实验基地**：作为开发者学习、测试和演示 RAG 工业级全链路（从开发到评估）的完整参考实现
 - **成本优化**：在仅使用已有免费/优惠 Azure、GitHub、Ollama 资源的约束下实现完整系统
- 
- 
+
+
 ## 2. 技术栈架构 (Tech Stack)
 
 ### 核心语言 & LLM 编排
@@ -45,9 +45,9 @@
 - ✓ Azure KeyVault (密钥管理)
 - ✓ GitHub Pages (文档/演示)
 - ✓ GitHub Container Registry (镜像存储)
- 
- 
- 
+
+
+
 ## 3. 核心功能设计 (Key Features)
 
 ### A. 数据分层索引与脱敏 (LlamaIndex 侧重)
@@ -85,9 +85,9 @@
 - **招聘场景**：1-1 面试模拟，招聘官角色扮演
 - **演示场景**：技术分享、招聘宣讲、能力验证
 - **学习场景**：RAG 系统诊断、提示词工程、评估方法论参考
- 
- 
- 
+
+
+
 ## 4. 实施阶段规划 (Implementation Roadmap)
 
 ### 第一阶段：基础设施与数据打通 (Week 1-2)
@@ -149,9 +149,9 @@
 - 准备面试演示脚本：展示 DSPy 优化效果、LangFuse Trace、RAGAS 评估报告
 - 编写系统设计文档和踩坑指南
 - 发布 GitHub Pages 技术文章（可观测 RAG 系统设计）
- 
- 
- 
+
+
+
 ## 5. 关键细节与最佳实践
 
 ### 数据安全与隐私
@@ -207,9 +207,9 @@
 | Strong Python + modern LLM APIs | Python 3.10+、Azure OpenAI、Ollama、DeepSeek API |
 | Evaluation (RAGAS, hallucination detection) | RAGAS 量化评估、Reference-free 反馈、异常告警 |
 | Debug retrieval quality systematically | CosmosDB 持久化、LangFuse 链路追踪、可视化分析 |
- 
- 
- 
+
+
+
 ## 6. 面试演示亮点 (Showcase)
 
 ### 技术深度亮点
@@ -275,5 +275,3 @@
 - **[项目结构与目录规范](PROJECT_STRUCTURE.cn.md)** - 完整的代码库组织、命名规则、测试结构、CI/CD 流程、Cloud Native 开发指南
 - **[Agent 场景设计](AgentScenarios.cn.md)** - 不同应用场景的 Agent 配置
 - **[基本考虑](00.basics.md)** - 项目约束条件和设计考虑因素
- 
- 

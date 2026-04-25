@@ -138,7 +138,7 @@
 - 文件：xxx.py，行号：XXX
   问题：具体描述
   修复建议：...
-  
+
 ## 🟡 警告问题（应该修复）
 ### 类型1：问题描述
 - 文件：xxx.py，行号：XXX
@@ -221,14 +221,14 @@
 【类型注解强制要求】
 def retrieve_documents(query: str, top_k: int = 5) -> List[Document]:
     """Retrieve documents from vector store.
-    
+
     Args:
         query: Search query string.
         top_k: Number of results to return.
-        
+
     Returns:
         List of retrieved documents.
-        
+
     Raises:
         ValueError: If query is empty.
     """

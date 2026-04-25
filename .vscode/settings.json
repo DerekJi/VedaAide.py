@@ -1,7 +1,7 @@
 {
   // Python 设置
   "[python]": {
-    "editor.defaultFormatter": "ms-python.python",
+    "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit"
@@ -21,14 +21,12 @@
   "python.linting.mypyEnabled": true,
   "python.linting.mypyArgs": [
     "--python-version=3.9",
-    "--strict",
     "--warn-unused-ignores",
     "--follow-imports=normal"
   ],
 
   // 代码格式化 - Black（100 字符行长）
-  "python.formatting.provider": "black",
-  "python.formatting.blackArgs": [
+  "black-formatter.args": [
     "--line-length=100"
   ],
 
@@ -39,42 +37,14 @@
   ],
 
   // Pylance 标准模式设置（忽略标准库的类型不兼容问题）
-  "pylance.typeCheckingMode": "basic",
   "pylance.enableTypeStubPackages": true,
-  "python.analysis.exclude": [
-    "**/.*",
-    "**/__pycache__",
-    "**/node_modules",
-    "**/.pytest_cache",
-    "**/.mypy_cache",
-    "**/.venv",
-    "**/typeshed-fallback/**",
-    ".vscode",
-    ".temp",
-    "htmlcov",
-    "langfuse_storage",
-    "qdrant_storage"
-  ],
 
   // 编辑器警告显示
   "editor.rulers": [100],
   "editor.renderWhitespace": "trailing",
   "problems.decorations.enabled": true,
 
-  // 显示诊断信息
-  "python.analysis.extraPaths": ["./src", "./tests"],
-  "python.analysis.typeCheckingMode": "strict",
-  "python.analysis.diagnosticSeverityOverrides": {
-    "reportMissingTypeStubs": "warning",
-    "reportOptionalMemberAccess": "warning",
-    "reportOptionalSubscript": "warning",
-    "reportOptionalArgumentType": "warning",
-    "reportOptionalReturnType": "warning",
-    "reportGeneralTypeIssues": "error",
-    "reportUntypedFunctionDecorator": "warning",
-    "reportUntypedClassDecorator": "warning",
-    "reportUntypedBaseClass": "warning"
-  },
+  // 显示诊断信息（analysis.* 由 pyproject.toml [tool.pyright] 管理，不在此重复设置）
 
   // 排除文件夹
   "files.exclude": {
@@ -84,7 +54,9 @@
     "**/htmlcov": true,
     "**/.venv": true,
     "**/.git": true,
-    "**/.temp": true
+    "**/.temp": true,
+    "**/langfuse_storage": true,
+    "**/qdrant_storage": true
   },
 
   // Python 路径配置

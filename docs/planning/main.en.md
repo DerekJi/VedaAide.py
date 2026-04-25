@@ -6,7 +6,7 @@ Build an intelligent Agent system that can simulate personalized interview conve
 
 **Core Value Propositions**:
 - **Technical Exploration**: An interview conversation tool demonstrating end-to-end RAG implementation (deidentification, indexing, retrieval, evaluation)
-- **Systematic Design**: Showcase engineering rigor through observability, quantitative evaluation, and security practices  
+- **Systematic Design**: Showcase engineering rigor through observability, quantitative evaluation, and security practices
 - **Learning Reference**: A complete reference implementation for developers to understand RAG industrial-grade practices (from development to evaluation)
 - **Resource-Aware**: Implement a complete system using only available free/discounted resources
 

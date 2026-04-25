@@ -39,6 +39,10 @@ exclude = '''
   | dist
   | build
   | __pycache__
+  | htmlcov
+  | langfuse_storage
+  | qdrant_storage
+  | data
 )/
 '''
 
@@ -47,11 +51,12 @@ profile = "black"
 include_trailing_comma = true
 use_parentheses = true
 line_length = 100
-skip = [".venv", "build", "dist"]
+skip = [".venv", "build", "dist", "htmlcov", "langfuse_storage", "qdrant_storage"]
 skip_glob = ["**/migrations/**"]
 
 [tool.mypy]
 python_version = "3.9"
+explicit_package_bases = true
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
@@ -65,6 +70,16 @@ warn_unreachable = true
 strict_equality = true
 follow_imports = "normal"
 ignore_missing_imports = true
+exclude = [
+    "^.venv/",
+    "^.temp/",
+    "^htmlcov/",
+    "^langfuse_storage/",
+    "^qdrant_storage/",
+    "^data/",
+    "^dist/",
+    "^build/",
+]
 
 [[tool.mypy.overrides]]
 module = "translatepy.*"
@@ -74,8 +89,11 @@ ignore_missing_imports = true
 disable = [
     "C0111",  # missing-docstring (handled by our standards)
     "C0114",  # missing-module-docstring
+    "R0903",  # too-few-public-methods (common false positive for data/utility classes)
     "R0913",  # too-many-arguments
+    "R0917",  # too-many-positional-arguments (new in pylint 3.x, often too strict)
     "W0212",  # protected-access
+    "W1203",  # logging-fstring-interpolation (design choice for scripts)
 ]
 
 [tool.pylint.format]
@@ -113,9 +131,33 @@ exclude_lines = [
 ]
 
 [tool.pyright]
-include = ["src", "dev-tools"]
-exclude = ["**/__pycache__", ".venv", ".pytest_cache", ".mypy_cache"]
+include = ["src", "dev-tools", "tests"]
+exclude = [
+    "**/node_modules",
+    "**/__pycache__",
+    "**/*.pyc",
+    "**/.*",
+    ".venv",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".temp",
+    "htmlcov",
+    "langfuse_storage",
+    "qdrant_storage",
+    "dist",
+    "build",
+]
+extraPaths = ["src", "tests", "dev-tools"]
 pythonVersion = "3.9"
 typeCheckingMode = "standard"
 reportMissingModuleSource = "warning"
 reportMissingImports = "error"
+reportMissingTypeStubs = "warning"
+reportOptionalMemberAccess = "warning"
+reportOptionalSubscript = "warning"
+reportOptionalArgumentType = "warning"
+reportOptionalReturnType = "warning"
+reportGeneralTypeIssues = "error"
+reportUntypedFunctionDecorator = "warning"
+reportUntypedClassDecorator = "warning"
+reportUntypedBaseClass = "warning"

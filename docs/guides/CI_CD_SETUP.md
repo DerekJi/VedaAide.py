@@ -102,7 +102,7 @@ src/core/retrieval   360     12    96%
 
 2. **On push/PR creation**: Pipeline automatically runs
 
-3. **View results**: 
+3. **View results**:
    - Check "Checks" tab in PR
    - Look for green ✅ or red ❌ status
 
@@ -116,7 +116,7 @@ src/core/retrieval   360     12    96%
 
 ### Unit Tests
 - **Location**: `tests/unit/`
-- **Coverage**: 
+- **Coverage**:
   - `test_deidentification.py`: 39 tests for deidentifier module
     - SSN detection (4 tests)
     - Phone detection (7 tests)

@@ -122,9 +122,7 @@ def translate_file(  # noqa: C901
 
         # Verify translation happened
         if translated_content == content:
-            print(
-                "  ⚠️  Warning: No changes detected (translation may have failed)"
-            )
+            print("  ⚠️  Warning: No changes detected (translation may have failed)")
 
         # Determine output path
         if output_dir:

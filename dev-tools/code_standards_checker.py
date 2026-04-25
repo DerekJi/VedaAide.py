@@ -67,9 +67,7 @@ class CheckResult:
 class CodeStandardsChecker:
     """Main checker class for code standards"""
 
-    def __init__(
-        self, root_dir: str = ".", exclude_dirs: Optional[List[str]] = None
-    ) -> None:
+    def __init__(self, root_dir: str = ".", exclude_dirs: Optional[List[str]] = None) -> None:
         """Initialize the code standards checker.
 
         Args:
@@ -205,9 +203,7 @@ class CodeStandardsChecker:
                 suggestion=sugg,
             )
 
-    def _check_naming_conventions(
-        self, file_path: Path, lines: List[str]
-    ) -> None:
+    def _check_naming_conventions(self, file_path: Path, lines: List[str]) -> None:
         """Check naming conventions (PascalCase, snake_case, UPPER_SNAKE_CASE)."""
         class_pattern = re.compile(r"^class\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*[:\(]")
         func_pattern = re.compile(r"^def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(")
@@ -278,10 +274,7 @@ class CodeStandardsChecker:
                 # Check parameter types
                 if params and ":" not in params and params.strip() != "self":
                     msg = f"Function '{func_name}' parameters missing type hints"
-                    sugg = (
-                        f"Add parameter types: "
-                        f"def {func_name}(param: Type) -> ReturnType:"
-                    )
+                    sugg = f"Add parameter types: " f"def {func_name}(param: Type) -> ReturnType:"
                     self._add_issue(
                         severity="error",
                         category="Type Hints",
@@ -305,7 +298,7 @@ class CodeStandardsChecker:
                         if class_match is not None:
                             class_name = class_match.group(1)
                             sugg = (
-                                f'Add docstring: class {class_name}:\n'
+                                f"Add docstring: class {class_name}:\n"
                                 f'    """Description of class."""'
                             )
                             self._add_issue(
@@ -331,10 +324,7 @@ class CodeStandardsChecker:
                             func_name = func_match.group(1)
                             if func_name not in ["__init__", "__str__"]:
                                 msg = f"Function '{func_name}' missing docstring"
-                                sugg = (
-                                    "Add Google-style docstring with "
-                                    "Args, Returns, Raises"
-                                )
+                                sugg = "Add Google-style docstring with " "Args, Returns, Raises"
                                 self._add_issue(
                                     severity="warning",
                                     category="Documentation",
@@ -656,9 +646,7 @@ class CodeStandardsChecker:
 
 def main() -> None:
     """Main entry point for code standards checker."""
-    parser = argparse.ArgumentParser(
-        description="Code Standards Checker for VedaAide Project"
-    )
+    parser = argparse.ArgumentParser(description="Code Standards Checker for VedaAide Project")
     parser.add_argument("--file", type=str, help="Check specific file")
     parser.add_argument("--dir", type=str, help="Check specific directory")
     parser.add_argument(

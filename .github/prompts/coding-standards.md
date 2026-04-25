@@ -19,11 +19,11 @@
 # ✅ Correct
 def retrieve_documents(query: str, top_k: int = 5) -> List[Document]:
     """Retrieve relevant documents.
-    
+
     Args:
         query: Search query string
         top_k: Number of results to return
-        
+
     Returns:
         List of relevant documents
     """
@@ -38,24 +38,24 @@ def retrieve_documents(query, top_k=5):
 ```python
 def process_query(query: str, deidentify: bool = True) -> Dict[str, Any]:
     """Process user query.
-    
+
     This function validates and processes user queries, optionally
     applying deidentification rules.
-    
+
     Args:
         query: The user's input query string
         deidentify: Whether to apply deidentification rules
-        
+
     Returns:
         A dictionary containing processed query and metadata:
         - 'cleaned_query': str
         - 'entities': List[str]
         - 'intent': str
-        
+
     Raises:
         ValueError: If query is empty or too long
         DeidentificationError: If deidentification fails
-        
+
     Example:
         >>> result = process_query("What is Kubernetes?")
         >>> print(result['intent'])
@@ -93,19 +93,19 @@ from src.utils.config import ConfigManager
 ```python
 class MyClass:
     """Class description."""
-    
+
     # Class constants
     DEFAULT_VALUE = 100
-    
+
     def __init__(self, param: str):
         """Initialize."""
         self._param = param
-    
+
     # Public methods (grouped by logic)
     def public_method1(self) -> str:
         """Public method 1."""
         return self._private_helper()
-    
+
     # Private methods
     def _private_helper(self) -> str:
         """Private helper method."""
@@ -176,10 +176,10 @@ def test_retrieve_returns_top_k_results():
     query = "What is RAG?"
     top_k = 5
     retriever = create_test_retriever()
-    
+
     # Act - Execute the operation being tested
     results = retriever.retrieve(query, top_k=top_k)
-    
+
     # Assert - Verify results
     assert len(results) == top_k
     assert all(doc.score > 0 for doc in results)
@@ -194,13 +194,13 @@ def test_agent_calls_llm():
     # Mock external dependencies
     mock_llm = Mock()
     mock_llm.generate.return_value = "mock response"
-    
+
     # Create agent (inject mock)
     agent = Agent(llm=mock_llm)
-    
+
     # Execute
     response = agent.query("test query")
-    
+
     # Verify LLM was called correctly
     mock_llm.generate.assert_called_once()
     args, kwargs = mock_llm.generate.call_args

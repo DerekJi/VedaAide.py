@@ -9,7 +9,7 @@ This directory contains development guidelines, templates, and AI-assisted devel
 - **`python-code-quality.instructions.md`** ⭐
   - **Purpose**: Core development standards for the project
   - **Audience**: For recruiters and team members
-  - **Content**: 
+  - **Content**:
     - Development environment requirements (Podman + Kind)
     - Development workflow enforcement (compile → test → deploy)
     - Python code quality standards (modularization, functions, OOP, type hints, docs, style)
@@ -108,5 +108,5 @@ This demonstrates:
 
 ---
 
-**Last Updated**: April 22, 2026  
+**Last Updated**: April 22, 2026
 **Maintainers**: VedaAide Development Team

@@ -195,9 +195,7 @@ def example_performance() -> None:
     """
 
     resumes = [
-        sample_resume.format(
-            i=i, ssn=f"{100 + i // 10:03d}-{i % 100:02d}-{1000 + i:04d}"
-        )
+        sample_resume.format(i=i, ssn=f"{100 + i // 10:03d}-{i % 100:02d}-{1000 + i:04d}")
         for i in range(1000)
     ]
 

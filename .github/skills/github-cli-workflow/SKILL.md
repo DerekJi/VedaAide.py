@@ -341,7 +341,7 @@ gh issue list --label "priority:high" --json number,title,state
 gh pr create \
   --title "Implement RAG Pipeline" \
   --body "Closes #7 #8
-  
+
 Implements Phase 1.4 and 1.5 tasks." \
   --base main
 ```

@@ -201,13 +201,13 @@ def retrieve_documents(query, top_k=5):
 ```python
 def process_resume(resume_data: Dict[str, Any]) -> Resume:
     """处理并验证简历数据。
-    
+
     Args:
         resume_data: 原始简历数据字典。
-    
+
     Returns:
         处理后的 Resume 对象。
-    
+
     Raises:
         ValueError: 如果简历数据无效。
     """

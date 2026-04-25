@@ -7,7 +7,6 @@ for RAG system evaluation and testing.
 """
 
 import json
-import os
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -137,7 +136,7 @@ class PublicSampleLoader:
 
             print(f"\nResumes: {len(datasets['resumes'])} items")
             for resume in datasets["resumes"]:
-                content_preview = resume["content"][:50].replace("\n", " ") + "..."
+                content_preview = resume["content"][:50].replace("\n", " ") + "..."  # noqa: F841
                 print(f"  - {resume['id']}: {resume['name']} ({len(resume['content'])} chars)")
 
             print(f"\nJob Postings: {len(datasets['job_postings'])} items")

@@ -391,9 +391,9 @@ import asyncio
 async def import_to_qdrant():
     client = AsyncQdrantClient(url="http://localhost:6333")
     generator = AdvancedDataGenerator(config)
-    
+
     resumes = generator.generate_resume_batch(10000)
-    
+
     points = [
         PointStruct(
             id=hash(r['id']) % (10**8),
@@ -402,7 +402,7 @@ async def import_to_qdrant():
         )
         for r in resumes
     ]
-    
+
     await client.upsert(collection_name="resumes", points=points)
 
 asyncio.run(import_to_qdrant())
@@ -477,7 +477,7 @@ A: 创建自定义配置，在`values`中只包含特定领域的值：
 
 ### Q2: 如何保证生成的数据逼真？
 
-A: 
+A:
 1. 使用合理的权重分布（匹配现实比例）
 2. 添加关联规则（职级和技能相匹配）
 3. 使用`count_range`控制组合数量
