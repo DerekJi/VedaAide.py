@@ -22,7 +22,6 @@ import sys
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime
-from io import TextIOWrapper
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -59,7 +58,7 @@ class CheckResult:
     errors: int = 0
     warnings: int = 0
     info: int = 0
-    issues: List["Issue"] = field(default_factory=list)
+    issues: List[Issue] = field(default_factory=list)
     files_checked: List[str] = field(default_factory=list)
 
 
@@ -681,8 +680,9 @@ def main() -> None:
     # Generate and print report
     report = checker.generate_report()
 
-    if isinstance(sys.stdout, TextIOWrapper):
-        sys.stdout.reconfigure(encoding="utf-8")
+    reconfigure = getattr(sys.stdout, "reconfigure", None)
+    if reconfigure is not None:
+        reconfigure(encoding="utf-8")
     print(report)
 
     # Save report to file

@@ -58,6 +58,7 @@
     "deidentifier"
   ],
   "ignorePaths": [
+    ".cspellrc.json",
     "node_modules",
     ".git",
     ".venv",
