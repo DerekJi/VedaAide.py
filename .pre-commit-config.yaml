@@ -69,3 +69,14 @@ repos:
         types: [python]
         pass_filenames: false
         require_serial: true
+
+  # poetry check - ensure pyproject.toml and poetry.lock are in sync
+  - repo: local
+    hooks:
+      - id: poetry-lock-check
+        name: poetry lock check
+        language: system
+        entry: poetry
+        args: ["check", "--lock"]
+        pass_filenames: false
+        files: ^(pyproject\.toml|poetry\.lock)$
