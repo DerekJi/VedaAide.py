@@ -129,12 +129,20 @@ class GeneratedDataSource(DataSource):
 
     def load_resumes(self, count: int = 100, **kwargs: Any) -> List[Dict[str, Any]]:
         """Generate synthetic resume records."""
+        if ResumeGenerator is None:
+            raise ImportError(
+                "ResumeGenerator not available. Ensure generator module is in path."
+            )
         generator = ResumeGenerator(seed=self.seed)
         resumes = [generator.generate() for _ in range(count)]
         return [asdict(r) for r in resumes]
 
     def load_jobs(self, count: int = 100, **kwargs: Any) -> List[Dict[str, Any]]:
         """Generate synthetic job posting records."""
+        if JobPostingGenerator is None:
+            raise ImportError(
+                "JobPostingGenerator not available. Ensure generator module is in path."
+            )
         generator = JobPostingGenerator(seed=self.seed)
         jobs = [generator.generate() for _ in range(count)]
         return [asdict(j) for j in jobs]

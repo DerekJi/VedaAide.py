@@ -25,6 +25,7 @@ pylint = ">=3.2,<4.0"
 pyright = "^1.1.0"
 flake8 = "^7.0.0"
 types-requests = "^2.31.0"
+translatepy = "^2.0.0"
 
 [tool.black]
 line-length = 100
@@ -110,3 +111,11 @@ exclude_lines = [
     "class .*\\bProtocol\\):",
     "@(abc\\.)?abstractmethod",
 ]
+
+[tool.pyright]
+include = ["src", "dev-tools"]
+exclude = ["**/__pycache__", ".venv", ".pytest_cache", ".mypy_cache"]
+pythonVersion = "3.9"
+typeCheckingMode = "standard"
+reportMissingModuleSource = "warning"
+reportMissingImports = "error"

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# cspell: ignore htmlcov
+# cspell: ignore htmlcov, mypy, pylint, isort
 """
 Code Standards Checker for VedaAide Project
 
@@ -60,8 +60,8 @@ class CheckResult:
     errors: int = 0
     warnings: int = 0
     info: int = 0
-    issues: List[Issue] = field(default_factory=list)
-    files_checked: List[str] = field(default_factory=list)
+    issues: list[Issue] = field(default_factory=list)
+    files_checked: list[str] = field(default_factory=list)
 
 
 class CodeStandardsChecker:
