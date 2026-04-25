@@ -84,6 +84,13 @@ exclude = [
 module = "translatepy.*"
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+# qdrant_client and llama_index are optional runtime deps; the try/except
+# ImportError fallbacks use `# type: ignore[assignment]` which may be
+# flagged as unused when ignore_missing_imports treats them as Any.
+module = "src.core.data.indexer"
+warn_unused_ignores = false
+
 [tool.pylint.messages_control]
 disable = [
     "C0111",  # missing-docstring (handled by our standards)
@@ -93,6 +100,14 @@ disable = [
     "R0917",  # too-many-positional-arguments (new in pylint 3.x, often too strict)
     "W0212",  # protected-access
     "W1203",  # logging-fstring-interpolation (design choice for scripts)
+]
+
+[tool.pylint.typecheck]
+# These are optional runtime dependencies not installed in the dev/CI environment.
+# They are guarded by try/except ImportError in production code.
+ignored-modules = [
+    "qdrant_client",
+    "llama_index",
 ]
 
 [tool.pylint.format]

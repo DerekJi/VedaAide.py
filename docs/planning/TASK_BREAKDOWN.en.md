@@ -119,7 +119,9 @@ This document breaks down each phase of the project roadmap into specific, actio
 
 ---
 
-### Task 1.6: Import and Prepare Deidentified Data
+### Task 1.6: Import and Prepare Deidentified Data 🚧 *In Progress*
+
+> **GitHub Issue**: [#16](https://github.com/DerekJi/VedaAide.py/issues/16) | **Branch**: `feat/issue-16-import-deidentified-data`
 
 **Objective**
 - [ ] Import user's own data or use public datasets from Task 1.5

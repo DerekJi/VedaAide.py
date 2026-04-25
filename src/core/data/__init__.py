@@ -27,6 +27,7 @@ from .data_loader import (
     KaggleDataSource,
     StaticDataSource,
 )
+from .indexer import DocumentIndexer, DocumentRecord, IndexStats
 
 __all__ = [
     "DataLoader",
@@ -36,4 +37,7 @@ __all__ = [
     "GeneratedDataSource",
     "KaggleDataSource",
     "HuggingFaceDataSource",
+    "DocumentIndexer",
+    "DocumentRecord",
+    "IndexStats",
 ]
