@@ -26,10 +26,10 @@ try:
     from llama_index.core import Document, Settings, VectorStoreIndex
     from llama_index.vector_stores.qdrant import QdrantVectorStore
 except ImportError:  # pragma: no cover
-    Document = None  # type: ignore
-    Settings = None  # type: ignore
-    VectorStoreIndex = None  # type: ignore
-    QdrantVectorStore = None  # type: ignore
+    Document = None  # type: ignore[misc,assignment]
+    Settings = None  # type: ignore[misc,assignment]
+    VectorStoreIndex = None  # type: ignore[misc,assignment]
+    QdrantVectorStore = None  # type: ignore[misc,assignment]
 
 # Default Qdrant settings
 DEFAULT_QDRANT_URL = "http://localhost:6333"
