@@ -38,9 +38,23 @@
     "--line-length=100"
   ],
 
-  // Pylance 严格模式设置
-  "pylance.typeCheckingMode": "strict",
+  // Pylance 标准模式设置（忽略标准库的类型不兼容问题）
+  "pylance.typeCheckingMode": "basic",
   "pylance.enableTypeStubPackages": true,
+  "python.analysis.exclude": [
+    "**/.*",
+    "**/__pycache__",
+    "**/node_modules",
+    "**/.pytest_cache",
+    "**/.mypy_cache",
+    "**/.venv",
+    "**/typeshed-fallback/**",
+    ".vscode",
+    ".temp",
+    "htmlcov",
+    "langfuse_storage",
+    "qdrant_storage"
+  ],
 
   // 编辑器警告显示
   "editor.rulers": [100],
@@ -83,5 +97,11 @@
   // 显示类型提示
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.parameterTypes": true,
-  "python.analysis.inlayHints.variableTypes": true
+  "python.analysis.inlayHints.variableTypes": true,
+
+  // 禁用所有拼写检查
+  "cSpell.enabled": false,
+  "spell.enabled": false,
+  "spellright.enabled": false,
+  "editor.spellCheck": false
 }

@@ -34,7 +34,7 @@ repos:
 
   # pylint - linting
   - repo: https://github.com/PyCQA/pylint
-    rev: pylint-2.16.4
+    rev: v2.16.4
     hooks:
       - id: pylint
         args: ["--max-line-length=100"]

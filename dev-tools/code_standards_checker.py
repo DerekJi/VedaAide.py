@@ -80,6 +80,7 @@ class CodeStandardsChecker:
         self.exclude_dirs: List[str] = exclude_dirs or [
             ".venv",
             ".git",
+            ".vscode",
             "__pycache__",
             ".pytest_cache",
             ".mypy_cache",
