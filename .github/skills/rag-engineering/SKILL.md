@@ -208,15 +208,15 @@ interview_system_v1:
   template: |
     You are an expert recruiter evaluating a candidate.
     Be fair, thorough, and strategic.
-    
+
     Candidate Experience:
     {experiences}
-    
+
     Job Description:
     {jd}
-    
+
     Question: {question}
-    
+
   temperature: 0.7
   max_tokens: 1000
 

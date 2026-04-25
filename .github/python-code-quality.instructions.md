@@ -56,4 +56,3 @@ All documentation and code comments in `.github/instructions/` and `.github/ISSU
 > **Note**: `.github/prompts/` contains developer-facing prompt guides that may be written in Chinese for clarity. They are not subject to the English-only rule.
 >
 > **Deduplication**: `.github/python-code-quality.instructions.md` (applies to `**/*.py`) and `.github/instructions/coding-standards.instructions.md` (applies to `src/**/*.py, tests/**/*.py`) cover the same rules. The `coding-standards.instructions.md` version is authoritative for scoped Python files; this file applies as a broader fallback.
-

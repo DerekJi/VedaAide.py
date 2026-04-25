@@ -1,0 +1,41 @@
+[flake8]
+# Flake8 configuration for VedaAide project
+# Matches Black, isort, and pylint line length settings
+
+# Line length: 100 characters (modern standard, not legacy 79)
+max-line-length = 100
+
+# PEP 8 compliance
+indent-size = 4
+
+# Ignore specific error codes
+# E203: whitespace before ':' (conflicts with Black)
+# W503: line break before binary operator (conflicts with Black)
+# W504: line break after binary operator (conflicts with Black)
+ignore = E203, E226, W503, W504
+
+# Exclude directories
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    .pytest_cache,
+    .mypy_cache,
+    dist,
+    build,
+    *.egg-info,
+    .temp,
+    qdrant_storage,
+    langfuse_storage,
+    htmlcov
+
+# File patterns to check
+# Only check Python files
+filename = *.py
+
+# Maximum complexity (McCabe)
+max-complexity = 10
+
+# Enable plugins
+# Note: flake8-docstrings (pydocstyle) can be enabled optionally
+# docstring-convention = google

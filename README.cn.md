@@ -202,15 +202,15 @@ def generate_answer(
 ) -> str:
     """
     使用上下文生成答案并进行脱敏处理。
-    
+
     参数：
         query: 用户问题
         contexts: 检索的上下文块
         metadata: 可选的过滤元数据
-    
+
     返回值：
         带有脱敏内容的生成答案
-    
+
     异常：
         ValueError: 如果上下文为空
         PII_EXPOSURE_ERROR: 如果脱敏失败
@@ -333,7 +333,7 @@ VedaAide 配置了 **VSCode Copilot Chat**：
 
 ```
 Copilot 检测问题 → 自动加载项目上下文
-"我如何编写检索函数？" 
+"我如何编写检索函数？"
 → 加载：项目上下文 + RAG 开发指南 + 编码标准
 ```
 

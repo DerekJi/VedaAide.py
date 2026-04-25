@@ -9,8 +9,8 @@
 - **完整实践**：通过可观测性、评估机制、安全设计等方面展示系统化的工程思维
 - **学习参考**：作为开发者理解和实验 RAG 工业级实践（从开发到评估）的完整示例
 - **成本意识**：在仅使用现有免费/优惠 Azure、GitHub、Ollama 资源的约束下实现完整系统
- 
- 
+
+
 ## 2. 技术栈架构 (Tech Stack)
 
 ### 核心语言 & LLM 编排
@@ -47,9 +47,9 @@
 - ✓ Azure KeyVault (密钥管理)
 - ✓ GitHub Pages (文档/演示)
 - ✓ GitHub Container Registry (镜像存储)
- 
- 
- 
+
+
+
 ## 3. 核心功能设计 (Key Features)
 
 ### A. 数据分层索引与脱敏 (LlamaIndex 侧重)
@@ -87,9 +87,9 @@
 - **招聘场景**：1-1 面试模拟，招聘官角色扮演
 - **演示场景**：技术分享、招聘宣讲、能力验证
 - **学习场景**：RAG 系统诊断、提示词工程、评估方法论参考
- 
- 
- 
+
+
+
 ## 4. 实施阶段规划 (Implementation Roadmap)
 
 ### 第一阶段：基础设施与数据打通 (Week 1-2)
@@ -174,9 +174,9 @@
 - 编写系统设计文档和踩坑指南
 - 发布 GitHub Pages 技术文章（可观测 RAG 系统设计）
 - Cloud Native 开发指南分享
- 
- 
- 
+
+
+
 ## 5. 关键细节与最佳实践
 
 ### 数据安全与隐私
@@ -232,9 +232,9 @@
 | Strong Python + modern LLM APIs | Python 3.10+、Azure OpenAI、Ollama、DeepSeek API |
 | Evaluation (RAGAS, hallucination detection) | RAGAS 量化评估、Reference-free 反馈、异常告警 |
 | Debug retrieval quality systematically | CosmosDB 持久化、LangFuse 链路追踪、可视化分析 |
- 
- 
- 
+
+
+
 ## 6. 面试演示亮点 (Showcase)
 
 ### 技术深度亮点
@@ -292,5 +292,3 @@
 - 异步处理：评估、日志写入都通过后台任务，不阻塞实时回复
 - 版本控制：每个重要迭代的代码标签、数据快照、评估报告
 - 亮点：高水准的代码质量
- 
- 

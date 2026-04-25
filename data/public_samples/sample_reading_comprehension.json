@@ -1,0 +1,67 @@
+[
+  {
+    "id": "reading_001",
+    "passage": "The development of artificial intelligence has been one of the most significant technological advances in recent decades. AI systems are now capable of performing tasks that were once thought to be exclusively human domain, such as playing chess, recognizing faces, and generating human-like text. However, this rapid progress has also raised important questions about the societal implications of AI. Researchers and policymakers are increasingly focusing on ensuring that AI development is aligned with human values and benefits society as a whole.",
+    "question": "What is the main idea of this passage?",
+    "options": [
+      "AI can only be used for entertainment purposes",
+      "Artificial intelligence has made significant technological advances but raises important questions about its societal implications",
+      "Chess and face recognition are the most important AI applications",
+      "Policymakers oppose the development of artificial intelligence"
+    ],
+    "correct_answer": "B",
+    "explanation": "The passage discusses both the significant progress in AI technology and the growing concerns about its societal implications, making option B the best answer."
+  },
+  {
+    "id": "reading_002",
+    "passage": "Climate change is one of the most pressing challenges facing humanity today. Rising global temperatures are causing melting polar ice caps, rising sea levels, and more extreme weather events. The primary cause of this warming is the emission of greenhouse gases, particularly carbon dioxide, from human activities such as burning fossil fuels and deforestation. To address this crisis, many countries have committed to reducing their carbon emissions through renewable energy adoption and energy efficiency improvements. Individual actions, such as reducing energy consumption and supporting sustainable practices, also play an important role.",
+    "question": "What does the passage imply about individual actions in addressing climate change?",
+    "options": [
+      "Individual actions are more important than government policies",
+      "Individual actions are insignificant and only large-scale government action matters",
+      "Individual actions, while not the sole solution, contribute meaningfully to addressing climate change",
+      "Climate change cannot be addressed through any human action"
+    ],
+    "correct_answer": "C",
+    "explanation": "The passage states that 'Individual actions...also play an important role,' suggesting that individual actions are a meaningful part of the solution, though not the only part."
+  },
+  {
+    "id": "reading_003",
+    "passage": "The invention of the printing press by Johannes Gutenberg in the 15th century revolutionized information dissemination and is considered one of the most important technological innovations in human history. Before the printing press, books were painstakingly copied by hand, making them expensive and scarce. The printing press enabled the mass production of books, making knowledge more accessible to the general population. This democratization of information contributed significantly to the Renaissance, the Scientific Revolution, and the Enlightenment, fundamentally changing the course of human development.",
+    "question": "What was the most significant consequence of the printing press invention?",
+    "options": [
+      "It made Johannes Gutenberg wealthy",
+      "It enabled mass production of books and democratized access to information, contributing to major intellectual movements",
+      "It eliminated the need for handwritten documents",
+      "It was primarily used for printing religious texts only"
+    ],
+    "correct_answer": "B",
+    "explanation": "The passage clearly states that the printing press made knowledge more accessible and contributed to major intellectual movements, making this the most significant consequence."
+  },
+  {
+    "id": "reading_004",
+    "passage": "Machine learning, a subset of artificial intelligence, has emerged as a powerful tool for solving complex problems across numerous industries. Machine learning algorithms learn from data and improve their performance without being explicitly programmed for every scenario. Applications of machine learning range from recommendation systems in e-commerce to diagnostic tools in healthcare. However, the effectiveness of machine learning models heavily depends on the quality and quantity of training data. Additionally, machine learning models can inherit biases present in their training data, raising important ethical concerns about fairness and transparency.",
+    "question": "According to the passage, what are the main challenges in machine learning?",
+    "options": [
+      "Machine learning is too expensive to implement",
+      "Machine learning cannot be applied to healthcare",
+      "The dependency on data quality and the potential for inherited biases are significant challenges",
+      "Machine learning only works for large companies"
+    ],
+    "correct_answer": "C",
+    "explanation": "The passage explicitly mentions data quality dependency and bias inheritance as challenges in machine learning implementation."
+  },
+  {
+    "id": "reading_005",
+    "passage": "The ocean covers approximately 71% of Earth's surface and plays a crucial role in regulating the global climate and supporting biodiversity. Marine ecosystems are home to millions of species, many of which are not yet discovered or studied by scientists. Unfortunately, human activities such as overfishing, pollution, and plastic waste dumping have severely damaged marine ecosystems. Coral reefs, often referred to as the rainforests of the sea, are particularly vulnerable to climate change and pollution. International efforts to establish marine protected areas and reduce ocean pollution are critical steps toward preserving these vital ecosystems for future generations.",
+    "question": "Why does the passage emphasize the importance of marine protected areas?",
+    "options": [
+      "To prevent people from visiting the ocean",
+      "To increase fishing opportunities",
+      "To preserve marine ecosystems threatened by human activities and ensure biodiversity for future generations",
+      "To eliminate all human interaction with the ocean"
+    ],
+    "correct_answer": "C",
+    "explanation": "The passage discusses threats to marine ecosystems and presents protected areas as critical steps toward preservation, making C the correct answer."
+  }
+]

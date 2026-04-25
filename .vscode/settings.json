@@ -1,0 +1,79 @@
+{
+  // Python 设置
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+
+  // Pylance 配置 - 类型检查
+  "python.languageServer": "Pylance",
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": [
+    "--max-line-length=100",
+    "--disable=C0111,C0114,R0913,W0212"
+  ],
+
+  // mypy 配置 - 类型检查（Python 3.9+）
+  "python.linting.mypyEnabled": true,
+  "python.linting.mypyArgs": [
+    "--python-version=3.9",
+    "--warn-unused-ignores",
+    "--follow-imports=normal"
+  ],
+
+  // 代码格式化 - Black（100 字符行长）
+  "black-formatter.args": [
+    "--line-length=100"
+  ],
+
+  // Import 排序 - isort
+  "python.sortImports.args": [
+    "--profile=black",
+    "--line-length=100"
+  ],
+
+  // Pylance 标准模式设置（忽略标准库的类型不兼容问题）
+  "pylance.enableTypeStubPackages": true,
+
+  // 编辑器警告显示
+  "editor.rulers": [100],
+  "editor.renderWhitespace": "trailing",
+  "problems.decorations.enabled": true,
+
+  // 显示诊断信息（analysis.* 由 pyproject.toml [tool.pyright] 管理，不在此重复设置）
+
+  // 排除文件夹
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/.mypy_cache": true,
+    "**/htmlcov": true,
+    "**/.venv": true,
+    "**/.git": true,
+    "**/.temp": true,
+    "**/langfuse_storage": true,
+    "**/qdrant_storage": true
+  },
+
+  // Python 路径配置
+  "python.defaultInterpreterPath": ".venv/Scripts/python",
+
+  // 保存时触发格式化
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+
+  // 显示类型提示
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.inlayHints.parameterTypes": true,
+  "python.analysis.inlayHints.variableTypes": true,
+
+  // 禁用所有拼写检查
+  "cSpell.enabled": false,
+  "spell.enabled": false,
+  "spellright.enabled": false,
+  "editor.spellCheck": false
+}

@@ -1,0 +1,137 @@
+[
+  {
+    "id": "job_001",
+    "title": "Senior Software Engineer - Backend",
+    "company": "TechCorp Inc",
+    "location": "Remote",
+    "level": "Senior",
+    "salary_min": 150000,
+    "salary_max": 200000,
+    "description": "We are looking for an experienced Backend Engineer to join our platform team. You will work on building scalable microservices that power our global platform. Strong system design skills and experience with distributed systems required.",
+    "requirements": [
+      "8+ years of software development experience",
+      "Expert in Python or Java",
+      "Experience with microservices architecture",
+      "Strong database design skills (SQL and NoSQL)",
+      "Experience with AWS or GCP",
+      "Understanding of system design and scalability",
+      "Excellent communication skills"
+    ],
+    "benefits": [
+      "Competitive salary and equity",
+      "Comprehensive health insurance",
+      "Unlimited PTO",
+      "Remote work options",
+      "Professional development budget",
+      "Relocation assistance available"
+    ]
+  },
+  {
+    "id": "job_002",
+    "title": "Product Manager",
+    "company": "CloudTech Solutions",
+    "location": "San Francisco, CA",
+    "level": "Mid-level",
+    "salary_min": 120000,
+    "salary_max": 160000,
+    "description": "Looking for a PM to lead our analytics platform. Own the product vision, roadmap, and work cross-functionally with engineering and design teams. Experience with B2B SaaS and data products preferred.",
+    "requirements": [
+      "4+ years of PM experience",
+      "Experience with B2B SaaS or analytics products",
+      "Strong data analysis and SQL skills",
+      "Excellent communication and presentation skills",
+      "Experience with agile methodologies",
+      "User research and user testing experience"
+    ],
+    "benefits": [
+      "Competitive compensation package",
+      "Stock options",
+      "Health, dental, and vision coverage",
+      "401k matching",
+      "Free meals and snacks",
+      "Gym membership",
+      "Career development opportunities"
+    ]
+  },
+  {
+    "id": "job_003",
+    "title": "Data Scientist - Machine Learning",
+    "company": "AIFirst Corp",
+    "location": "New York, NY",
+    "level": "Mid-level",
+    "salary_min": 130000,
+    "salary_max": 170000,
+    "description": "Join our ML team to build and deploy machine learning models. Work on challenging problems in NLP and recommendation systems. Collaborate with engineers to productionize models and drive business impact.",
+    "requirements": [
+      "5+ years of ML/data science experience",
+      "Strong Python skills and ML frameworks experience",
+      "Experience with NLP or computer vision",
+      "Understanding of statistics and experimental design",
+      "Experience with big data tools",
+      "Production ML experience preferred"
+    ],
+    "benefits": [
+      "Competitive salary + bonus",
+      "Stock options",
+      "Comprehensive health benefits",
+      "Flexible work hours",
+      "Free courses and certifications",
+      "Lab resources and compute credits",
+      "Collaborative team environment"
+    ]
+  },
+  {
+    "id": "job_004",
+    "title": "DevOps Engineer",
+    "company": "InfraScale Systems",
+    "location": "Seattle, WA",
+    "level": "Senior",
+    "salary_min": 140000,
+    "salary_max": 190000,
+    "description": "We need an experienced DevOps engineer to lead our infrastructure team. Design and implement cloud infrastructure, CI/CD pipelines, and monitoring systems. Take ownership of system reliability and performance.",
+    "requirements": [
+      "7+ years of DevOps/Infrastructure experience",
+      "Expert in Kubernetes and Docker",
+      "Strong Infrastructure as Code experience (Terraform/Ansible)",
+      "Expert in CI/CD pipeline design",
+      "Cloud platform expertise (AWS/Azure/GCP)",
+      "Excellent troubleshooting and problem-solving skills"
+    ],
+    "benefits": [
+      "Top-tier compensation",
+      "Comprehensive benefits package",
+      "Stock options and 401k matching",
+      "Unlimited PTO",
+      "Remote work flexibility",
+      "Budget for conferences and training",
+      "Leadership opportunities"
+    ]
+  },
+  {
+    "id": "job_005",
+    "title": "Frontend Engineer - React",
+    "company": "WebFirst Design",
+    "location": "Austin, TX",
+    "level": "Junior to Mid",
+    "salary_min": 80000,
+    "salary_max": 120000,
+    "description": "Looking for a talented Frontend Engineer passionate about building beautiful, performant web applications. Work with React and modern JavaScript to create engaging user experiences for millions of users.",
+    "requirements": [
+      "3+ years of web development experience",
+      "Strong React and JavaScript skills",
+      "HTML5 and CSS3 proficiency",
+      "Understanding of responsive design",
+      "Experience with version control (Git)",
+      "Basic understanding of web performance"
+    ],
+    "benefits": [
+      "Competitive compensation",
+      "Flexible working hours",
+      "Generous time off",
+      "Home office setup stipend",
+      "Learning and development budget",
+      "Health and wellness programs",
+      "Casual work environment"
+    ]
+  }
+]

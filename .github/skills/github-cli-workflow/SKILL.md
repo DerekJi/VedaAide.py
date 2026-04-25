@@ -55,6 +55,32 @@ gh auth switch -u <username>
 gh auth login
 ```
 
+#### ⚠️ IMPORTANT: Required Account for VedaAide
+
+**When working in VedaAide.py repository, you MUST use the `DerekJi` GitHub account.**
+
+- ✅ **Correct account**: `DerekJi`
+- ❌ **Wrong account**: `derekj_youi` (or any other account)
+
+**Always check before performing any gh CLI operations:**
+
+```bash
+# Verify current account
+gh auth status
+
+# You should see: github.com account DerekJi
+# If not, switch to the correct account:
+gh auth switch
+# Select "DerekJi" from the list
+```
+
+**Why this matters**: The `derekj_youi` account is for other projects and may not have the correct permissions or status for this repository. Using the wrong account could cause permission issues, failed pushes, or incorrect attribution.
+
+**Before each workflow session:**
+1. Run `gh auth status` to verify you're using `DerekJi`
+2. If using `derekj_youi`, run `gh auth switch` and select `DerekJi`
+3. Proceed with your operations (issues, PRs, pushes, etc.)
+
 ## Issue Management
 
 ### Creating Issues
@@ -315,7 +341,7 @@ gh issue list --label "priority:high" --json number,title,state
 gh pr create \
   --title "Implement RAG Pipeline" \
   --body "Closes #7 #8
-  
+
 Implements Phase 1.4 and 1.5 tasks." \
   --base main
 ```

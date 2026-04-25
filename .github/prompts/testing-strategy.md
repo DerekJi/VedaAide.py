@@ -39,10 +39,10 @@ def test_deidentifier_masks_ssn():
     # Arrange
     deidentifier = Deidentifier()
     text = "John Doe, SSN 123-45-6789"
-    
+
     # Act
     result = deidentifier.deidentify(text, rules=["ssn"])
-    
+
     # Assert
     assert "[REDACTED]" in result
     assert "123-45-6789" not in result
@@ -58,19 +58,19 @@ def test_agent_calls_llm_with_correct_context():
     # Mock LLM
     mock_llm = Mock()
     mock_llm.generate.return_value = "I have 5 years of Kubernetes experience"
-    
+
     # Mock Retriever
     mock_retriever = Mock()
     mock_retriever.retrieve.return_value = [
         Document(text="Kubernetes deployment experience", score=0.95)
     ]
-    
+
     # Create Agent
     agent = Agent(llm=mock_llm, retriever=mock_retriever)
-    
+
     # Execute
     response = agent.query("Tell me about your experience")
-    
+
     # Verify
     mock_llm.generate.assert_called_once()
     call_args = mock_llm.generate.call_args
@@ -133,27 +133,27 @@ def test_rag_pipeline_end_to_end(qdrant_client, cosmosdb_client):
         Document(text="Kubernetes experience with 5 years"),
         Document(text="Docker containerization expertise"),
     ]
-    
+
     # Index documents to Qdrant
     indexer = Indexer(qdrant_client)
     indexer.index_documents(documents)
-    
+
     # Create Retriever
     retriever = Retriever(qdrant_client)
-    
+
     # Mock LLM
     mock_llm = Mock()
     mock_llm.generate.return_value = "5 years of Kubernetes"
-    
+
     # Create RAG Pipeline
     pipeline = RAGPipeline(retriever=retriever, llm=mock_llm)
-    
+
     # Execute query
     response = pipeline.query("How much Kubernetes experience do you have?")
-    
+
     # Verify
     assert "Kubernetes" in response or "5 years" in response
-    
+
     # Verify data persisted to CosmosDB
     persistence = cosmosdb_client.query_by_query_text("Kubernetes")
     assert len(persistence) > 0
@@ -168,7 +168,7 @@ def test_retrieval_persistence_to_cosmosdb(cosmosdb_client):
     query = "experience with databases"
     retriever = Retriever(...)
     contexts = retriever.retrieve(query)
-    
+
     # Save to CosmosDB
     persistence_handler = PersistenceHandler(cosmosdb_client)
     persistence_handler.save_retrieval(
@@ -176,7 +176,7 @@ def test_retrieval_persistence_to_cosmosdb(cosmosdb_client):
         contexts=contexts,
         scores=[0.95, 0.87]
     )
-    
+
     # Verify saved
     saved = cosmosdb_client.query_by_id(...)
     assert saved["query"] == query
@@ -195,27 +195,27 @@ def test_complete_interview_flow():
     qdrant_client = QdrantClient(url="http://localhost:6333")
     cosmosdb_client = CosmosDBClient(...)
     llm = AzureOpenAI(...)  # real LLM
-    
+
     # Create Agent
     agent = Agent(
         llm=llm,
         retriever=Retriever(qdrant_client),
         persistence=PersistenceHandler(cosmosdb_client)
     )
-    
+
     # Simulate interview conversation
     questions = [
         "Tell me about your Kubernetes experience",
         "What challenges did you face?",
         "How did you solve them?"
     ]
-    
+
     responses = []
     for question in questions:
         response = agent.query(question)
         responses.append(response)
         assert len(response) > 10  # ensure meaningful response
-    
+
     # Verify conversation coherence
     assert len(responses) == len(questions)
 ```
@@ -235,20 +235,20 @@ def test_complete_evaluation_flow():
         ["Kubernetes document 1", "Kubernetes document 2"],
         ["Cloud project documentation"],
     ]
-    
+
     # Run Agent to generate responses
     agent = create_test_agent()
     predictions = [
         agent.query(q) for q in test_queries
     ]
-    
+
     # Run RAGAS evaluation
     results = evaluate(
         predictions=predictions,
         ground_truths=ground_truth_contexts,
         metrics=[Faithfulness(), Relevance(), Recall()]
     )
-    
+
     # Verify evaluation scores
     assert results['faithfulness'] > 0.75
     assert results['relevance'] > 0.75
@@ -265,19 +265,19 @@ import time
 def bench_retrieval_latency(retriever, queries, num_iterations=10):
     """Retrieval latency benchmark test."""
     latencies = []
-    
+
     for _ in range(num_iterations):
         for query in queries:
             start = time.time()
             results = retriever.retrieve(query)
             latencies.append(time.time() - start)
-    
+
     avg_latency = sum(latencies) / len(latencies)
     max_latency = max(latencies)
-    
+
     print(f"Average latency: {avg_latency*1000:.2f}ms")
     print(f"Max latency: {max_latency*1000:.2f}ms")
-    
+
     assert avg_latency < 1.0, "Retrieval latency should be < 1 second"
 ```
 
@@ -289,14 +289,14 @@ def bench_evaluation_throughput():
     evaluator = RAGASEvaluator()
     predictions = ["answer 1"] * 100
     ground_truths = [["doc 1"]] * 100
-    
+
     start = time.time()
     results = evaluator.evaluate_batch(predictions, ground_truths)
     elapsed = time.time() - start
-    
+
     throughput = len(predictions) / elapsed
     print(f"Evaluation throughput: {throughput:.2f} samples/sec")
-    
+
     assert throughput > 5, "Evaluation throughput should be > 5 samples/sec"
 ```
 
@@ -371,15 +371,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       # Fast check (2-3 minutes)
       - name: Unit tests
         run: poetry run pytest tests/unit/ --cov=src/
-      
+
       # Integration tests (5-10 minutes)
       - name: Integration tests
         run: poetry run pytest tests/integration/
-      
+
       # Upload coverage report
       - name: Upload coverage
         uses: codecov/codecov-action@v3

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "resume_001",
+    "name": "Sample Resume 1",
+    "content": "Senior Software Engineer with 8 years of experience in full-stack development. Proficient in Python, Java, and JavaScript. Expert in microservices architecture, cloud infrastructure, and DevOps. Led teams of 5-10 engineers. Strong background in agile development and continuous integration/deployment.\n\nTechnical Skills:\n- Languages: Python, Java, JavaScript, Go, SQL\n- Frameworks: Django, Spring Boot, React, FastAPI\n- Cloud Platforms: AWS, Google Cloud, Azure\n- Databases: PostgreSQL, MongoDB, Redis, Elasticsearch\n- Tools: Docker, Kubernetes, Jenkins, GitHub Actions\n\nExperience:\n- TechCorp Inc (2018-Present): Led development of microservices platform serving 10M+ users\n- StartupXYZ (2016-2018): Built real-time analytics system handling 100K events/second\n- DataSystems Corp (2015-2016): Implemented machine learning pipeline for recommendation engine"
+  },
+  {
+    "id": "resume_002",
+    "name": "Sample Resume 2",
+    "content": "Product Manager with 6 years of experience in B2B SaaS. Proven track record of launching 5+ successful products. Strong data analytics and user research skills. Experienced in cross-functional collaboration and go-to-market strategies.\n\nCore Competencies:\n- Product Strategy & Roadmapping\n- User Research & Analytics\n- Stakeholder Management\n- Agile & Scrum\n- Go-to-Market Strategy\n- Data Analysis\n\nExperience:\n- CloudTech Solutions (2020-Present): Product Manager for Analytics Platform - grew ARR from $500K to $3M\n- GrowthLabs (2018-2020): Senior Product Manager - managed 3-engineer team, launched 2 new products\n- ConsultCorp (2017-2018): Associate Product Manager - supported product launches for enterprise clients"
+  },
+  {
+    "id": "resume_003",
+    "name": "Sample Resume 3",
+    "content": "Data Scientist with 5 years of experience in machine learning and statistical analysis. Specializing in NLP, computer vision, and recommendation systems. Published 3 research papers in peer-reviewed journals.\n\nTechnical Stack:\n- Programming: Python, R, SQL, Scala\n- ML Frameworks: TensorFlow, PyTorch, Scikit-learn, XGBoost\n- Big Data: Spark, Hadoop, Hive\n- Visualization: Tableau, Matplotlib, Plotly\n- Deployment: MLflow, Kubeflow, Airflow\n\nKey Projects:\n- Built NLP model for document classification achieving 96% accuracy\n- Developed recommendation engine increasing user engagement by 35%\n- Implemented computer vision system for automated quality control"
+  },
+  {
+    "id": "resume_004",
+    "name": "Sample Resume 4",
+    "content": "DevOps Engineer with 7 years of experience in infrastructure automation and cloud deployment. Expert in Kubernetes, containerization, and CI/CD pipelines. Improved system uptime from 99.5% to 99.99% through infrastructure optimization.\n\nCore Expertise:\n- Infrastructure as Code: Terraform, CloudFormation, Ansible\n- Container Orchestration: Kubernetes, Docker Swarm\n- CI/CD: Jenkins, GitLab CI, GitHub Actions, ArgoCD\n- Monitoring: Prometheus, Grafana, ELK Stack\n- Cloud Platforms: AWS, Azure, Google Cloud\n\nAccomplishments:\n- Automated deployment pipeline reducing deployment time from 2 hours to 15 minutes\n- Designed and implemented disaster recovery plan with RTO of 1 hour\n- Mentored 3 junior engineers on Kubernetes best practices"
+  },
+  {
+    "id": "resume_005",
+    "name": "Sample Resume 5",
+    "content": "Frontend Engineer with 4 years of experience building responsive web applications. Expertise in modern JavaScript frameworks and CSS. Focus on performance optimization and user experience.\n\nTechnologies:\n- JavaScript Frameworks: React, Vue.js, Angular\n- Styling: CSS3, SASS, Tailwind CSS, Material-UI\n- Build Tools: Webpack, Vite, Parcel\n- Testing: Jest, React Testing Library, Cypress\n- Performance: Web Vitals optimization, Code splitting\n\nProjects:\n- Redesigned company dashboard reducing load time by 60%\n- Implemented component library used across 10+ applications\n- Led performance optimization initiative improving accessibility score to 98"
+  }
+]
