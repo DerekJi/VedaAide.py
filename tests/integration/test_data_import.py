@@ -122,6 +122,7 @@ class TestDocumentIndexer:
             patch.object(indexer, "_get_qdrant_client", return_value=mock_qdrant_client),
             patch.object(indexer, "_get_embed_model", return_value=mock_embed),
             patch.object(indexer, "_ensure_collection"),
+            patch("src.core.data.indexer.Document", MagicMock()),
             patch("src.core.data.indexer.Settings", mock_settings),
             patch("src.core.data.indexer.VectorStoreIndex", mock_vsi),
             patch("src.core.data.indexer.QdrantVectorStore", mock_qvs),
