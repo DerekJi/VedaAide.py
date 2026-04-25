@@ -49,7 +49,6 @@
     "venv",
     "pycache",
     "pyproject",
-    "isort",
     "noqa",
     "reconfigure",
     "stacklevel",

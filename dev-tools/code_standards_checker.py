@@ -16,6 +16,8 @@ Usage:
     python code_standards_checker.py --report html  # Generate HTML report
 """
 
+from __future__ import annotations
+
 import argparse
 import re
 import sys
