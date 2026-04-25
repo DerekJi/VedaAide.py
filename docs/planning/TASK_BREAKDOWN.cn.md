@@ -119,7 +119,9 @@
 
 ---
 
-### 任务 1.6：导入和清洗脱敏数据
+### 任务 1.6：导入和清洗脱敏数据 🚧 *进行中*
+
+> **GitHub Issue**: [#16](https://github.com/DerekJi/VedaAide.py/issues/16) | **分支**: `feat/issue-16-import-deidentified-data`
 
 **目标**
 - [ ] 导入用户自有数据或使用任务 1.5 中的公开数据集
