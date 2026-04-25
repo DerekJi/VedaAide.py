@@ -57,7 +57,7 @@ def process_query(query: str, deidentify: bool = True) -> Dict[str, Any]:
         DeidentificationError: If deidentification fails
 
     Example:
-        >>> result = process_query("What is Kubernetes?")
+        >>> result = process_query("What is Kafka?")
         >>> print(result['intent'])
         'technical_question'
     """

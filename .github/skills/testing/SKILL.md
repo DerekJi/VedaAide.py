@@ -87,12 +87,12 @@ def test_agent_calls_llm_with_correct_context():
     """Agent should call LLM with correct context."""
     # Mock LLM
     mock_llm = Mock()
-    mock_llm.generate.return_value = "I have 5 years of Kubernetes experience"
+    mock_llm.generate.return_value = "I have 5 years of Kafka experience"
 
     # Mock Retriever
     mock_retriever = Mock()
     mock_retriever.retrieve.return_value = [
-        Document(text="Kubernetes deployment experience", score=0.95)
+        Document(text="Kafka streaming platform experience", score=0.95)
     ]
 
     # Create Agent
@@ -104,7 +104,7 @@ def test_agent_calls_llm_with_correct_context():
     # Verify
     mock_llm.generate.assert_called_once()
     call_args = mock_llm.generate.call_args
-    assert "Kubernetes" in str(call_args)
+    assert "Kafka" in str(call_args)
 ```
 
 ### Using Fixtures
@@ -117,7 +117,7 @@ def sample_documents():
     """Return sample documents."""
     return [
         Document(text="Python experience", metadata={"tech": "Python"}),
-        Document(text="Kubernetes deployment", metadata={"tech": "Kubernetes"}),
+        Document(text="Kafka streaming", metadata={"tech": "Kafka"}),
     ]
 
 @pytest.fixture
@@ -160,7 +160,7 @@ def test_rag_pipeline_end_to_end(qdrant_client, cosmosdb_client):
     """Complete RAG pipeline test (Mock LLM)."""
     # Prepare
     documents = [
-        Document(text="Kubernetes experience with 5 years"),
+        Document(text="Kafka experience with 5 years"),
         Document(text="Docker containerization expertise"),
     ]
 
@@ -173,19 +173,19 @@ def test_rag_pipeline_end_to_end(qdrant_client, cosmosdb_client):
 
     # Mock LLM
     mock_llm = Mock()
-    mock_llm.generate.return_value = "5 years of Kubernetes"
+    mock_llm.generate.return_value = "5 years of Kafka"
 
     # Create RAG Pipeline
     pipeline = RAGPipeline(retriever=retriever, llm=mock_llm)
 
     # Execute query
-    response = pipeline.query("How much Kubernetes experience do you have?")
+    response = pipeline.query("How much Kafka experience do you have?")
 
     # Verify
-    assert "Kubernetes" in response or "5 years" in response
+    assert "Kafka" in response or "5 years" in response
 
     # Verify data persisted to CosmosDB
-    persistence = cosmosdb_client.query_by_query_text("Kubernetes")
+    persistence = cosmosdb_client.query_by_query_text("Kafka")
     assert len(persistence) > 0
 ```
 

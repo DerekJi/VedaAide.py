@@ -2,16 +2,16 @@
 
 This directory contains development guidelines, templates, and AI-assisted development configurations for VedaAide.
 
-## 📋 Contents
+## Contents
 
-### Configuration Files (Active)
+### Configuration Files
 
 - **`python-code-quality.instructions.md`** ⭐
   - **Purpose**: Core development standards for the project
   - **Audience**: For recruiters and team members
   - **Content**:
-    - Development environment requirements (Podman + Kind)
-    - Development workflow enforcement (compile → test → deploy)
+    - Development environment requirements (local Python + optional local services)
+    - Development workflow enforcement (format/lint/test/build)
     - Python code quality standards (modularization, functions, OOP, type hints, docs, style)
   - **Status**: ✅ English, active, auto-loaded by Copilot Chat
 
@@ -30,7 +30,6 @@ Located in `prompts/` subdirectory:
 | `rag-development.md` | English | ⚠️ Needs review | RAG patterns, hybrid search, Qdrant, DSPy |
 | `testing-strategy.md` | Chinese | ⏳ Pending translation | Test pyramid, AAA pattern, mocking |
 | `evaluation-strategy.md` | Chinese | ⏳ Pending translation | RAGAS metrics, DSPy compilation |
-| `cloud-native-dev.md` | Chinese | ⏳ Pending translation | Skaffold, Podman, Kind setup |
 | `project-context.md` | Chinese | ⏳ Pending translation | Project goals, tech stack overview |
 | `.prompts.json` | JSON | ✅ Active | Copilot Chat skill definitions |
 
@@ -41,7 +40,7 @@ Located in `prompts/` subdirectory:
   - **Purpose**: Standard task/feature request template with DoD (Definition of Done)
   - **Content**: Problem description, objectives, acceptance criteria, code quality checks, documentation requirements
 
-## 🎯 Key Development Standards
+## Key Development Standards
 
 ### Code Quality (Python)
 
@@ -52,6 +51,7 @@ All Python development must follow:
 - **Type Hints**: Mandatory on all functions and methods
 - **Docstrings**: Google-style for important functions/classes
 - **Style**: PEP 8 (4-space indent), ruff/pylint compatible
+- **Tooling**: Prefer Ruff-based format/lint checks as default quality gate
 - **Architecture**: Think through module structure BEFORE coding
 
 ### Development Workflow
@@ -65,18 +65,17 @@ Before ending any development task:
 
 ### Environment
 
-- **Container Runtime**: Podman Desktop (no Docker)
-- **K8s Cluster**: Kind Extension (cluster: `k8s-new`)
-- **Development Tool**: Skaffold for hot reload and debugging
-- **Namespace**: `vedaaide-dev`
+- **Default path**: CLI-first local development
+- **Optional local services**: `docker-compose.yml` for local dependencies when needed
+- **Removed path**: K8s/Skaffold workflow has been removed from the repository
 
-## 🔧 For Recruiters
+## For Recruiters
 
 These files document:
 
 1. **Engineering Practices**: How we ensure high-quality, maintainable code
 2. **Development Process**: Continuous iteration and quality verification
-3. **Tech Stack**: Python 3.10+, RAG architecture, Kubernetes-native
+3. **Tech Stack**: Python 3.10+, RAG architecture, local-first execution
 4. **Team Standards**: Code review checklist, naming conventions, architectural patterns
 
 This demonstrates:
@@ -84,27 +83,27 @@ This demonstrates:
 - ✅ Production-ready practices (modularization, testing, observability)
 - ✅ Team collaboration (clear standards, templates, documentation)
 
-## 📚 Related Documentation
+## Related Documentation
 
-- **Project Structure**: [docs/planning/PROJECT_STRUCTURE.en.md](../../docs/planning/PROJECT_STRUCTURE.en.md)
-- **Project Vision**: [docs/planning/index.md](../../docs/planning/index.md)
+- **Project Structure**: [docs/PROJECT_STRUCTURE.en.md](../docs/PROJECT_STRUCTURE.en.md)
+- **Project Vision**: [docs/planning/main.en.md](../docs/planning/main.en.md)
 - **Main README**: [README.md](../../README.md)
 
-## 🚀 Quick Start
+## Quick Start
 
 1. Read `python-code-quality.instructions.md` for development standards
 2. Use `ISSUE_TEMPLATE/task.md` when creating tasks
 3. Reference `prompts/coding-standards.md` for code review checklist
-4. Follow development workflow: code → compile → test → deploy
+4. Follow development workflow: code → format/lint → test → build
 
-## 📝 Translation Status
+## Translation Status
 
 | Language | Completion | Priority |
 |----------|-----------|----------|
 | English | 60% (3/5 main files) | HIGH - Complete for recruiter review |
 | Chinese | 100% | For internal team reference |
 
-**Translation Work**: `testing-strategy.md`, `evaluation-strategy.md`, `cloud-native-dev.md`, `project-context.md` require English translation for consistency.
+**Translation Work**: `testing-strategy.md`, `evaluation-strategy.md`, `project-context.md` require English translation for consistency.
 
 ---
 

@@ -63,8 +63,8 @@ Given an answer and context, ask the LLM:
 
 **Example**:
 ```
-Context: "John has 5 years of Kubernetes experience"
-Answer: "John has 5 years of Kubernetes experience and is proficient in container orchestration"
+Context: "John has 5 years of Kafka experience"
+Answer: "John has 5 years of Kafka experience and is proficient in stream processing"
 Faithfulness: 0.8  # "container orchestration" may not be in the original text
 ```
 
@@ -86,7 +86,7 @@ Given a query and context, ask the LLM:
 **Example**:
 ```
 Query: "Do you have database experience?"
-Retrieved: "I have managed Kubernetes clusters"
+Retrieved: "I have built Kafka streaming pipelines"
 Relevance: 0.3  # not relevant
 ```
 

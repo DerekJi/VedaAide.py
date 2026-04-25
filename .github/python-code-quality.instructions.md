@@ -3,7 +3,7 @@ applyTo: '**/*.py'
 ---
 ## Development Environment
 
-The local machine has Podman Desktop with Kind Extension running a Kind Cluster. There is no Docker Desktop installed.
+The project uses Docker Compose for local infrastructure (Qdrant required, LangFuse optional). Kubernetes/Skaffold/Kind is not part of the current workflow.
 
 ## Development Workflow Requirements
 

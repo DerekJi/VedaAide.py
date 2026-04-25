@@ -14,108 +14,63 @@ packages = [{include = "src"}, {include = "scripts"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 
+# Core RAG & Orchestration
+langchain = "*"
+langchain-core = "*"
+langgraph = "*"
+llama-index = "*"
+llama-index-core = "*"
+
+# Vector DB & Retrieval
+qdrant-client = "*"
+rank-bm25 = "*"
+
+# Prompt Optimization & RAG
+dspy-ai = "*"
+ragas = "*"
+
+# LLM Providers & Embedding
+openai = "*"
+azure-identity = "*"
+ollama = "*"
+
+# Observability
+langfuse = "*"
+
+# Configuration & Utils
+python-dotenv = "*"
+pydantic = "*"
+click = "*"
+
+
 [tool.poetry.group.dev.dependencies]
-black = "^23.1.0"
-isort = "^5.12.0"
-mypy = "^1.0.0"
+ruff = ">=0.4.0"
 pytest = "^7.2.0"
 pytest-cov = "^4.0.0"
 pre-commit = "^3.1.0"
-pylint = ">=3.2,<4.0"
-pyright = "^1.1.0"
-flake8 = "^7.0.0"
-types-requests = "^2.31.0"
 translatepy = "^2.0.0"
 
-[tool.black]
+[tool.ruff]
 line-length = 100
-target-version = ['py310', 'py311', 'py312']
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.venv
-  | \.pyc
-  | dist
-  | build
-  | __pycache__
-  | htmlcov
-  | langfuse_storage
-  | qdrant_storage
-  | data
-)/
-'''
-
-[tool.isort]
-profile = "black"
-include_trailing_comma = true
-use_parentheses = true
-line_length = 100
-skip = [".venv", "build", "dist", "htmlcov", "langfuse_storage", "qdrant_storage"]
-skip_glob = ["**/migrations/**"]
-
-[tool.mypy]
-python_version = "3.10"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
-no_implicit_optional = true
-warn_redundant_casts = true
-warn_unused_ignores = true
-warn_no_return = true
-warn_unreachable = true
-strict_equality = true
-follow_imports = "normal"
-ignore_missing_imports = true
+target-version = "py310"
 exclude = [
-    "^.venv/",
-    "^.temp/",
-    "^htmlcov/",
-    "^langfuse_storage/",
-    "^qdrant_storage/",
-    "^data/",
-    "^dist/",
-    "^build/",
+    ".venv",
+    ".temp",
+    "htmlcov",
+    "langfuse_storage",
+    "qdrant_storage",
+    "dist",
+    "build",
+    "data",
 ]
 
-[[tool.mypy.overrides]]
-module = "translatepy.*"
-ignore_missing_imports = true
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP"]
+ignore = ["E203", "W503"]
 
-[[tool.mypy.overrides]]
-# qdrant_client and llama_index are optional runtime deps; the try/except
-# ImportError fallbacks use `# type: ignore[assignment]` which may be
-# flagged as unused when ignore_missing_imports treats them as Any.
-module = "src.core.data.indexer"
-warn_unused_ignores = false
-
-[tool.pylint.messages_control]
-disable = [
-    "C0111",  # missing-docstring (handled by our standards)
-    "C0114",  # missing-module-docstring
-    "R0903",  # too-few-public-methods (common false positive for data/utility classes)
-    "R0913",  # too-many-arguments
-    "R0917",  # too-many-positional-arguments (new in pylint 3.x, often too strict)
-    "W0212",  # protected-access
-    "W1203",  # logging-fstring-interpolation (design choice for scripts)
-]
-
-[tool.pylint.typecheck]
-# These are optional runtime dependencies not installed in the dev/CI environment.
-# They are guarded by try/except ImportError in production code.
-ignored-modules = [
-    "qdrant_client",
-    "llama_index",
-]
-
-[tool.pylint.format]
-max-line-length = 100
-indent-string = "    "
-
-[tool.pylint.basic]
-good-names = ["i", "j", "k", "ex", "Run", "_", "id", "x", "y", "z", "df", "ax"]
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -143,34 +98,3 @@ exclude_lines = [
     "class .*\\bProtocol\\):",
     "@(abc\\.)?abstractmethod",
 ]
-
-[tool.pyright]
-include = ["src", "dev-tools", "tests"]
-exclude = [
-    "**/node_modules",
-    "**/__pycache__",
-    "**/*.pyc",
-    "**/.*",
-    ".venv",
-    ".pytest_cache",
-    ".mypy_cache",
-    ".temp",
-    "htmlcov",
-    "langfuse_storage",
-    "qdrant_storage",
-    "dist",
-    "build",
-]
-extraPaths = ["src", "tests", "dev-tools"]
-pythonVersion = "3.10"
-reportMissingModuleSource = "warning"
-reportMissingImports = "error"
-reportMissingTypeStubs = "warning"
-reportOptionalMemberAccess = "warning"
-reportOptionalSubscript = "warning"
-reportOptionalArgumentType = "warning"
-reportOptionalReturnType = "warning"
-reportGeneralTypeIssues = "error"
-reportUntypedFunctionDecorator = "warning"
-reportUntypedClassDecorator = "warning"
-reportUntypedBaseClass = "warning"

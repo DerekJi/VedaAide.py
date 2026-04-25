@@ -2,29 +2,29 @@
 
 ## 1. Project Vision
 
-Build an intelligent Agent system that can simulate personalized interview conversations. By analyzing deidentified experience data, it uses Agentic RAG technology to provide realistic interactive experiences.
+Build an intelligent Agent system that simulates personalized interview conversations. By analyzing a deidentified experience library, it uses Agentic RAG technology to provide realistic interactive interview experiences.
 
 **Core Value Propositions**:
-- **Technical Exploration**: An interview conversation tool demonstrating end-to-end RAG implementation (deidentification, indexing, retrieval, evaluation)
-- **Systematic Design**: Showcase engineering rigor through observability, quantitative evaluation, and security practices
-- **Learning Reference**: A complete reference implementation for developers to understand RAG industrial-grade practices (from development to evaluation)
-- **Resource-Aware**: Implement a complete system using only available free/discounted resources
+- **Technical Showcase**: Demonstrate end-to-end RAG + Agent engineering capabilities to recruiters (LlamaIndex indexing, LangGraph Agent, DSPy optimization)
+- **Runnable Demo**: Published as a CLI tool — recruiters can try it with `pip install vedaaide`
+- **Learning Reference**: A practical example for developers to understand the complete RAG pipeline (from indexing to evaluation)
+- **Focused & Practical**: Concentrate on RAG/Agent core capabilities; avoid spending time on infra/DevOps that isn't the showcase goal
 
 ---
 
-## 2. Technology Stack (Tech Stack)
+## 2. Technology Stack
 
 ### Core Language & LLM Orchestration
-- **Development Language**: Python 3.10+
+- **Language**: Python 3.10+
 - **Orchestration**:
   - LangChain / LangGraph: Agent state management, multi-step planning, and tool invocation
-  - LlamaIndex: Data layer retrieval augmentation supporting hierarchical indexing and hybrid search
+  - LlamaIndex: Data layer retrieval augmentation with hierarchical indexing and hybrid search
   - DSPy: Prompt compilation and optimization, reducing manual tuning overhead
 
-### Vector Database & Data Storage
-- **Vector DB**: Qdrant (local Docker + cloud hosting options)
-- **Persistent Storage**: Azure CosmosDB (NoSQL) - stores detailed data from each retrieval, supporting evaluation and replay
-- **Data Deidentification**: Unified sensitive information masking layer ensuring data security during demos and evaluations
+### Vector Database & Configuration
+- **Vector DB**: Qdrant (local Docker)
+- **Config Management**: `.env` + `python-dotenv` (simple and direct, no KeyVault required)
+- **Data Deidentification**: Unified sensitive information masking layer for demo safety
 
 ### Model Access (LLM & Embedding)
 - **Local Inference**: Ollama (Llama-3 / Phi-3)
@@ -32,32 +32,24 @@ Build an intelligent Agent system that can simulate personalized interview conve
   - Azure OpenAI: gpt-4o, gpt-4o-mini (LLM), text-embedding-3-small (Embedding)
   - DeepSeek API (cost optimization alternative)
 
-### Observability & Evaluation Framework
-- **Tracing**:
-  - LangFuse (LangSmith alternative): Local Docker + cloud hosting with superior cost efficiency and privacy control
-  - Custom Observability Layer: Decorator-based interception of Query, Contexts, Answer → written to CosmosDB
-- **Quality Evaluation**:
-  - RAGAS: Quantitative assessment of Faithfulness, Relevance, Recall
-  - Reference-free Evaluation: User feedback (thumbs up/down) as optimization signals
-- **Monitoring & Alerts**: Cost tracking, retrieval quality anomaly detection, API rate limiting
+### Evaluation & Observability (Lightweight)
+- **Chain Tracing**: LangFuse (local Docker, optional — for demonstrating Agent execution chains)
+- **Quality Evaluation**: RAGAS (Faithfulness, Relevance, Recall metrics)
 
-### Cost-Optimized Resources
-- ✓ Azure OpenAI Deployments (existing quota)
-- ✓ Azure CosmosDB (Free Tier / budget-controlled)
-- ✓ Azure Container Apps (deployment runtime)
-- ✓ Azure KeyVault (secret management)
-- ✓ GitHub Pages (documentation/demo)
-- ✓ GitHub Container Registry (image storage)
+### Distribution
+- ✓ PyPI package (`pip install vedaaide`)
+- ✓ GitHub source (with sample datasets)
+- ✓ GitHub Pages (documentation)
 
 ---
 
-## 3. Core Feature Design
+## 3. Core Features
 
 ### A. Hierarchical Data Indexing with Deidentification (LlamaIndex-focused)
 - **Multi-dimensional Data Ingestion**: Resume, project retrospectives, technical blogs, interview Q&A pairs
-- **Unified Deidentification Framework**: Pre-ingestion masking of SSN, phone, email, addresses as `[REDACTED]`, ensuring safety during demos and evaluations
-- **Hierarchical Retrieval Strategy**: "Summary retrieval → sub-chunk pinpointing" recursive retrieval, allowing Agent to answer both high-level and granular details
-- **Hybrid Search**: BM25 + Vector Search combined for precise matching on domain terms (Kubernetes, Redis, etc.)
+- **Unified Deidentification Framework**: Pre-ingestion masking of SSN, phone, email, addresses as `[REDACTED]`, ensuring safety during demos
+- **Hierarchical Retrieval Strategy**: "Summary retrieval → sub-chunk pinpointing" recursive retrieval, letting the Agent answer both high-level and granular questions
+- **Hybrid Search**: BM25 + Vector Search for precise matching on domain terms (Kafka, Redis, etc.)
 
 ### B. Agentic Workflow with Adaptive Strategy (LangChain/LangGraph-focused)
 - **Tool Suite**:
@@ -67,227 +59,165 @@ Build an intelligent Agent system that can simulate personalized interview conve
 - **Self-Reflection Loop**: Agent pre-evaluates "Do my retrieved materials fully answer this question?" → triggers secondary retrieval if needed
 - **Multi-turn Conversation Memory**: Maintains dialogue history, prevents repetition and omissions, supports cross-question coherence
 
-### C. Observability & Auditability
-- **Complete Chain Tracing**: LangFuse records every Agent step, retrieval, tool call, and reasoning process
-- **Retrieval Data Persistence**: Every retrieval's Query, Top-K results, relevance scores stored in CosmosDB enabling:
-  - Post-analysis and optimization
-  - Performance benchmarking
-  - User feedback correlation
-- **Cost Monitoring**: Real-time tracking of token consumption, API call frequency, model selection (local vs cloud)
-
-### D. Automated Evaluation & Optimization Pipeline (RAGAS & DSPy)
+### C. Evaluation Framework (RAGAS & DSPy)
 - **Synthetic Test Set Generation**: Generate 50+ standard interview questions from personal documents (TestsetGenerator)
-- **Multi-model Evaluation**:
-  - Use gpt-4o as reference standard
-  - Use gpt-4o-mini for cost-optimized quick evaluation
-- **DSPy Compilation Optimization**: Compile optimal prompts for Azure OpenAI and Ollama separately, addressing local model comprehension limitations
-- **Reference-free Feedback Loop**: User thumbs up/down on each response becomes ground truth label for iterative optimization
-- **Offline Evaluation Reports**: Visualize Faithfulness, Relevance, Recall score trends
+- **RAGAS Quantitative Evaluation**: Compute Faithfulness, Relevance, Recall
+- **DSPy Compilation Optimization**: Compile optimal prompts for Azure OpenAI and Ollama separately, addressing local model limitations
 
-### E. Multi-scenario Support
-- **Recruitment Scenario**: 1-1 interview simulation with recruiter role-playing
-- **Demo Scenario**: Tech talks, recruiting pitches, capability verification
-- **Learning Scenario**: RAG system diagnosis, prompt engineering, evaluation methodology reference
+### D. Observability (Optional Demo)
+- **Local LangFuse Instance**: Existing `langfuse_storage/` data; can demonstrate complete Agent execution chains during demo
+- **Use Case**: Diagnose hallucination root causes; show visibility into Retrieval → Reasoning pipeline
+
+### E. CLI Tool
+- **Install**: `pip install vedaaide`
+- **Commands** (detailed UX design TBD):
+  - `vedaaide index <docs_dir>`: index documents
+  - `vedaaide chat`: start interview conversation
+  - `vedaaide eval`: run RAGAS evaluation
 
 ---
 
 ## 4. Implementation Roadmap
 
-### Phase 1: Infrastructure & Data Pipeline (Week 1-2)
+### Phase 1: Data Pipeline Basics (Week 1-2)
 
-**Infrastructure Setup**
-- Deploy local Qdrant Docker and Ollama
-- Configure Azure CosmosDB (NoSQL) connection pool and indexing strategies
-- Set up LangFuse (local Docker container + optional cloud hosting)
-- Configure Azure KeyVault for API keys and connection strings
+**Environment Setup**
+- Start local Qdrant (Docker)
+- Configure `.env`: Azure OpenAI API Key, Qdrant connection info
+- Optional: start local LangFuse (existing `langfuse_storage/`)
 
 **Data Processing**
-- Build deidentification tool: identify and mask SSN, phone, email, addresses, etc.
-- Prepare public sample datasets (mock resumes, job postings, English reading comprehension, etc.)
-- Structure and ingest resume, projects using LlamaIndex (support user's own data or public datasets)
-- Build multi-dimensional data model (resume, projects, Q&A, blogs)
-- Establish data versioning for evaluation tracking
+- Build deidentification tool: identify and mask SSN, phone, email, addresses
+- Prepare public sample datasets (mock resumes, job postings)
+- Use LlamaIndex for document cleaning, chunking, and vector ingestion
 
-**Integration Verification**
-- Connect Azure OpenAI + LlamaIndex for baseline RAG
-- Validate Qdrant retrieval quality (reranking, recall)
-- Establish basic logging and tracing framework
+**Baseline Validation**
+- Connect Azure OpenAI + LlamaIndex for basic RAG
+- Validate Qdrant hybrid search (BM25 + Vector) quality
+- Unit tests covering deidentification tool
 
-### Phase 2: Agent & Observability (Week 3-4)
+### Phase 2: Agent Core (Week 3-4)
 
-**Agent Core**
-- Define Agent state machine with LangGraph: Query → Retrieval → Reasoning → Reflection → Response
-- Implement three core tools: Experience_Comparator, Technical_Deep_Dive, Interview_Strategy_Agent
-- Multi-turn conversation memory management preventing repetition
+**LangGraph Agent**
+- Define state machine: Query → Retrieval → Reasoning → Reflection → Response
+- Implement three core tools: `ExperienceComparator`, `TechnicalDeepDive`, `InterviewStrategySelector`
+- Multi-turn conversation memory management
 
-**Observability & Persistence**
-- Decorator-based auto-observability: intercept Query, Top-K Contexts, LLM Response → CosmosDB
-- LangFuse integration: complete Agent execution tree
-- Establish feedback mechanism for each response (User Feedback field)
-- Cost dashboard: token consumption, API call stats, model usage distribution
+**Initial CLI**
+- `vedaaide index`: document indexing command
+- `vedaaide chat`: interactive interview conversation
 
-**Testing & Optimization**
-- Manual testing with deidentified data on basic workflows
-- Qualitative evaluation on common question types
+**Testing**
+- Unit tests for all Agent tools
+- Integration test: end-to-end RAG query flow
 
-### Phase 3: Evaluation Framework & Intelligent Optimization (Week 5-6)
+### Phase 3: Evaluation & Optimization (Week 5-6)
 
-**RAGAS Evaluation Pipeline**
-- Generate 50+ synthetic interview questions from documents (TestsetGenerator)
-- Implement RAGAS evaluation: Faithfulness, Relevance, Recall
-- Use gpt-4o as reference, gpt-4o-mini for cost-effective rapid evaluation
-- Generate evaluation reports (visualization of score trends, problem classification stats)
+**RAGAS Evaluation**
+- Synthetic test set (50+ interview questions)
+- Compute Faithfulness, Relevance, Recall
+- Generate evaluation reports
 
-**DSPy Compilation Optimization**
-- Prompt compilation optimization for Azure OpenAI
-- Prompt compilation optimization for Ollama local models
-- Compare local vs cloud model evaluation results, determine optimal config
+**DSPy Optimization**
+- Compile prompts for Azure OpenAI and Ollama separately
+- Compare RAGAS scores before and after optimization
 
-**Closed-loop Feedback**
-- Reference-free feedback loop: thumbs up/down → label accumulation → prompt/retrieval strategy tuning
-- Anomaly detection: identify high-frequency error patterns for precise optimization
-- Continuous benchmarking: establish performance baseline, track improvement
+**CLI Expansion**
+- `vedaaide eval`: run evaluation command
+- `vedaaide eval --compare`: compare evaluation results across configurations
 
-### Phase 4: Demo & Documentation (Optional)
+### Phase 4: Release & Documentation (Week 7-8)
 
-- Prepare interview demo scripts: showcase DSPy optimization, LangFuse tracing, RAGAS reports
-- Document system design and lessons learned
-- Publish GitHub Pages technical articles (observable RAG system design)
+**PyPI Release**
+- Finalize `pyproject.toml` (package config, CLI entry points)
+- Write installation guide and quick-start documentation
+- Publish to PyPI
+
+**Documentation**
+- README 5-minute quick start
+- System design document
+- Demo script (LangFuse chain visualization, RAGAS report)
+
+### Future (TBD)
+
+- CLI UX detailed design (user interaction flow, help documentation)
 
 ---
 
-## 5. Key Details & Best Practices
+## 5. Key Practices
 
 ### Data Security & Privacy
 - **Deidentification Strategy**: Pre-ingestion masking of SSN, phone, email, address as `[REDACTED]`
-- **Multi-stage Deidentification**: raw data → deidentified storage → CosmosDB persistence → LangFuse tracing, with verification at each stage
-- **Demo Mode**: One-click switch to fully deidentified demo dataset for external presentations
-
-### Performance & Cost Optimization
-- **Async Evaluation**: RAGAS is time/token-intensive; use background tasks (Celery or asyncio), non-blocking to real-time responses
-- **Model Selection Strategy**:
-  - Real-time: prioritize Ollama (local, free) → gpt-4o-mini (low-cost) → gpt-4o (quality-critical)
-  - Offline evaluation: batch use gpt-4o-mini, gpt-4o only when necessary
-- **Vector DB Optimization**:
-  - Enable Qdrant Hybrid Search (BM25 + Vector) for domain terms
-  - Tune top_k, similarity_threshold for recall/precision balance
-  - Regular cleanup of redundant vectors for storage cost control
-
-### Observability & Auditability
-- **Tracing**:
-  - LangFuse records complete Agent execution tree
-  - CosmosDB persists Query, Context, Score, Response for each retrieval
-  - Custom metrics: retrieval latency, token consumption, model selection
-- **Alerting**:
-  - Retrieval recall anomaly: alert when < 0.5
-  - Evaluation score decline: alert when Faithfulness drops > 5%
-  - Cost overage: alert at 80% of monthly budget
+- **Demo Mode**: Repository includes fully deidentified public sample datasets — users can try without providing personal data
 
 ### Hybrid Search & Recall Optimization
-- **Professional Terms Challenge**: Pure vector search may miss keywords like Kubernetes, Redis
+- **Professional Terms Challenge**: Pure vector search may miss keywords like Kafka, Redis
 - **Hybrid Search Config**:
   - BM25 weight: 0.3 (exact keyword matching)
   - Vector weight: 0.7 (semantic relevance)
-  - Support Metadata Filtering: by tech stack, time period, project type
-- **Recursive Retrieval**: document summary → relevant sections → specific paragraphs for multi-level precision
+  - Metadata Filtering: by tech stack, time period, project type
+- **Recursive Retrieval**: document summary → relevant sections → specific paragraphs
 
-### Reference-free Monitoring & Feedback
-- **Feedback Mechanism**:
-  - Collect 👍 / 👎 after each response
-  - Write feedback to CosmosDB linked to Query, Context, Response, User ID
-  - Analyze feedback distribution periodically for high-frequency error patterns
-- **Iterative Optimization**:
-  - Low-score questions → manual analysis → adjust Prompt / retrieval / data
-  - Version comparison: A/B test new vs old Prompt on same question set
+### Model & Cost Strategy
+- **Real-time conversations**: prefer Ollama (local, free) → gpt-4o-mini (low-cost) → gpt-4o (quality)
+- **Offline evaluation**: batch with gpt-4o-mini, gpt-4o only when necessary
+- **Configuration**: switch models via `.env`, no code changes needed
 
 ### Skills to JD Mapping
-This project directly covers all core JD-001 requirements:
+This project directly covers the core RAG/Agent requirements from JD-001:
 
 | JD Requirement | Project Implementation |
 |---|---|
-| Production RAG systems end-to-end | Complete pipeline: data deidentification → indexing → retrieval → Agent → evaluation |
-| Vector databases (Qdrant, etc.) | Qdrant local + cloud, Hybrid Search optimization |
+| Production RAG systems end-to-end | Full pipeline: deidentification → indexing → hybrid retrieval → Agent → RAGAS evaluation |
+| Vector databases (Qdrant, etc.) | Qdrant local, Hybrid Search (BM25 + Vector) optimization |
 | LLM orchestration (LangChain, LlamaIndex, DSPy) | LangGraph Agent, LlamaIndex hierarchical indexing, DSPy compilation |
 | Strong Python + modern LLM APIs | Python 3.10+, Azure OpenAI, Ollama, DeepSeek API |
-| Evaluation (RAGAS, hallucination detection) | RAGAS quantitative eval, reference-free feedback, anomaly alerts |
-| Debug retrieval quality systematically | CosmosDB persistence, LangFuse tracing, visualization analysis |
+| Evaluation (RAGAS, hallucination detection) | RAGAS quantitative eval, LangFuse tracing (optional) |
+| Debug retrieval quality systematically | RAGAS metric analysis, LangFuse trace diagnosis, evaluation report comparison |
 
 ---
 
 ## 6. Interview Showcase Highlights
 
-### Technical Depth Highlights
+### Technical Depth
 
-**Highlight 1: DSPy Compilation – 0.5ms inference with near-GPT-3.5 quality**
-- Demonstrate local Llama-3 via DSPy achieving gpt-3.5-turbo-level RAG performance without changing a line of prompt
-- Comparison charts: Ollama vs Azure OpenAI in evaluation scores, latency, cost
-- Win: Cost ↓ 99%, Latency ↓ 90%, Quality ↑ near-parity
+**Highlight 1: DSPy Compilation – local model approaching cloud quality**
+- Demonstrate local Llama-3 via DSPy achieving near-gpt-3.5-turbo RAG performance
+- Comparison charts: Ollama vs Azure OpenAI RAGAS scores, latency
+- Key value: cost optimization + understanding prompt compilation principles
 
-**Highlight 2: LangFuse Complete Tracing – diagnosing hallucinations**
-- Open LangFuse dashboard showing complete execution tree of one interview Agent run
-- Pinpoint hallucination root cause: retrieval precision issue or LLM reasoning flaw?
-- Demonstrate CosmosDB data replay for precise issue diagnosis and iterative improvement
-- Win: Observable, auditable, reproducible
+**Highlight 2: RAGAS Quantitative Evaluation – data-driven optimization**
+- Present RAGAS reports before/after system iteration (Faithfulness, Relevance, Recall trends)
+- Show how metrics pinpoint problems (low recall → retrieval strategy issue / low Faithfulness → generation issue)
+- Key value: quantifiable, verifiable, continuous improvement
 
-**Highlight 3: RAGAS Quantitative Evaluation – data-driven optimization**
-- Present RAGAS reports before/after system iteration:
-  - Faithfulness: 0.75 → 0.92 (via data quality improvement)
-  - Relevance: 0.80 → 0.95 (via Hybrid Search tuning)
-  - Recall: 0.70 → 0.88 (via hierarchical indexing)
-- Data-backed proof of Agent reliability on "resume matching"
-- Win: Quantifiable, verifiable, continuous improvement
+**Highlight 3: Hybrid Search Power**
+- Compare pure vector search vs Hybrid Search retrieval quality
+- Case study: BM25 + Vector precisely matching Kafka, Redis, CI/CD terminology
+- Key value: understanding retrieval system design trade-offs
 
-**Highlight 4: Multi-model Cost Optimization – production-grade system design**
-- Demonstrate intelligent model selection (Ollama → gpt-4o-mini → gpt-4o) for cost control
-- Token consumption monitoring dashboard with real-time cost calculation
-- Monthly cost comparison: gpt-4o-only vs hybrid local Ollama
-- Win: Engineering mindset, cost consciousness, production-ready
+**Highlight 4: LangFuse Agent Execution Chain (optional demo)**
+- Open local LangFuse dashboard showing a complete interview Agent execution tree
+- Pinpoint hallucination root cause: retrieval precision or LLM reasoning issue
+- Key value: observable, debuggable, reproducible
 
-### System Design Highlights
+### Engineering Capability
 
 **Highlight 5: Full-stack Data Deidentification**
 - Show deidentification tool mechanics: identification, masking, verification
-- Demonstrate complete transformation from raw resume to deidentified output
-- Multi-stage validation: storage layer, tracing layer, presentation layer all scrubbed
-- Win: Privacy-first, production-grade security considerations
+- Demonstrate transformation from raw resume to deidentified output
+- Key value: privacy awareness, practical engineering considerations
 
-**Highlight 6: Hybrid Search Power**
-- Compare pure vector search vs Hybrid Search retrieval quality
-- Case study: BM25 + Vector precisely matches Kubernetes, Redis, CI/CD terminology
-- Metadata Filtering in action: tech stack and time-based fine-grained filtering
-- Win: Thoughtful engineering, real-world considerations
-
-### Capability Highlights
-
-**Highlight 7: Reference-free Continuous Improvement Loop**
-- Show how user feedback converts to improvement signals
-- Example: low-score question set → pattern recognition → prompt tuning → new/old A/B test
-- Data from last 3 iterations showing improvement trajectory
-- Win: Closed-loop thinking, data-driven decisions
-
-**Highlight 8: Engineering Best Practices**
-- Code structure: modularity, single responsibility, testability
-- Config management: environment variables, KeyVault integration, secure secret storage
-- Async patterns: evaluation, logging via background tasks, non-blocking real-time response
-- Version control: code tags, data snapshots, evaluation reports per iteration
-- Win: high code quality standards
+**Highlight 6: CLI Tool Design** (after Phase 4)
+- `pip install vedaaide` + 5-minute runnable demo
+- Thoughtful command structure considering user experience
+- Key value: engineering mindset, product thinking
 
 ---
 
-## Appendix: Quick Reference
+## Related Documents
 
-### Key Technologies
-- **LLM Orchestration**: LangChain, LangGraph, DSPy
-- **Data Processing**: LlamaIndex (indexing & retrieval)
-- **Vector Search**: Qdrant (hybrid search with BM25)
-- **Data Storage**: Azure CosmosDB (retrieval persistence)
-- **Evaluation**: RAGAS (quantitative quality metrics)
-- **Tracing**: LangFuse (observable RAG)
-- **Models**: Azure OpenAI (gpt-4o), Ollama (local inference)
-
-### Success Metrics
-- Faithfulness ≥ 0.90
-- Relevance ≥ 0.90
-- Recall ≥ 0.85
-- Average retrieval latency ≤ 500ms
-- Monthly cost ≤ $50 (with free tier optimization)
+- **[Project Structure](../PROJECT_STRUCTURE.en.md)** - Codebase organization, naming conventions, test structure
+- **[Agent Scenarios](AgentScenarios.en.md)** - Agent configuration for different use cases
+- **[Basics](00.basics.en.md)** - Project constraints and design considerations
+- **[Task Breakdown](TASK_BREAKDOWN.en.md)** - Detailed actionable task list

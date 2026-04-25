@@ -1,12 +1,10 @@
 {
   "recommendations": [
     "ms-python.python",
-    "ms-python.vscode-pylance",
     "charliermarsh.ruff",
     "ms-python.debugpy",
-    "ms-python.flake8",
     "eamodio.gitlens",
-    "GitHub.copilot",
+    "github.copilot-chat",
     "ms-vscode.makefile-tools"
   ]
 }
