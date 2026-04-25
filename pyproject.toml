@@ -12,7 +12,7 @@ readme = "README.md"
 packages = [{include = "src"}, {include = "scripts"}]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.1.0"
@@ -29,7 +29,7 @@ translatepy = "^2.0.0"
 
 [tool.black]
 line-length = 100
-target-version = ['py39', 'py310', 'py311']
+target-version = ['py310', 'py311', 'py312']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -55,8 +55,7 @@ skip = [".venv", "build", "dist", "htmlcov", "langfuse_storage", "qdrant_storage
 skip_glob = ["**/migrations/**"]
 
 [tool.mypy]
-python_version = "3.9"
-explicit_package_bases = true
+python_version = "3.10"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
@@ -148,8 +147,7 @@ exclude = [
     "build",
 ]
 extraPaths = ["src", "tests", "dev-tools"]
-pythonVersion = "3.9"
-typeCheckingMode = "standard"
+pythonVersion = "3.10"
 reportMissingModuleSource = "warning"
 reportMissingImports = "error"
 reportMissingTypeStubs = "warning"
