@@ -34,6 +34,7 @@ lint:
 
 type-check:
 	poetry run mypy src dev-tools
+	poetry run pyright src dev-tools
 
 test:
 	poetry run pytest --cov
