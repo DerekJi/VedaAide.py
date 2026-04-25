@@ -95,6 +95,14 @@ disable = [
     "W1203",  # logging-fstring-interpolation (design choice for scripts)
 ]
 
+[tool.pylint.typecheck]
+# These are optional runtime dependencies not installed in the dev/CI environment.
+# They are guarded by try/except ImportError in production code.
+ignored-modules = [
+    "qdrant_client",
+    "llama_index",
+]
+
 [tool.pylint.format]
 max-line-length = 100
 indent-string = "    "
