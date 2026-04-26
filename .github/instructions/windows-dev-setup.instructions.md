@@ -122,7 +122,7 @@ poetry install
 # Run development tasks
 poetry run python -m pytest tests/
 poetry run python scripts/some_script.py
-poetry run pylint src/
+poetry run ruff check src/
 
 # Or activate environment
 poetry shell

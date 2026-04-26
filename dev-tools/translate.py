@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Batch translate markdown files in a directory using translatepy.
 
@@ -15,7 +14,6 @@ import argparse
 import os
 import sys
 from pathlib import Path
-from typing import Optional
 
 # Set UTF-8 encoding for Windows console
 if sys.platform == "win32":
@@ -73,7 +71,7 @@ def translate_file(  # noqa: C901
     file_path: Path,
     target_lang: str = "en",
     dry_run: bool = False,
-    output_dir: Optional[Path] = None,
+    output_dir: Path | None = None,
     verbose: bool = False,
 ) -> bool:
     """
@@ -91,7 +89,7 @@ def translate_file(  # noqa: C901
     """
     try:
         # Read file
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             content = f.read()
 
         if verbose:

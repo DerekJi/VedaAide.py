@@ -15,17 +15,9 @@
 
 【项目位置】VedaAide.py 项目，src/ 和 tests/ 目录
 
-【审查三个层次】
+【审查等级】
 
-## 第一层：make verify 能检查的项目
-
-这些项目可以通过运行以下命令检查：
-- make format (black + isort) → 检查代码格式和行长
-- make lint (pylint) → 检查命名规范、缺少文档
-- make type-check (mypy) → 检查类型注解
-- make test (pytest) → 检查单元测试
-
-请检查以下项目：
+优先使用 `make verify` 检查（Ruff + mypy + pytest）然后进行以下检查：
 1. 【代码格式】
    - 行长是否超过 100 字符
    - 缩进是否正确（4 空格）
@@ -33,7 +25,7 @@
 
 2. 【Import 顺序】
    - 是否按顺序：标准库 → 第三方库 → 本地模块
-   - 是否使用了 isort 推荐的排列
+   - Ruff 会自动检查和修复导入顺序
 
 3. 【命名规范】
    - 类名是否为 PascalCase

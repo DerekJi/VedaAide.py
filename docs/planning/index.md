@@ -54,7 +54,7 @@
 - **多维数据入库**：不仅是简历，还包括个人项目复盘、技术博客、常见面试题库（Q&A 对）
 - **统一脱敏框架**：在入库前对身份证、手机号、邮箱等敏感信息进行掩码处理 `[REDACTED]`，确保演示和评估过程中的安全性
 - **层级检索策略**：实现"摘要检索 -> 子块锁定"的递归检索（Recursive Retrieval），确保 Agent 既能回答大概，也能深挖细节
-- **混合搜索**：BM25 + Vector Search 结合，针对专有名词（Kubernetes、Redis 等）的精准匹配
+- **混合搜索**：BM25 + Vector Search 结合，针对专有名词（Kafka、Redis 等）的精准匹配
 
 ### B. Agentic 工作流与自适应策略 (LangChain/LangGraph 侧重)
 - **工具箱设计**：
@@ -180,7 +180,7 @@
   - 成本超出预期：Token 消耗超过月预算 80% 时告警
 
 ### 混合搜索与召回优化
-- **简历中的专有名词问题**：单纯向量检索容易遗漏 Kubernetes、Redis 等关键词
+- **简历中的专有名词问题**：单纯向量检索容易遗漏 Kafka、Redis 等关键词
 - **Hybrid Search 配置**：
   - BM25 权重：0.3（精准关键词匹配）
   - Vector 权重：0.7（语义相关性）
@@ -249,7 +249,7 @@
 
 **亮点 6：Hybrid Search 的威力**
 - 对比纯向量搜索 vs Hybrid Search 的检索质量
-- Case Study：如何通过 BM25 + Vector 精准匹配 Kubernetes、Redis、CI/CD 等专有名词
+- Case Study：如何通过 BM25 + Vector 精准匹配 Kafka、Redis、CI/CD 等专有名词
 - Metadata Filtering 实战：按技术栈和时间段精细化过滤
 - 亮点：细致的工程实现，考虑真实场景
 
@@ -272,6 +272,6 @@
 
 ## 相关文档
 
-- **[项目结构与目录规范](PROJECT_STRUCTURE.cn.md)** - 完整的代码库组织、命名规则、测试结构、CI/CD 流程、Cloud Native 开发指南
+- **[项目结构与目录规范](PROJECT_STRUCTURE.cn.md)** - 完整的代码库组织、命名规则、测试结构、CI/CD 流程
 - **[Agent 场景设计](AgentScenarios.cn.md)** - 不同应用场景的 Agent 配置
 - **[基本考虑](00.basics.md)** - 项目约束条件和设计考虑因素

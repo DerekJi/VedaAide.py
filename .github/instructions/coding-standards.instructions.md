@@ -8,7 +8,7 @@ applyTo: "src/**/*.py,tests/**/*.py"
 
 - Line length limit: **100 characters**
 - Indentation: 4 spaces
-- Formatter: `black`; import sorting: `isort`
+- Formatter and import sorting: `ruff format` + `ruff check`
 
 ## Naming Convention
 
@@ -202,9 +202,8 @@ All code must pass these checks **before submission**:
 make verify  # Runs all checks
 
 # Or individually:
-make format      # black + isort
-make lint        # pylint
-make type-check  # mypy
+make format      # ruff format
+make lint        # ruff check
 make test        # pytest with coverage
 ```
 

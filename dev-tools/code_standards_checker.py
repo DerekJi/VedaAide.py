@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-# cspell: ignore htmlcov, mypy, pylint, isort
+# cspell: ignore htmlcov, mypy
 """
 Code Standards Checker for VedaAide Project
 
 This script performs comprehensive code standards audits including:
-1. Format checks (black, isort compliance)
-2. Style checks (naming conventions, pylint compliance)
+1. Format checks (Ruff compliance)
+2. Style checks (naming conventions, Ruff compliance)
 3. Type hint checks (mypy compliance)
 4. Custom standards checks (DI, logging, exceptions, async, etc.)
 
@@ -25,7 +25,6 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 
 
 @dataclass
@@ -67,7 +66,7 @@ class CheckResult:
 class CodeStandardsChecker:
     """Main checker class for code standards"""
 
-    def __init__(self, root_dir: str = ".", exclude_dirs: Optional[List[str]] = None) -> None:
+    def __init__(self, root_dir: str = ".", exclude_dirs: list[str] | None = None) -> None:
         """Initialize the code standards checker.
 
         Args:
@@ -75,7 +74,7 @@ class CodeStandardsChecker:
             exclude_dirs: Directories to exclude from checks.
         """
         self.root_dir: Path = Path(root_dir)
-        self.exclude_dirs: List[str] = exclude_dirs or [
+        self.exclude_dirs: list[str] = exclude_dirs or [
             ".venv",
             ".git",
             ".vscode",
@@ -86,9 +85,9 @@ class CodeStandardsChecker:
             ".temp",
         ]
         self.result: CheckResult = CheckResult()
-        self.coding_standards: Dict[str, int] = self._load_standards()
+        self.coding_standards: dict[str, int] = self._load_standards()
 
-    def _load_standards(self) -> Dict[str, int]:
+    def _load_standards(self) -> dict[str, int]:
         """Load coding standards from standards file"""
         return {
             "max_line_length": 100,
@@ -140,7 +139,7 @@ class CodeStandardsChecker:
             self.result.total_files += 1
 
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
                 lines = content.split("\n")
 
@@ -165,7 +164,7 @@ class CodeStandardsChecker:
                 suggestion="Check file encoding and permissions",
             )
 
-    def _check_line_length(self, file_path: Path, lines: List[str]) -> None:
+    def _check_line_length(self, file_path: Path, lines: list[str]) -> None:
         """Check if lines exceed maximum length"""
         max_length: int = self.coding_standards["max_line_length"]
 
@@ -182,7 +181,7 @@ class CodeStandardsChecker:
                     suggestion="Break line into multiple lines or use line continuation",
                 )
 
-    def _check_file_size(self, file_path: Path, lines: List[str]) -> None:
+    def _check_file_size(self, file_path: Path, lines: list[str]) -> None:
         """Check if file exceeds maximum size"""
         max_lines: int = self.coding_standards["max_file_lines"]
         line_count: int = len([line for line in lines if line.strip()])
@@ -203,7 +202,7 @@ class CodeStandardsChecker:
                 suggestion=sugg,
             )
 
-    def _check_naming_conventions(self, file_path: Path, lines: List[str]) -> None:
+    def _check_naming_conventions(self, file_path: Path, lines: list[str]) -> None:
         """Check naming conventions (PascalCase, snake_case, UPPER_SNAKE_CASE)."""
         class_pattern = re.compile(r"^class\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*[:\(]")
         func_pattern = re.compile(r"^def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(")
@@ -241,7 +240,7 @@ class CodeStandardsChecker:
                         suggestion=f"Rename to: {self._to_snake_case(func_name)}",
                     )
 
-    def _check_type_hints(self, file_path: Path, lines: List[str]) -> None:
+    def _check_type_hints(self, file_path: Path, lines: list[str]) -> None:
         """Check if functions have type hints."""
         function_pattern = re.compile(
             r"^\s*def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\((.*?)\)\s*(->[\s\w\[\],\.\|]*)?:"
@@ -274,7 +273,7 @@ class CodeStandardsChecker:
                 # Check parameter types
                 if params and ":" not in params and params.strip() != "self":
                     msg = f"Function '{func_name}' parameters missing type hints"
-                    sugg = f"Add parameter types: " f"def {func_name}(param: Type) -> ReturnType:"
+                    sugg = f"Add parameter types: def {func_name}(param: Type) -> ReturnType:"
                     self._add_issue(
                         severity="error",
                         category="Type Hints",
@@ -286,7 +285,7 @@ class CodeStandardsChecker:
                         suggestion=sugg,
                     )
 
-    def _check_docstrings(self, file_path: Path, lines: List[str]) -> None:  # noqa: C901
+    def _check_docstrings(self, file_path: Path, lines: list[str]) -> None:  # noqa: C901
         """Check if public functions and classes have docstrings."""
         for line_num, line in enumerate(lines, 1):
             # Check class definitions
@@ -324,7 +323,7 @@ class CodeStandardsChecker:
                             func_name = func_match.group(1)
                             if func_name not in ["__init__", "__str__"]:
                                 msg = f"Function '{func_name}' missing docstring"
-                                sugg = "Add Google-style docstring with " "Args, Returns, Raises"
+                                sugg = "Add Google-style docstring with Args, Returns, Raises"
                                 self._add_issue(
                                     severity="warning",
                                     category="Documentation",
@@ -336,10 +335,10 @@ class CodeStandardsChecker:
                                     suggestion=sugg,
                                 )
 
-    def _check_imports(self, file_path: Path, lines: List[str]) -> None:
+    def _check_imports(self, file_path: Path, lines: list[str]) -> None:
         """Check import order and organization."""
-        import_lines: List[Tuple[int, str]] = []
-        import_start: Optional[int] = None
+        import_lines: list[tuple[int, str]] = []
+        import_start: int | None = None
 
         for line_num, line in enumerate(lines, 1):
             if re.match(r"^\s*(import|from)\s+", line):
@@ -349,7 +348,7 @@ class CodeStandardsChecker:
 
         if import_lines:
             # Check order: stdlib, third-party, local
-            categories: Dict[str, List[Tuple[int, str]]] = {
+            categories: dict[str, list[tuple[int, str]]] = {
                 "stdlib": [],
                 "third_party": [],
                 "local": [],
@@ -377,7 +376,7 @@ class CodeStandardsChecker:
                     else:
                         categories["third_party"].append((line_num, line))
 
-    def _check_prohibited_patterns(self, file_path: Path, lines: List[str]) -> None:
+    def _check_prohibited_patterns(self, file_path: Path, lines: list[str]) -> None:
         """Check for prohibited patterns."""
         for line_num, line in enumerate(lines, 1):
             # Check for print() usage
@@ -423,7 +422,7 @@ class CodeStandardsChecker:
                     suggestion="Use ConfigManager.get() instead: config.get('key_name')",
                 )
 
-    def _check_exception_handling(self, file_path: Path, lines: List[str]) -> None:
+    def _check_exception_handling(self, file_path: Path, lines: list[str]) -> None:
         """Check exception handling patterns."""
         for line_num, line in enumerate(lines, 1):
             # Check for bare except
@@ -456,7 +455,7 @@ class CodeStandardsChecker:
                     suggestion="Catch specific exceptions instead",
                 )
 
-    def _check_code_smells(self, file_path: Path, lines: List[str]) -> None:
+    def _check_code_smells(self, file_path: Path, lines: list[str]) -> None:
         """Check for code smells and potential issues."""
         # Check for hardcoded service instantiation (dependency injection violation)
         for line_num, line in enumerate(lines, 1):
@@ -541,7 +540,7 @@ class CodeStandardsChecker:
 
     def generate_report(self) -> str:  # noqa: C901
         """Generate a text report."""
-        report: List[str] = []
+        report: list[str] = []
         report.append("=" * 80)
         report.append("Code Standards Audit Report")
         report.append("=" * 80)
@@ -590,7 +589,7 @@ class CodeStandardsChecker:
         # By category
         report.append("\n\n📋 Issues by Category")
         report.append("-" * 80)
-        by_category: Dict[str, List[Issue]] = defaultdict(list)
+        by_category: dict[str, list[Issue]] = defaultdict(list)
         for issue in self.result.issues:
             by_category[issue.category].append(issue)
 
@@ -603,7 +602,7 @@ class CodeStandardsChecker:
         # By file
         report.append("\n\n📁 Issues by File")
         report.append("-" * 80)
-        by_file: Dict[str, List[Issue]] = defaultdict(list)
+        by_file: dict[str, list[Issue]] = defaultdict(list)
         for issue in self.result.issues:
             by_file[issue.file].append(issue)
 

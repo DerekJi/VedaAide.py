@@ -38,9 +38,8 @@ VedaAide is an intelligent RAG Agent system that:
 - **Custom Observability**: Decorator interception, CosmosDB persistence, cost monitoring
 
 ### Deployment
-- **Docker**: Containerization
-- **Kubernetes**: Orchestration (Kind local + AKS production)
-- **Skaffold**: Cloud Native development workflow
+- **Packaging**: PyPI distribution (`pip install vedaaide`)
+- **Local runtime**: Docker Compose for optional local services
 
 ## Core Modules
 
@@ -100,7 +99,7 @@ VedaAide is an intelligent RAG Agent system that:
 1. Branch from `develop`: `git checkout -b feature/xxx`
 2. Implement in `src/`, write tests in `tests/`
 3. Run `pytest` locally to verify
-4. Format and lint: `black src/ && pylint src/`
+4. Format and lint: `poetry run ruff check --fix src/ && poetry run ruff format src/`
 5. Submit PR, CI checks automatically
 
 ### Debugging Issues
@@ -110,11 +109,11 @@ VedaAide is an intelligent RAG Agent system that:
 4. Check information recorded by observability decorators
 
 ### Deploying to Production
-1. Build image: `docker build -t vedaaide-api:v1.0 .`
-2. Push to GitHub Container Registry
-3. Update image version in K8s manifest
-4. Deploy with `kubectl apply`
-5. Monitor pod status and logs
+1. Build package: `poetry build`
+2. Publish to PyPI (manual or CI workflow)
+3. Verify install: `pip install vedaaide`
+4. Verify CLI: `vedaaide --help`
+5. Monitor runtime logs in local/dev environments
 
 ## More Information
 

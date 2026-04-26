@@ -46,7 +46,7 @@ Comprehensive testing framework for VedaAide:
 - End-to-end tests for complete workflows
 - Fixtures and parametrized tests
 - RAGAS evaluation integration
-- CosmosDB persistence testing
+- Persistence and integration testing patterns
 
 **Triggers on keywords**:
 - English: test, unit, integration, e2e, benchmark, ragas, pytest, mock, coverage
@@ -54,20 +54,15 @@ Comprehensive testing framework for VedaAide:
 
 ---
 
-### 3. Cloud Native Development
+### 3. Legacy Infrastructure (Deprecated)
 **File**: `cloud-native/SKILL.md`
 
-Guide for cloud-native development workflow:
-- Skaffold configuration and automation
-- Kubernetes deployment with Kind
-- Podman Docker image building
-- Multi-stage Dockerfile best practices
-- Local development setup (no Docker Registry)
-- Hot code sync and debugging
+This skill is kept only for historical context and migration notes.
+Current project workflow is local CLI + Docker Compose.
 
 **Triggers on keywords**:
-- English: docker, kubernetes, skaffold, deployment, k8s, container, helm, manifest, podman, kind
-- 中文: 容器, 云原生, 部署, K8s, 镜像, Skaffold, Dockerfile, 配置管理
+- English: legacy infra, deprecated infrastructure, migration notes
+- 中文: 历史基础设施, 已废弃流程, 迁移说明
 
 ---
 
@@ -105,8 +100,8 @@ User: "I need to optimize Qdrant retrieval performance"
 User: "写单元测试"
 → testing SKILL loaded (detected: 测试)
 
-User: "How do I debug this container issue?"
-→ cloud-native SKILL loaded (detected: container, debug)
+User: "How do I migrate old infra docs?"
+→ cloud-native SKILL loaded (detected: legacy infra, migration)
 
 User: "改进RAGAS指标"
 → evaluation SKILL loaded (detected: RAGAS, 指标, 改进)
@@ -121,11 +116,11 @@ User: "改进RAGAS指标"
 │   └── SKILL.md
 ├── rag-engineering/
 │   └── SKILL.md
-├── testing-strategy/
+├── testing/
 │   └── SKILL.md
-├── cloud-native-development/
+├── cloud-native/
 │   └── SKILL.md
-└── evaluation-strategy/
+└── evaluation/
     └── SKILL.md
 ```
 

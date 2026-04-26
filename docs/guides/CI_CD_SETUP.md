@@ -58,19 +58,16 @@ src/core/retrieval   360     12    96%
 **Purpose**: Ensure code follows style and quality standards
 
 **Tools Used**:
-- **black**: Code formatting check
-- **isort**: Import sorting check
-- **flake8**: Style linting (E9, F63, F7, F82)
-- **pylint**: Static analysis (E, F errors only)
+- **Ruff**: Unified linting and formatting
+- **mypy**: Type checking
 
 **Steps**:
 1. Check out code
 2. Set up Python 3.11 environment
-3. Install linting tools
-4. Run formatting checks (non-blocking)
-5. Run linting checks (non-blocking)
-
-**Note**: Code quality checks are currently **non-blocking** - failures don't prevent PR merge but are reported for awareness.
+3. Install Ruff and mypy
+4. Run Ruff checks (linting)
+5. Run Ruff format checks (formatting)
+6. Run mypy (type checking)
 
 ### 3. Integration Tests (`integration-tests`)
 
@@ -138,7 +135,8 @@ The pipeline automatically installs:
 - `pytest`: Test framework
 - `pytest-cov`: Coverage plugin
 - `pytest-timeout`: Timeout plugin
-- `pylint`, `flake8`, `black`, `isort`: Code quality tools
+- `ruff`: Linting and formatting
+- `mypy`: Type checking
 
 To add more dependencies, update the `Install dependencies` step in `.github/workflows/ci.yml`.
 
@@ -169,10 +167,10 @@ To add more dependencies, update the `Install dependencies` step in `.github/wor
 - Add verbosity: `pytest -vv` for more details
 
 #### Code Quality Warnings
-- Run formatters locally:
+- Run formatters and checks locally:
   ```bash
-  black src/ tests/
-  isort src/ tests/
+  poetry run ruff check src/ tests/
+  poetry run ruff format src/ tests/
   ```
 
 ## Future Enhancements

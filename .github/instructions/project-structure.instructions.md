@@ -14,13 +14,12 @@ VedaAide.py/
 ├── tests/                # 测试代码
 ├── docs/                 # 文档
 ├── scripts/              # 可执行脚本
-├── infra/                # 基础设施配置（Docker, K8s）
+├── infra/                # 基础设施配置（Docker）
 ├── config/               # 配置文件
 ├── data/                 # 数据目录
 ├── .github/              # GitHub 配置
 ├── .temp/                # 临时文件（重要！）
 ├── docker-compose.yml    # 本地开发环境
-├── skaffold.yaml         # Skaffold 配置
 ├── pyproject.toml        # Python 依赖管理
 └── README.md / README.cn.md
 ```
@@ -199,7 +198,6 @@ rm .temp/old-debug-script.py
 
 ### infra/ - 基础设施
 - Docker 配置：`infra/docker/`
-- Kubernetes 配置：`infra/k8s/`
 - 所有基础设施代码都应该被版本控制
 
 ---

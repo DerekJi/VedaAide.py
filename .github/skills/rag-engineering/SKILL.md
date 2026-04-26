@@ -85,7 +85,7 @@ Final Response
 
 ### Hybrid Search
 
-In VedaAide, resumes contain many technical terms (Kubernetes, Redis, CI/CD, etc.). Pure vector retrieval often misses important keywords.
+In VedaAide, resumes contain many technical terms (Kafka, Redis, CI/CD, etc.). Pure vector retrieval often misses important keywords.
 
 **Configuration Example**:
 ```python
@@ -98,8 +98,8 @@ retriever = HybridRetriever(
 )
 
 # Automatically combines BM25 + Vector Search
-results = retriever.retrieve("Kubernetes deployment experience")
-# Results include both exact "Kubernetes" matches and related cloud-native experience
+results = retriever.retrieve("Kafka streaming platform experience")
+# Results include both exact "Kafka" matches and semantically related experience
 ```
 
 ### Metadata Filtering
@@ -130,7 +130,7 @@ results = retriever.retrieve(
 from llama_index.indices.document_summary import DocumentSummaryIndex
 
 # Level 1: Summary-level retrieval
-summaries = summary_index.retrieve("Kubernetes experience")
+summaries = summary_index.retrieve("Kafka experience")
 
 # Level 2: Detailed chunks of related documents
 detailed_results = detail_index.retrieve_for_summaries(summaries)
