@@ -19,10 +19,31 @@ VedaAide.py/
 ├── data/                 # 数据目录
 ├── .github/              # GitHub 配置
 ├── .temp/                # 临时文件（重要！）
+├── dev-tools/            # 开发工具（见下方语言规定）
 ├── docker-compose.yml    # 本地开发环境
 ├── pyproject.toml        # Python 依赖管理
 └── README.md / README.cn.md
 ```
+
+---
+
+## dev-tools/ 子目录语言规定 (CRITICAL)
+
+| 子目录 | 语言 | 说明 |
+|-------|------|------|
+| `dev-tools/pr-monitor/` | **TypeScript (Node.js)** | VS Code PR 监控工具，所有代码必须用 `.ts` 文件，用 `tsc` 编译，**禁止生成 `.py` 文件** |
+
+### ⚠️ AI 助手注意事项
+
+当在 `dev-tools/pr-monitor/` 目录内生成或修改代码时：
+
+- ✅ 必须使用 TypeScript（`.ts` 文件）
+- ✅ 必须符合该目录的 `tsconfig.json` 配置
+- ❌ **严禁生成 Python 文件（`.py`）** — executor 会在运行时自动拒绝 `.py` 文件
+- ❌ 严禁覆盖 `package.json`、`tsconfig.json` 等项目配置文件
+- ❌ 严禁在文件内容中使用 markdown code fence（` ``` `）
+
+> **强制执行**：`executor.ts` 已在代码层面阻止 `.py` 文件写入，违规时会打印 `Blocked: Python files are not allowed` 并跳过。
 
 ---
 

@@ -1,0 +1,36 @@
+{
+  "name": "pr-monitor-chat",
+  "displayName": "PR Monitor Chat",
+  "description": "Copilot Chat API wrapper for PR Monitor daemon",
+  "version": "0.1.0",
+  "publisher": "vedaaide",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "extensionDependencies": [
+    "GitHub.copilot-chat"
+  ],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.90.0",
+    "@types/node": "^20.0.0",
+    "@types/express": "^4.17.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
