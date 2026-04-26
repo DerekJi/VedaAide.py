@@ -66,7 +66,7 @@ ci:
 		echo "Switching to Python $$requested_version"; \
 		poetry env use "$$requested_version" >/dev/null; \
 		echo "Installing dependencies..."; \
-		poetry install; \
+		poetry install --with dev --sync; \
 	fi; \
 	echo "Running CI checks with: $$(poetry run python --version)"; \
 	echo "FAST mode: $$fast_mode"; \
