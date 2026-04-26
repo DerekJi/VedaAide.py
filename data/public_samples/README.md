@@ -22,7 +22,7 @@ This directory contains publicly available sample datasets designed for RAG syst
 ```
 
 **Characteristics**:
-- 5 sample resumes covering different seniority levels
+- 10 sample resumes covering different seniority levels
 - Diverse technical backgrounds (Backend, Product, Data Science, DevOps, Frontend)
 - Realistic but fictional professional experiences
 - Well-structured with skills, experience, and accomplishments sections
@@ -51,7 +51,7 @@ This directory contains publicly available sample datasets designed for RAG syst
 ```
 
 **Characteristics**:
-- 5 diverse job postings
+- 10 diverse job postings
 - Different job levels (Junior, Mid, Senior)
 - Various departments (Engineering, Product, Data Science, DevOps)
 - Realistic salary ranges and benefits
@@ -86,10 +86,10 @@ This directory contains publicly available sample datasets designed for RAG syst
 
 | Component | Count | Size |
 |-----------|-------|------|
-| Resumes | 5 | ~1.5 KB |
-| Job Postings | 5 | ~3 KB |
+| Resumes | 10 | ~3.5 KB |
+| Job Postings | 10 | ~7 KB |
 | Reading Questions | 5 | ~2.5 KB |
-| **Total** | **15** | **~7 KB** |
+| **Total** | **25** | **~13 KB** |
 
 ## Usage
 
@@ -149,21 +149,21 @@ VedaAide supports a **three-tier data strategy** to balance quick development wi
 
 ### 🎯 Tier 1: Static Sample Data (Committed to Git)
 
-**Location**: `data/public_samples/` (5 samples per type)
+**Location**: `data/public_samples/` (10 resumes, 10 jobs, 5 QA pairs)
 
 ```python
 from src.core.data import DataLoader
 
 loader = DataLoader(source="static")
-resumes = loader.get_resumes()        # 5 samples
-jobs = loader.get_jobs()              # 5 samples
+resumes = loader.get_resumes()        # 10 samples
+jobs = loader.get_jobs()              # 10 samples
 qa_pairs = loader.get_qa_pairs()      # 5 samples
 ```
 
 **Characteristics**:
 - ✅ Always available, zero dependencies
 - ✅ Fast (instant load)
-- ✅ Small (~7 KB total)
+- ✅ Small (~13 KB total)
 - ✅ Suitable for demos and documentation
 - ❌ Too small for comprehensive testing
 

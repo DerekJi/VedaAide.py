@@ -133,5 +133,135 @@
       "Health and wellness programs",
       "Casual work environment"
     ]
+  },
+  {
+    "id": "job_006",
+    "title": "Machine Learning Engineer",
+    "company": "VisionLab AI",
+    "location": "Boston, MA",
+    "level": "Senior",
+    "salary_min": 145000,
+    "salary_max": 195000,
+    "description": "Join our applied AI team to design, train, and deploy machine learning models for high-impact business scenarios. You will work across model lifecycle management, data quality, and production observability.",
+    "requirements": [
+      "5+ years of ML engineering experience",
+      "Strong Python and SQL skills",
+      "Hands-on experience with PyTorch or TensorFlow",
+      "Experience deploying models to production",
+      "Understanding of feature stores and MLOps workflows",
+      "Strong communication and collaboration skills"
+    ],
+    "benefits": [
+      "Base salary + annual performance bonus",
+      "Equity package",
+      "Comprehensive health coverage",
+      "Home office stipend",
+      "Learning budget and conference support",
+      "Flexible hybrid schedule"
+    ]
+  },
+  {
+    "id": "job_007",
+    "title": "Mobile Engineer - iOS/Android",
+    "company": "FinFlow Mobile",
+    "location": "Remote",
+    "level": "Mid-level",
+    "salary_min": 115000,
+    "salary_max": 155000,
+    "description": "We are building next-generation mobile banking experiences. You will collaborate with product and design to deliver secure, performant, and user-friendly mobile features for millions of users.",
+    "requirements": [
+      "3+ years of mobile engineering experience",
+      "Strong Kotlin or Swift development skills",
+      "Experience with mobile app architecture patterns",
+      "Understanding of secure mobile development practices",
+      "Experience with testing and release automation",
+      "Ability to collaborate in cross-functional teams"
+    ],
+    "benefits": [
+      "Competitive compensation and equity",
+      "Remote-first team",
+      "Health and wellness allowance",
+      "Parental leave",
+      "Annual team offsite",
+      "Career growth mentorship"
+    ]
+  },
+  {
+    "id": "job_008",
+    "title": "QA Automation Engineer",
+    "company": "QualityScale Systems",
+    "location": "Denver, CO",
+    "level": "Mid-level",
+    "salary_min": 100000,
+    "salary_max": 140000,
+    "description": "Help us build robust quality automation for a microservices platform. You will design end-to-end test strategies, improve test reliability, and integrate quality gates into CI/CD pipelines.",
+    "requirements": [
+      "4+ years in QA or test automation",
+      "Experience with Playwright, Cypress, or Selenium",
+      "Strong API testing skills",
+      "Familiarity with CI/CD tooling",
+      "Understanding of test pyramid and risk-based testing",
+      "Ability to analyze and reduce flaky tests"
+    ],
+    "benefits": [
+      "Competitive salary",
+      "Health, dental, and vision insurance",
+      "Flexible paid time off",
+      "401k matching",
+      "Certification reimbursement",
+      "Ergonomic equipment stipend"
+    ]
+  },
+  {
+    "id": "job_009",
+    "title": "Security Engineer - Application Security",
+    "company": "SecureStack Labs",
+    "location": "Chicago, IL",
+    "level": "Senior",
+    "salary_min": 150000,
+    "salary_max": 205000,
+    "description": "We are seeking an AppSec engineer to embed security into product development. You will lead threat modeling, secure coding initiatives, and vulnerability remediation workflows across multiple teams.",
+    "requirements": [
+      "6+ years of security engineering experience",
+      "Strong knowledge of OWASP Top 10 and secure SDLC",
+      "Experience with SAST/DAST and dependency scanning",
+      "Ability to conduct threat modeling and risk assessments",
+      "Scripting skills in Python or Bash",
+      "Strong incident response collaboration skills"
+    ],
+    "benefits": [
+      "Top market compensation",
+      "Annual bonus",
+      "Equity participation",
+      "Comprehensive insurance package",
+      "Education and certification budget",
+      "Flexible remote policy"
+    ]
+  },
+  {
+    "id": "job_010",
+    "title": "Data Engineer - Streaming Platform",
+    "company": "DataStream Works",
+    "location": "Toronto, ON",
+    "level": "Senior",
+    "salary_min": 135000,
+    "salary_max": 185000,
+    "description": "Build and operate a real-time data platform that powers product analytics and decision systems. You will own streaming pipelines, schema management, and performance optimization of large-scale data workloads.",
+    "requirements": [
+      "5+ years of data engineering experience",
+      "Strong experience with Kafka and Spark or Flink",
+      "Proficiency in SQL and Python",
+      "Experience with cloud data warehouses",
+      "Understanding of data modeling and data contracts",
+      "Experience building observability for data pipelines"
+    ],
+    "benefits": [
+      "Competitive salary package",
+      "Annual bonus and stock options",
+      "Comprehensive health benefits",
+      "Remote and flexible work arrangement",
+      "Professional development allowance",
+      "Wellness and mental health support"
+    ]
   }
 ]
