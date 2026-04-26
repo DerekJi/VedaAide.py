@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Batch translate markdown files in a directory using local Ollama models.
 
@@ -16,7 +15,6 @@ import argparse
 import os
 import sys
 from pathlib import Path
-from typing import List, Optional
 
 import requests
 
@@ -48,7 +46,7 @@ def check_ollama_health() -> bool:
         return False
 
 
-def get_available_models() -> List[str]:
+def get_available_models() -> list[str]:
     """Get list of available Ollama models."""
     try:
         response = requests.get("http://localhost:11434/api/tags", timeout=5)
@@ -60,7 +58,7 @@ def get_available_models() -> List[str]:
     return []
 
 
-def select_model(preferred_model: Optional[str] = None) -> str:
+def select_model(preferred_model: str | None = None) -> str:
     """Select the best available model for translation."""
     available = get_available_models()
 
@@ -196,7 +194,7 @@ def translate_file(  # noqa: C901
     model: str,
     target_lang: str = "en",
     dry_run: bool = False,
-    output_dir: Optional[Path] = None,
+    output_dir: Path | None = None,
     verbose: bool = False,
 ) -> bool:
     """
@@ -215,7 +213,7 @@ def translate_file(  # noqa: C901
     """
     try:
         # Read file
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             content = f.read()
 
         if verbose:

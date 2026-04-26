@@ -21,7 +21,6 @@ import logging
 import re
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +45,7 @@ class SensitiveMatch:
     text: str
     start: int
     end: int
-    mask: Optional[str] = None
+    mask: str | None = None
 
     def __post_init__(self) -> None:
         if self.mask is None:
@@ -125,8 +124,8 @@ class Deidentifier:
 
     def __init__(
         self,
-        custom_patterns: Optional[Dict[SensitiveInfoType, re.Pattern]] = None,
-        mask_template: Optional[Dict[SensitiveInfoType, str]] = None,
+        custom_patterns: dict[SensitiveInfoType, re.Pattern] | None = None,
+        mask_template: dict[SensitiveInfoType, str] | None = None,
     ):
         """
         Initialize the Deidentifier.
@@ -152,7 +151,7 @@ class Deidentifier:
 
         self._detection_stats = {info_type: 0 for info_type in SensitiveInfoType}
 
-    def detect(self, text: str) -> List[SensitiveMatch]:
+    def detect(self, text: str) -> list[SensitiveMatch]:
         """
         Detect all sensitive information in the text.
 
@@ -189,7 +188,7 @@ class Deidentifier:
 
         return self._merge_overlapping_matches(matches)
 
-    def _detect_addresses(self, text: str) -> List[SensitiveMatch]:
+    def _detect_addresses(self, text: str) -> list[SensitiveMatch]:
         """
         Detect potential addresses using heuristics.
 
@@ -231,7 +230,7 @@ class Deidentifier:
 
         return matches
 
-    def _merge_overlapping_matches(self, matches: List[SensitiveMatch]) -> List[SensitiveMatch]:
+    def _merge_overlapping_matches(self, matches: list[SensitiveMatch]) -> list[SensitiveMatch]:
         """
         Merge overlapping matches, keeping the longer one.
 
@@ -284,7 +283,7 @@ class Deidentifier:
             result = result[: match.start] + mask_str + result[match.end :]
         return result
 
-    def deidentify_batch(self, texts: List[str]) -> List[str]:
+    def deidentify_batch(self, texts: list[str]) -> list[str]:
         """
         Deidentify multiple texts efficiently.
 
@@ -336,7 +335,7 @@ class Deidentifier:
 
         return True
 
-    def get_statistics(self) -> Dict[str, int]:
+    def get_statistics(self) -> dict[str, int]:
         """
         Get detection statistics since object creation.
 

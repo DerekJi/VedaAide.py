@@ -273,7 +273,7 @@ class CodeStandardsChecker:
                 # Check parameter types
                 if params and ":" not in params and params.strip() != "self":
                     msg = f"Function '{func_name}' parameters missing type hints"
-                    sugg = f"Add parameter types: " f"def {func_name}(param: Type) -> ReturnType:"
+                    sugg = f"Add parameter types: def {func_name}(param: Type) -> ReturnType:"
                     self._add_issue(
                         severity="error",
                         category="Type Hints",
@@ -323,7 +323,7 @@ class CodeStandardsChecker:
                             func_name = func_match.group(1)
                             if func_name not in ["__init__", "__str__"]:
                                 msg = f"Function '{func_name}' missing docstring"
-                                sugg = "Add Google-style docstring with " "Args, Returns, Raises"
+                                sugg = "Add Google-style docstring with Args, Returns, Raises"
                                 self._add_issue(
                                     severity="warning",
                                     category="Documentation",

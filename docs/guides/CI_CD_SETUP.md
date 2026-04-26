@@ -58,7 +58,7 @@ src/core/retrieval   360     12    96%
 **Purpose**: Ensure code follows style and quality standards
 
 **Tools Used**:
-- **Ruff**: Unified linting and formatting (replaces black, isort, flake8, pylint)
+- **Ruff**: Unified linting and formatting
 - **mypy**: Type checking
 
 **Steps**:
