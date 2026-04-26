@@ -5,10 +5,26 @@
 
 import { execSync } from "child_process";
 import { PullRequest, Review } from "./types";
-import * as fs from "fs";
-import * as path from "path";
 
 const logger = console;
+
+type RawPR = {
+  number: number;
+  title: string;
+  body?: string;
+  headRefName: string;
+  baseRefName: string;
+  author?: { login?: string };
+  url: string;
+};
+
+type RawReview = {
+  id: string;
+  body: string;
+  author?: { login?: string };
+  createdAt: string;
+  authorAssociation?: string;
+};
 
 export class GitHubClient {
   private repoPath: string;
@@ -61,8 +77,8 @@ export class GitHubClient {
         { encoding: "utf-8" }
       );
 
-      const prs = JSON.parse(output);
-      return prs.map((pr: any) => ({
+      const prs = JSON.parse(output) as RawPR[];
+      return prs.map((pr) => ({
         number: pr.number,
         title: pr.title,
         body: pr.body || "",
@@ -89,13 +105,13 @@ export class GitHubClient {
         { encoding: "utf-8" }
       );
 
-      const data = JSON.parse(output);
-      return (data.reviews || []).map((review: any) => ({
+      const data = JSON.parse(output) as { reviews?: RawReview[] };
+      return (data.reviews || []).map((review) => ({
         id: review.id,
         body: review.body,
         author: review.author?.login || "unknown",
         createdAt: review.createdAt,
-        authorAssociation: review.authorAssociation,
+        authorAssociation: review.authorAssociation || "NONE",
       }));
     } catch (e) {
       logger.error(

@@ -4,6 +4,8 @@
  */
 
 import axios from "axios";
+import { promises as fs } from "fs";
+import * as path from "path";
 import { GitHubClient } from "./github-client";
 import { EvaluationResult, ExecutionResult } from "./types";
 
@@ -162,18 +164,16 @@ export class PRExecutor {
     action: string;
     content: string;
   }): Promise<void> {
-    const fs = require("fs").promises;
-    const path = require("path");
-
     try {
       switch (change.action) {
         case "create":
-        case "modify":
+        case "modify": {
           const dir = path.dirname(change.file);
           await fs.mkdir(dir, { recursive: true });
           await fs.writeFile(change.file, change.content, "utf-8");
           logger.info(`${change.action.toUpperCase()} ${change.file}`);
           break;
+        }
 
         case "delete":
           await fs.unlink(change.file);

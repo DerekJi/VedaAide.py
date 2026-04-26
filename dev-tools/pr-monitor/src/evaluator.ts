@@ -99,7 +99,9 @@ Evaluate this comment.`;
   /**
    * Ensure response has all expected fields
    */
-  private ensureResponseFormat(response: any): EvaluationResult {
+  private ensureResponseFormat(
+    response: Partial<EvaluationResult>
+  ): EvaluationResult {
     const defaults: EvaluationResult = {
       is_actionable: false,
       action_type: "unknown",

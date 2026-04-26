@@ -85,7 +85,7 @@ export class PRMonitor {
    */
   private async verifyCopilotChatConnection(): Promise<boolean> {
     try {
-      const response = await import("axios").then((axios) =>
+      await import("axios").then((axios) =>
         axios.default.get(`${this.config.copilot_chat_url}/health`, {
           timeout: 5000,
         })
@@ -261,7 +261,7 @@ export class PRMonitor {
   /**
    * Mark a comment as processed
    */
-  private markProcessed(commentId: string, result: ExecutionResult): void {
+  private markProcessed(commentId: string, _result: ExecutionResult): void {
     this.processedComments.add(commentId);
 
     try {
