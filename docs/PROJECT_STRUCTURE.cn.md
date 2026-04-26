@@ -212,8 +212,7 @@ scripts/
 ```
 .github/
 ├── workflows/
-│   ├── ci.yml                    # CI：测试与基础检查
-│   └── code-quality.yml          # CI：扩展质量检查
+│   └── ci.yml                    # CI：测试与代码质量检查
 │
 ├── instructions/                 # Copilot 指令文件
 │   ├── project-context.instructions.md

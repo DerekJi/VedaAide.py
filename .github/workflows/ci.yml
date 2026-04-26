@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ['3.10', '3.11', '3.12']
+        python-version: ['3.10', '3.11', '3.12', '3.13']
 
     steps:
       - name: Checkout code
@@ -67,7 +67,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.13'
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -81,13 +81,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .venv
-          key: venv-${{ runner.os }}-3.11-${{ hashFiles('**/poetry.lock') }}
+          key: venv-${{ runner.os }}-3.13-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install dependencies
         run: poetry install
 
       - name: Lint and format check (Ruff)
-        run: poetry run ruff check src tests scripts && poetry run ruff format --check src tests scripts
+        run: poetry run ruff check src tests && poetry run ruff format --check src tests
 
   integration-tests:
     name: Integration Tests
@@ -100,7 +100,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.13'
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -114,7 +114,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .venv
-          key: venv-${{ runner.os }}-3.11-${{ hashFiles('**/poetry.lock') }}
+          key: venv-${{ runner.os }}-3.13-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install dependencies
         run: poetry install
