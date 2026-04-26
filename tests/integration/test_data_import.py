@@ -166,7 +166,18 @@ class TestImportPipeline:
         from scripts.data.import_deidentified_data import load_and_deidentify
 
         records = load_and_deidentify(data_dir="data/public_samples")
-        assert len(records) >= 10, "Must produce >= 10 documents"
+        assert len(records) >= 20, "Must produce >= 20 documents"
+
+    def test_public_samples_have_minimum_resume_and_job_counts(self) -> None:
+        """Task 1.4 requires at least 10 resumes and 10 job postings."""
+        from scripts.data.import_deidentified_data import load_and_deidentify
+
+        records = load_and_deidentify(data_dir="data/public_samples")
+        resume_count = sum(1 for rec in records if rec.doc_type == "resume")
+        job_count = sum(1 for rec in records if rec.doc_type == "job_posting")
+
+        assert resume_count >= 10, "Must include >= 10 resume records"
+        assert job_count >= 10, "Must include >= 10 job posting records"
 
     def test_all_records_have_content(self) -> None:
         """Every DocumentRecord must have non-empty content."""

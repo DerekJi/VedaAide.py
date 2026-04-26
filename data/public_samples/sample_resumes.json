@@ -23,5 +23,30 @@
     "id": "resume_005",
     "name": "Sample Resume 5",
     "content": "Frontend Engineer with 4 years of experience building responsive web applications. Expertise in modern JavaScript frameworks and CSS. Focus on performance optimization and user experience.\n\nTechnologies:\n- JavaScript Frameworks: React, Vue.js, Angular\n- Styling: CSS3, SASS, Tailwind CSS, Material-UI\n- Build Tools: Webpack, Vite, Parcel\n- Testing: Jest, React Testing Library, Cypress\n- Performance: Web Vitals optimization, Code splitting\n\nProjects:\n- Redesigned company dashboard reducing load time by 60%\n- Implemented component library used across 10+ applications\n- Led performance optimization initiative improving accessibility score to 98"
+  },
+  {
+    "id": "resume_006",
+    "name": "Sample Resume 6",
+    "content": "Machine Learning Engineer with 6 years of experience building production-grade AI systems. Strong background in model deployment, feature engineering, and MLOps. Experienced in collaborating with product and platform teams to deliver measurable business impact.\n\nTechnical Skills:\n- Languages: Python, SQL, Java\n- ML: PyTorch, TensorFlow, Scikit-learn, LightGBM\n- MLOps: MLflow, Kubeflow, Airflow, Docker\n- Data Platforms: Spark, BigQuery, Snowflake\n- APIs: FastAPI, gRPC\n\nExperience:\n- VisionLab AI (2021-Present): Built anomaly detection models reducing fraud losses by 22%\n- SmartRetail (2018-2021): Deployed recommendation service improving conversion by 18%\n- QuantData (2017-2018): Developed feature pipelines for weekly retraining workflows"
+  },
+  {
+    "id": "resume_007",
+    "name": "Sample Resume 7",
+    "content": "Mobile Engineer with 5 years of experience developing iOS and Android applications at scale. Focused on app architecture, offline-first experiences, and performance tuning. Passionate about delivering accessible and intuitive mobile products.\n\nCore Skills:\n- Languages: Kotlin, Swift, Dart\n- Frameworks: Android SDK, iOS UIKit, Flutter\n- Architecture: MVVM, Clean Architecture\n- Tooling: Firebase, Crashlytics, Fastlane\n- Testing: XCTest, Espresso, Widget tests\n\nHighlights:\n- Launched fintech app used by 2M monthly users\n- Improved startup performance by 40% through app modularization\n- Introduced release automation reducing deployment errors by 70%"
+  },
+  {
+    "id": "resume_008",
+    "name": "Sample Resume 8",
+    "content": "QA Automation Engineer with 7 years of experience in quality engineering for web and backend systems. Specialized in automation strategy, flaky test reduction, and CI test acceleration. Works closely with development teams to shift quality left.\n\nExpertise:\n- Automation: Playwright, Selenium, Cypress, Pytest\n- API Testing: Postman, REST Assured\n- CI/CD: Jenkins, GitHub Actions\n- Performance: k6, JMeter\n- Quality Practices: Test pyramid, contract testing\n\nAchievements:\n- Increased automation coverage from 35% to 82% in one year\n- Reduced flaky tests by 60% via isolation and retry strategy redesign\n- Built quality dashboards that cut regression triage time in half"
+  },
+  {
+    "id": "resume_009",
+    "name": "Sample Resume 9",
+    "content": "Security Engineer with 8 years of experience in application security and cloud security architecture. Skilled in threat modeling, vulnerability management, and secure SDLC practices. Drives security adoption through engineering enablement and tooling.\n\nSecurity Stack:\n- AppSec: SAST, DAST, dependency scanning\n- Cloud Security: IAM hardening, network segmentation, KMS\n- Standards: OWASP ASVS, ISO 27001, SOC 2\n- Tooling: Burp Suite, Trivy, Semgrep\n- Languages: Python, Bash\n\nImpact:\n- Implemented security gates reducing critical vulnerabilities in release builds by 75%\n- Led incident response tabletop program across 4 product teams\n- Established secure coding training completed by 120+ engineers"
+  },
+  {
+    "id": "resume_010",
+    "name": "Sample Resume 10",
+    "content": "Data Engineer with 6 years of experience designing reliable batch and streaming data platforms. Strong in distributed systems, data modeling, and observability for data pipelines. Known for improving data freshness and platform stability.\n\nTechnical Skills:\n- Data Processing: Spark, Flink, Kafka\n- Warehousing: Snowflake, Redshift, BigQuery\n- Orchestration: Airflow, Dagster\n- Infrastructure: Terraform, Kubernetes\n- Languages: Python, SQL, Scala\n\nProjects:\n- Built CDC pipeline reducing analytics latency from 24 hours to 20 minutes\n- Implemented schema governance reducing data contract incidents by 45%\n- Migrated legacy ETL to streaming architecture for near real-time reporting"
   }
 ]
