@@ -67,6 +67,7 @@ Evaluate this comment.`;
       return this.ensureResponseFormat(response.data);
     } catch (error) {
       if (axios.isAxiosError(error) && error.code === "ECONNREFUSED") {
+        // API server is completely down — return gracefully, no point retrying this poll
         logger.error(
           `Cannot connect to Copilot Chat API at ${this.copilotChatUrl}`
         );
@@ -82,17 +83,11 @@ Evaluate this comment.`;
         };
       }
 
-      logger.error(`Error evaluating comment: ${error}`);
-      return {
-        is_actionable: false,
-        action_type: "unknown",
-        confidence: 0,
-        reason: `Evaluation failed: ${error}`,
-        suggested_changes: "",
-        risk_level: "high",
-        safety_concerns: ["Evaluation error"],
-        requires_manual_review: true,
-      };
+      // For HTTP 5xx or other transient errors, re-throw so the caller can decide whether to retry
+      const statusCode = axios.isAxiosError(error) ? error.response?.status : undefined;
+      const responseBody = axios.isAxiosError(error) ? JSON.stringify(error.response?.data) : '';
+      logger.error(`Error evaluating comment (status=${statusCode ?? 'N/A'}): ${error} — response: ${responseBody}`);
+      throw error;
     }
   }
 

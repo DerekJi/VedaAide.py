@@ -4,6 +4,8 @@ applyTo: "src/**/*.py,tests/**/*.py"
 
 # Python Coding Standards (Mandatory)
 
+> **Note**: For `dev-tools/pr-monitor/` — that is a **TypeScript/Node.js** project. See the TypeScript standards section at the bottom of this file.
+
 ## Formatting
 
 - Line length limit: **100 characters**
@@ -239,3 +241,38 @@ make verify
 # Expected output:
 # ✅ All quality checks passed!
 ```
+
+---
+
+## TypeScript Coding Standards — dev-tools/pr-monitor/ (CRITICAL)
+
+**`dev-tools/pr-monitor/` is a TypeScript/Node.js project. All code in this directory MUST be TypeScript.**
+
+### Language Rules
+
+| Rule | Detail |
+|------|--------|
+| Language | **TypeScript only** — `.ts` files |
+| Compiler | `tsc` (see `tsconfig.json` in that directory) |
+| Runtime | Node.js |
+| **Prohibited** | `.py` files, inline markdown code fences (` ``` `) in generated file content |
+
+### AI Code Generation Rules
+
+When generating or modifying files inside `dev-tools/pr-monitor/`:
+
+- ✅ Use TypeScript (`.ts`) for all source files
+- ✅ Keep generated file content free of markdown code fences
+- ❌ Never generate Python (`.py`) files in this directory
+- ❌ Never overwrite `package.json`, `tsconfig.json`, or other project config files
+- ❌ Never use ` ```typescript ` or ` ```python ` fences inside file content delivered to the executor
+
+### Naming Convention
+
+| Context | Standard |
+|---------|----------|
+| Classes | `PascalCase` |
+| Functions, variables | `camelCase` |
+| Constants | `UPPER_SNAKE_CASE` |
+| Interfaces | `IPascalCase` or `PascalCase` |
+| Files | `kebab-case.ts` |

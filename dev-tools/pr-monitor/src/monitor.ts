@@ -169,6 +169,13 @@ export class PRMonitor {
         `    Skipping comment from untrusted user: ${review.author}`
       );
       this.markProcessed(commentId, { success: false, error: "Untrusted user" });
+      // Reply to indicate skip reason
+      const actualCommentId = commentId.replace(/^(inline|issue|review):/, "");
+      await this.gitClient.replyToComment(
+        pr.number,
+        actualCommentId,
+          "[PR Bot] ⏭️ Skipped: comment author is not in TRUSTED_USERS list"
+      ).catch(() => {});
       return;
     }
 
@@ -201,6 +208,12 @@ export class PRMonitor {
     if (!evaluation.is_actionable) {
       logger.info(`    Not actionable, skipping`);
       this.markProcessed(commentId, { success: false, error: "Not actionable" });
+      const actualCommentId = commentId.replace(/^(inline|issue|review):/, "");
+      await this.gitClient.replyToComment(
+        pr.number,
+        actualCommentId,
+        `[PR Bot] ⏭️ Skipped: Comment is not actionable. Reason: ${evaluation.reason}`
+      ).catch(() => {});
       return;
     }
 
@@ -212,12 +225,24 @@ export class PRMonitor {
         success: false,
         error: "Confidence too low",
       });
+      const actualCommentId = commentId.replace(/^(inline|issue|review):/, "");
+      await this.gitClient.replyToComment(
+        pr.number,
+        actualCommentId,
+        `[PR Bot] ⏭️ Skipped: Confidence too low (${evaluation.confidence.toFixed(2)}). Need ≥ 0.7`
+      ).catch(() => {});
       return;
     }
 
     if (evaluation.risk_level === "high") {
       logger.info(`    Risk too high, skipping`);
       this.markProcessed(commentId, { success: false, error: "Risk too high" });
+      const actualCommentId = commentId.replace(/^(inline|issue|review):/, "");
+      await this.gitClient.replyToComment(
+        pr.number,
+        actualCommentId,
+        `[PR Bot] ⚠️ Skipped: Risk level too high. Reason: ${evaluation.safety_concerns.join(", ")}`
+      ).catch(() => {});
       return;
     }
 
@@ -232,11 +257,24 @@ export class PRMonitor {
 
     if (result.success) {
       logger.info(`    ✓ Successfully executed changes`);
-    } else {
-      logger.error(`    ✗ Execution failed: ${result.error}`);
-    }
+      this.markProcessed(commentId, result);
 
-    this.markProcessed(commentId, result);
+      // Reply to the comment to indicate processing completion
+      // Extract the actual comment ID (remove prefix like "inline:", "issue:", "review:")
+      const actualCommentId = commentId.replace(/^(inline|issue|review):/, "");
+      try {
+        await this.gitClient.replyToComment(
+          pr.number,
+          actualCommentId,
+          "[PR Bot] ✅ Processed and implemented"
+        );
+      } catch (replyErr) {
+        logger.warn(`Could not reply to comment: ${replyErr}`);
+      }
+    } else {
+      logger.error(`    ✗ Execution failed (will retry next poll): ${result.error}`);
+      // do NOT markProcessed — leave for retry
+    }
   }
 
   /**

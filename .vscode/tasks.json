@@ -6,7 +6,9 @@
       "type": "shell",
       "command": "npm",
       "args": ["start"],
-      "cwd": "${workspaceFolder}/dev-tools/pr-monitor",
+      "options": {
+        "cwd": "${workspaceFolder}/dev-tools/pr-monitor"
+      },
       "isBackground": true,
       "problemMatcher": {
         "pattern": {
@@ -35,7 +37,9 @@
       "type": "shell",
       "command": "npm",
       "args": ["run", "build"],
-      "cwd": "${workspaceFolder}/dev-tools/pr-monitor",
+      "options": {
+        "cwd": "${workspaceFolder}/dev-tools/pr-monitor"
+      },
       "group": {
         "kind": "build",
         "isDefault": true
@@ -50,7 +54,9 @@
       "type": "shell",
       "command": "npm",
       "args": ["install"],
-      "cwd": "${workspaceFolder}/dev-tools/pr-monitor",
+      "options": {
+        "cwd": "${workspaceFolder}/dev-tools/pr-monitor"
+      },
       "presentation": {
         "reveal": "always",
         "panel": "new"
@@ -74,7 +80,9 @@
       "type": "shell",
       "command": "npm",
       "args": ["run", "lint"],
-      "cwd": "${workspaceFolder}/dev-tools/pr-monitor",
+      "options": {
+        "cwd": "${workspaceFolder}/dev-tools/pr-monitor"
+      },
       "presentation": {
         "reveal": "always",
         "panel": "new"

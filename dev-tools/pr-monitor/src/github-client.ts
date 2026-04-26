@@ -96,27 +96,83 @@ export class GitHubClient {
 
   /**
    * Get reviews for a specific PR
+   * Fetches from 3 sources: review bodies, issue comments, and inline review comments
    */
   async getPRReviews(prNumber: number): Promise<Review[]> {
     try {
       const repo = this.getRepo();
+      const allReviews: Review[] = [];
+
+      // 1. Review bodies + issue comments
       const output = execSync(
-        `gh pr view "${prNumber}" --repo "${repo}" --json reviews`,
+        `gh pr view "${prNumber}" --repo "${repo}" --json reviews,comments`,
         { encoding: "utf-8" }
       );
+      const data = JSON.parse(output) as {
+        reviews?: RawReview[];
+        comments?: RawReview[];
+      };
 
-      const data = JSON.parse(output) as { reviews?: RawReview[] };
-      return (data.reviews || []).map((review) => ({
-        id: review.id,
-        body: review.body,
-        author: review.author?.login || "unknown",
-        createdAt: review.createdAt,
-        authorAssociation: review.authorAssociation || "NONE",
-      }));
+      for (const review of data.reviews || []) {
+        if (review.body?.trim()) {
+          allReviews.push({
+            id: `review:${review.id}`,
+            body: review.body,
+            author: review.author?.login || "unknown",
+            createdAt: review.createdAt,
+            authorAssociation: review.authorAssociation || "NONE",
+          });
+        }
+      }
+
+      for (const comment of data.comments || []) {
+        if (comment.body?.trim()) {
+          allReviews.push({
+            id: `issue:${comment.id}`,
+            body: comment.body,
+            author: comment.author?.login || "unknown",
+            createdAt: comment.createdAt,
+            authorAssociation: comment.authorAssociation || "NONE",
+          });
+        }
+      }
+
+      // 2. Inline review comments (pull request review comments)
+      try {
+        const inlineOutput = execSync(
+          `gh api repos/${repo}/pulls/${prNumber}/comments`,
+          { encoding: "utf-8" }
+        );
+        const inlineComments = JSON.parse(inlineOutput) as Array<{
+          id: number;
+          body: string;
+          user?: { login?: string };
+          created_at: string;
+          author_association?: string;
+        }>;
+
+        for (const c of inlineComments) {
+          if (c.body?.trim()) {
+            allReviews.push({
+              id: `inline:${c.id}`,
+              body: c.body,
+              author: c.user?.login || "unknown",
+              createdAt: c.created_at,
+              authorAssociation: c.author_association || "NONE",
+            });
+          }
+        }
+      } catch (inlineErr) {
+        logger.warn(`Could not fetch inline comments for PR #${prNumber}: ${inlineErr}`);
+      }
+
+      // Sort by creation time, deduplicate by id
+      const seen = new Set<string>();
+      return allReviews
+        .filter((r) => { if (seen.has(r.id)) return false; seen.add(r.id); return true; })
+        .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
     } catch (e) {
-      logger.error(
-        `Failed to get reviews for PR #${prNumber}: ${e}`
-      );
+      logger.error(`Failed to get reviews for PR #${prNumber}: ${e}`);
       return [];
     }
   }
@@ -155,7 +211,14 @@ export class GitHubClient {
   async commitChanges(message: string): Promise<void> {
     try {
       execSync(`git add .`, { cwd: this.repoPath });
-      execSync(`git commit -m "${message}"`, { cwd: this.repoPath });
+      try {
+        execSync(`git commit -m "${message}"`, { cwd: this.repoPath });
+      } catch {
+        // Pre-commit hooks may have auto-fixed files (trailing whitespace, EOF newline).
+        // Stage those fixes and retry the commit once.
+        execSync(`git add .`, { cwd: this.repoPath });
+        execSync(`git commit -m "${message}"`, { cwd: this.repoPath });
+      }
       logger.info(`Committed: ${message}`);
     } catch (e) {
       throw new Error(
@@ -193,6 +256,29 @@ export class GitHubClient {
       return output.split("\n").filter(Boolean);
     } catch {
       return [];
+    }
+  }
+
+  /**
+   * Reply to a PR inline comment
+   * Adds a new reply comment to an existing inline comment
+   */
+  async replyToComment(
+    prNumber: number,
+    commentId: string,
+    replyMessage: string
+  ): Promise<void> {
+    try {
+      const repo = this.getRepo();
+      // POST to /replies endpoint to add a new reply comment
+      execSync(
+        `gh api repos/${repo}/pulls/${prNumber}/comments/${commentId}/replies -f body='${replyMessage.replace(/'/g, "'\\''")}'`,
+        { cwd: this.repoPath }
+      );
+      logger.info(`Replied to comment #${commentId}`);
+    } catch (e) {
+      logger.warn(`Could not reply to comment ${commentId}: ${e}`);
+      // Non-fatal error; don't throw
     }
   }
 }

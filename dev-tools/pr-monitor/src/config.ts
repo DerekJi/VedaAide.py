@@ -51,4 +51,5 @@ export class Config implements MonitorConfig {
   }
 }
 
-export const config = Config.fromEnv();
+// Note: do NOT eagerly initialize config here.
+// index.ts calls dotenv.config() first, then creates Config.fromEnv().

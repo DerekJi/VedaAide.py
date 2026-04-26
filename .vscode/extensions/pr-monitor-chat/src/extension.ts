@@ -9,52 +9,54 @@ const PORT = 3456;
 let server: http.Server;
 
 /**
- * 使用 Copilot Chat 进行评估或代码生成
+ * 使用 VS Code Language Model API (vscode.lm) 调用 Copilot
+ * 需要 VS Code 1.90+ 和 GitHub Copilot Chat 扩展
  */
 async function askCopilot(systemPrompt: string, userMessage: string): Promise<string> {
-  try {
-    // 获取 Copilot Chat 的 extension
-    const copilotExt = vscode.extensions.getExtension('GitHub.copilot-chat');
-    if (!copilotExt) {
-      throw new Error('Copilot Chat extension not found');
-    }
-
-    // 如果还没激活，激活它
-    if (!copilotExt.isActive) {
-      await copilotExt.activate();
-    }
-
-    // 调用 Copilot Chat 的 chat 接口（如果可用）
-    // 这需要使用 vscode.chat API（VS Code 1.84+）
-    if (vscode.chat) {
-      const result = await vscode.chat.requestChatResponse(
-        [
-          {
-            content: systemPrompt,
-            role: vscode.ChatMessageRole.System,
-          },
-          {
-            content: userMessage,
-            role: vscode.ChatMessageRole.User,
-          },
-        ],
-        { model: 'auto' } // 使用 Auto 模式
-      );
-
-      if (result.response && result.response.length > 0) {
-        return result.response
-          .map((part) => (typeof part === 'string' ? part : part.value || ''))
-          .join('\n');
-      }
-    }
-
-    // Fallback: 如果 API 不可用，返回错误
-    throw new Error('Copilot Chat API not available');
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    console.error('Copilot Chat error:', errorMessage);
-    throw new Error(`Copilot Chat error: ${errorMessage}`);
+  if (!vscode.lm) {
+    throw new Error('vscode.lm API not available. Requires VS Code 1.90+');
   }
+
+  const models = await vscode.lm.selectChatModels({ vendor: 'copilot', family: 'gpt-4o' });
+  if (!models || models.length === 0) {
+    const allModels = await vscode.lm.selectChatModels();
+    const modelNames = allModels.map(m => `${m.vendor}/${m.family}/${m.id}`).join(', ');
+    throw new Error(
+      `No Copilot chat model available. Available: [${modelNames || 'none'}]. ` +
+      'Ensure GitHub Copilot Chat is installed, signed in, and VS Code >= 1.90.'
+    );
+  }
+
+  const model = models[0];
+  console.log(`Using model: ${model.vendor}/${model.family}/${model.id}`);
+
+  const messages = [
+    vscode.LanguageModelChatMessage.Assistant(systemPrompt),
+    vscode.LanguageModelChatMessage.User(userMessage),
+  ];
+
+  const response = await model.sendRequest(messages, {}, new vscode.CancellationTokenSource().token);
+  const parts: string[] = [];
+  for await (const chunk of response.text) {
+    parts.push(chunk);
+  }
+
+  const result = parts.join('');
+  if (!result.trim()) {
+    throw new Error('Empty response from Copilot model');
+  }
+  return result;
+}
+
+/**
+ * 剥掉 Copilot 经常输出的 markdown code fence
+ * 例如 ```json\n{...}\n``` → {...}
+ */
+function stripCodeFence(text: string): string {
+  return text
+    .replace(/^```(?:json|typescript|ts|js|javascript|python|bash|sh)?\s*\n?/m, '')
+    .replace(/\n?```\s*$/m, '')
+    .trim();
 }
 
 /**
@@ -102,8 +104,8 @@ Evaluate this comment and respond with JSON:
   "requires_manual_review": boolean
 }`;
 
-    const response = await askCopilot(systemPrompt, userMessage);
-    const evaluation = JSON.parse(response);
+    const rawResponse = await askCopilot(systemPrompt, userMessage);
+    const evaluation = JSON.parse(stripCodeFence(rawResponse));
 
     res.json(evaluation);
   } catch (error) {
@@ -120,25 +122,29 @@ Evaluate this comment and respond with JSON:
  */
 app.post('/generate-implementation', async (req, res) => {
   try {
-    const { comment_body, evaluation } = req.body;
+    const { comment_body, evaluation, pr_branch, pr_title } = req.body;
 
-    const systemPrompt = `You are a code generation assistant for a PR automation system.
-Generate specific file modifications based on the request.
-Respond ONLY with FILE sections in this format, no other text:
+    const systemPrompt = `You are a code generation assistant for a TypeScript/Node.js PR automation system.
+The codebase is TypeScript. Generate file modifications in TypeScript (.ts) unless the PR comment explicitly requests a different language.
+Do NOT wrap file content in markdown code fences (no \`\`\`).
+Respond ONLY with FILE sections in this exact format, no other text:
 
-FILE: path/to/file.py
+FILE: path/to/file.ts
 ACTION: create|modify|delete
 ---
-<file content>
+<file content here, no code fences>
 ---`;
 
-    const userMessage = `Based on this request:
+    const userMessage = `PR: ${pr_title || '(unknown)'}
+Branch: ${pr_branch || '(unknown)'}
+
+Comment requesting changes:
 ${comment_body}
 
 Action type: ${evaluation.action_type}
 Suggested changes: ${evaluation.suggested_changes}
 
-Generate the exact file modifications needed. For each file, include FILE, ACTION, and content between --- markers.`;
+Generate the exact TypeScript file modifications needed. For each file, include FILE, ACTION, and content between --- markers. Do NOT use markdown code fences inside the content.`;
 
     const response = await askCopilot(systemPrompt, userMessage);
     res.json({ implementation: response });

@@ -143,8 +143,13 @@ export class PRExecutor {
         .substring(7)
         .trim()
         .toLowerCase();
-      const contentMatch = block.match(/^---\n([\s\S]*?)\n---/m);
-      const content = contentMatch ? contentMatch[1] : "";
+      // Match content between --- delimiters; tolerate CRLF and leading/trailing spaces on the --- lines
+      const contentMatch = block.match(/^-{3,}\s*\r?\n([\s\S]*?)\r?\n-{3,}\s*(?:\r?\n|$)/m);
+      if (!contentMatch) {
+        logger.warn(`Could not extract content for ${filePath} — skipping`);
+        continue;
+      }
+      const content = contentMatch[1];
 
       changes.push({
         file: filePath,
@@ -164,6 +169,29 @@ export class PRExecutor {
     action: string;
     content: string;
   }): Promise<void> {
+    // Safety: block overwriting critical project config files
+    const BLOCKED_FILES = new Set([
+      'package.json',
+      'package-lock.json',
+      'tsconfig.json',
+      'pyproject.toml',
+      'poetry.lock',
+      '.gitignore',
+      'docker-compose.yml',
+      'Makefile',
+    ]);
+    const basename = path.basename(change.file);
+    if (BLOCKED_FILES.has(basename)) {
+      logger.warn(`Blocked: not allowed to ${change.action} protected file ${change.file}`);
+      return;
+    }
+
+    // Safety: this is a TypeScript/Node.js project — block Python files
+    if (change.file.endsWith('.py')) {
+      logger.warn(`Blocked: Python files are not allowed in this TypeScript project (${change.file}). Generate .ts files instead.`);
+      return;
+    }
+
     try {
       switch (change.action) {
         case "create":

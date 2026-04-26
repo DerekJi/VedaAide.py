@@ -47,5 +47,17 @@
   "cSpell.enabled": false,
   "spell.enabled": false,
   "spellright.enabled": false,
-  "editor.spellCheck": false
+  "editor.spellCheck": false,
+
+  // npm 任务目录（避免在仓库根目录执行 npm start）
+  "npm.workingDirectories": [
+    {
+      "directory": "dev-tools/pr-monitor",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": ".vscode/extensions/pr-monitor-chat",
+      "changeProcessCWD": true
+    }
+  ]
 }
