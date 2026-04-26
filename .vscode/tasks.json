@@ -2,13 +2,11 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Start PR Monitor (with Copilot Chat)",
+      "label": "Start PR Monitor (Copilot Chat)",
       "type": "shell",
-      "command": "python",
-      "args": [
-        "${workspaceFolder}/.github/tools/pr_monitor.py"
-      ],
-      "cwd": "${workspaceFolder}/.github/tools",
+      "command": "npm",
+      "args": ["start"],
+      "cwd": "${workspaceFolder}/dev-tools/pr-monitor",
       "isBackground": true,
       "problemMatcher": {
         "pattern": {
@@ -33,15 +31,26 @@
       }
     },
     {
+      "label": "Build PR Monitor",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "build"],
+      "cwd": "${workspaceFolder}/dev-tools/pr-monitor",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
       "label": "Install PR Monitor Dependencies",
       "type": "shell",
-      "command": "pip",
-      "args": [
-        "install",
-        "-r",
-        "requirements.txt"
-      ],
-      "cwd": "${workspaceFolder}/.github/tools",
+      "command": "npm",
+      "args": ["install"],
+      "cwd": "${workspaceFolder}/dev-tools/pr-monitor",
       "presentation": {
         "reveal": "always",
         "panel": "new"
@@ -53,7 +62,7 @@
       "command": "bash",
       "args": [
         "-c",
-        "cd ${workspaceFolder}/.github/tools && test -f .env || (cp .env.example .env && echo 'Created .env from template. Please edit it with your tokens.')"
+        "cd ${workspaceFolder}/dev-tools/pr-monitor && test -f .env || (cp .env.example .env && echo 'Created .env from template. Configure TRUSTED_USERS if needed.')"
       ],
       "presentation": {
         "reveal": "always",
@@ -61,14 +70,11 @@
       }
     },
     {
-      "label": "View PR Monitor Logs",
+      "label": "Lint PR Monitor Code",
       "type": "shell",
-      "command": "bash",
-      "args": [
-        "-c",
-        "tail -f ${workspaceFolder}/.github/tools/state/monitor.log"
-      ],
-      "isBackground": false,
+      "command": "npm",
+      "args": ["run", "lint"],
+      "cwd": "${workspaceFolder}/dev-tools/pr-monitor",
       "presentation": {
         "reveal": "always",
         "panel": "new"
