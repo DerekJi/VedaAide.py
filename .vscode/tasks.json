@@ -1,0 +1,78 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start PR Monitor (with Copilot Chat)",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "${workspaceFolder}/.github/tools/pr_monitor.py"
+      ],
+      "cwd": "${workspaceFolder}/.github/tools",
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^.*$",
+          "line": 0
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*Starting PR Monitor.*$",
+          "endsPattern": "^.*Sleeping for.*$"
+        }
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "label": "Install PR Monitor Dependencies",
+      "type": "shell",
+      "command": "pip",
+      "args": [
+        "install",
+        "-r",
+        "requirements.txt"
+      ],
+      "cwd": "${workspaceFolder}/.github/tools",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "Setup PR Monitor (.env from .env.example)",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "cd ${workspaceFolder}/.github/tools && test -f .env || (cp .env.example .env && echo 'Created .env from template. Please edit it with your tokens.')"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "View PR Monitor Logs",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-c",
+        "tail -f ${workspaceFolder}/.github/tools/state/monitor.log"
+      ],
+      "isBackground": false,
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    }
+  ]
+}

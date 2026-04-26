@@ -1,0 +1,20 @@
+# Environment configuration (contains tokens, do not commit)
+.env
+.env.local
+
+# State files (runtime generated)
+state/
+monitor.log
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
