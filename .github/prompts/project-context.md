@@ -99,7 +99,7 @@ VedaAide is an intelligent RAG Agent system that:
 1. Branch from `develop`: `git checkout -b feature/xxx`
 2. Implement in `src/`, write tests in `tests/`
 3. Run `pytest` locally to verify
-4. Format and lint: `black src/ && pylint src/`
+4. Format and lint: `poetry run ruff check --fix src/ && poetry run ruff format src/`
 5. Submit PR, CI checks automatically
 
 ### Debugging Issues

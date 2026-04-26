@@ -7,10 +7,8 @@
 ### `settings.json`
 
 - **Pylance**: 启用 Python 类型检查
-- **pylint**: 代码风格检查
+- **Ruff**: 统一的 linting 和格式化
 - **mypy**: 严格类型检查
-- **Black**: 代码格式化（100 字符行长）
-- **isort**: Import 自动排序
 
 ### `extensions.json`
 

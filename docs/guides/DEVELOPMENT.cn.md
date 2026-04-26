@@ -45,7 +45,7 @@ poetry install
 这个命令会：
 - 创建虚拟环境
 - 安装 `pyproject.toml` 中列出的所有依赖
-- 安装开发工具（black、pylint、mypy、pytest 等）
+- 安装开发工具（ruff、mypy、pytest 等）
 
 ### 4. (可选) 设置 Pre-commit Hooks
 
@@ -62,12 +62,12 @@ poetry run pre-commit install
 ### 运行代码质量检查
 
 ```bash
-# 运行所有检查（格式化 + 语法检查 + 类型检查 + 测试）
+# 运行所有检查（代码检查 + 格式化 + 类型检查 + 测试）
 make verify
 
-# 或单独运行：
-make format       # 自动格式化代码（black + isort）
-make lint         # 检查代码风格（pylint）
+# 或单毯运行：
+make format       # 自动格式化代码（ruff format）
+make lint         # 检查代码风格（ruff check）
 make type-check   # 检查类型（mypy）
 make test         # 运行测试并生成覆盖率报告
 ```
@@ -163,8 +163,7 @@ poetry run mypy src/core/retrieval/deidentifier.py
 make format
 
 # 格式化特定目录
-poetry run black src/core/data/
-poetry run isort src/core/data/
+poetry run ruff format src/core/data/
 ```
 
 ### 运行数据生成脚本
@@ -266,25 +265,22 @@ poetry lock --no-cache
 推荐安装以下扩展：
 - Python
 - Pylance
-- Black Formatter
-- isort
+- Ruff
 - autoDocstring
 
 创建 `.vscode/settings.json`：
 ```json
 {
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintPath": "${workspaceFolder}/.venv/bin/pylint",
-    "python.formatting.provider": "black",
-    "editor.formatOnSave": true,
-    "editor.rulers": [100],
+    "python.linting.enabled": true,
+    "python.formatting.provider": "none",
     "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-            "source.organizeImports": true
+            "source.fixAll": "explicit"
         }
-    }
+    },
+    "editor.rulers": [100]
 }
 ```
 

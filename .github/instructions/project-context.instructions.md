@@ -58,5 +58,5 @@ vedaaide eval               # Run RAGAS evaluation
 
 - Package Manager: `poetry`, config: `pyproject.toml` + `poetry.lock`
 - Python Version: 3.10+
-- Linting: `ruff` (replaces black + isort + flake8 + pylint)
+- Linting: `ruff`
 - Import Order: stdlib → third-party → local

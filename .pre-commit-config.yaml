@@ -3,7 +3,7 @@
 # Run manually: pre-commit run --all-files
 
 repos:
-  # Ruff - formatting + linting (replaces black + isort + flake8 + pylint)
+  # Ruff - formatting + linting
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.4.4
     hooks:

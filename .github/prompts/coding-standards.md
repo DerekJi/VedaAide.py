@@ -5,8 +5,8 @@
 ### PEP 8 Compliance
 - **Line length limit: 100 characters** (not 79)
   - PEP 8's 79-character limit is legacy (Python 2.7 era for old terminal widths)
-  - Modern standard: 88-120 characters (Black default: 88, we use: 100)
-  - Configured in: `pyproject.toml` (Black/isort), `.flake8` (Flake8)
+  - Modern standard: 88-120 characters (we use: 100 via Ruff)
+  - Configured in: `pyproject.toml` (Ruff)
 - Indentation: 4 spaces
 - Naming:
   - Classes: `PascalCase`
@@ -288,8 +288,8 @@ Before submitting a PR, self-check:
 - [ ] All functions have type hints
 - [ ] All public methods have Docstrings
 - [ ] Unit test coverage ≥ 80%
-- [ ] Code formatted with `black`
-- [ ] `pylint` and `mypy` have no errors
+- [ ] Code formatted and linted with Ruff (`ruff check` and `ruff format`)
+- [ ] Type hints validated with mypy
 - [ ] No print statements (use logger)
 - [ ] No hardcoded keys or configs
 - [ ] Error handling is complete (try-except-finally)
@@ -298,31 +298,28 @@ Before submitting a PR, self-check:
 
 ## Toolchain
 
-### Code Formatting
+### Code Quality with Ruff
 ```bash
-# Black - Code formatting
-poetry run black src/ tests/
+# Check code for linting issues
+poetry run ruff check src/ tests/
 
-# isort - Import sorting
-poetry run isort src/ tests/
+# Auto-fix linting issues
+poetry run ruff check --fix src/ tests/
 
-# Combined command
-poetry run black src/ && poetry run isort src/
+# Format code
+poetry run ruff format src/ tests/
+
+# Check formatting without modifying
+poetry run ruff format --check src/ tests/
+
+# Combined: lint + format check
+poetry run ruff check src/ tests/ && poetry run ruff format --check src/ tests/
 ```
 
-### Code Checking
+### Type Checking
 ```bash
-# Pylint - Static analysis
-poetry run pylint src/
-
 # MyPy - Type checking
 poetry run mypy src/
-
-# Flake8 - Style checking (configured for 100 chars in .flake8)
-poetry run flake8 src/
-
-# All checks
-poetry run black --check src/ && poetry run isort --check-only src/ && poetry run pylint src/ && poetry run mypy src/ && poetry run flake8 src/
 ```
 
 ### Testing

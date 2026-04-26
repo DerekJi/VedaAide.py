@@ -1,5 +1,5 @@
 {
-  // Python 设置 - Ruff 格式化（替代 black + isort + flake8 + pylint）
+  // Python 设置 - Ruff 格式化和检查
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true,

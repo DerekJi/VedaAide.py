@@ -5,7 +5,7 @@ without requiring a running Qdrant server or embedding model.
 """
 
 import json
-from typing import Any, List
+from typing import Any
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -18,7 +18,7 @@ from src.core.data.indexer import DocumentIndexer, DocumentRecord, IndexStats
 
 
 @pytest.fixture
-def sample_records() -> List[DocumentRecord]:
+def sample_records() -> list[DocumentRecord]:
     """Provide 12 minimal DocumentRecord objects (> MIN_DOCUMENTS = 10)."""
     records = []
     for i in range(1, 13):
@@ -76,16 +76,13 @@ class TestDocumentRecord:
 # ---------------------------------------------------------------------------
 
 
-# pylint: disable=redefined-outer-name
 class TestDocumentIndexer:
-    # pylint: disable-next=redefined-outer-name
     def test_collection_exists_false(self, mock_qdrant_client: MagicMock) -> None:
         """Returns False when collection is not in Qdrant."""
         indexer = DocumentIndexer()
         with patch.object(indexer, "_get_qdrant_client", return_value=mock_qdrant_client):
             assert indexer.collection_exists() is False
 
-    # pylint: disable-next=redefined-outer-name
     def test_collection_exists_true(self, mock_qdrant_client: MagicMock) -> None:
         """Returns True when collection is already present."""
         existing = MagicMock()
@@ -95,7 +92,6 @@ class TestDocumentIndexer:
         with patch.object(indexer, "_get_qdrant_client", return_value=mock_qdrant_client):
             assert indexer.collection_exists() is True
 
-    # pylint: disable-next=redefined-outer-name
     def test_get_collection_stats(self, mock_qdrant_client: MagicMock) -> None:
         """get_collection_stats returns expected keys."""
         indexer = DocumentIndexer()
@@ -107,7 +103,7 @@ class TestDocumentIndexer:
 
     def test_index_documents_success(
         self,
-        sample_records: List[DocumentRecord],
+        sample_records: list[DocumentRecord],
         mock_qdrant_client: MagicMock,
     ) -> None:
         """index_documents returns correct stats after successful run."""
@@ -136,7 +132,7 @@ class TestDocumentIndexer:
     def test_save_manifest(
         self,
         tmp_path: Any,
-        sample_records: List[DocumentRecord],
+        sample_records: list[DocumentRecord],
     ) -> None:
         """save_manifest writes a valid JSON file with expected fields."""
         manifest_path = str(tmp_path / "manifest.json")
@@ -167,7 +163,6 @@ class TestDocumentIndexer:
 class TestImportPipeline:
     def test_load_and_deidentify_returns_records(self) -> None:
         """load_and_deidentify produces DocumentRecords from sample data."""
-        # pylint: disable-next=import-outside-toplevel
         from scripts.data.import_deidentified_data import load_and_deidentify
 
         records = load_and_deidentify(data_dir="data/public_samples")
@@ -175,7 +170,6 @@ class TestImportPipeline:
 
     def test_all_records_have_content(self) -> None:
         """Every DocumentRecord must have non-empty content."""
-        # pylint: disable-next=import-outside-toplevel
         from scripts.data.import_deidentified_data import load_and_deidentify
 
         records = load_and_deidentify(data_dir="data/public_samples")
@@ -184,7 +178,6 @@ class TestImportPipeline:
 
     def test_record_types_are_valid(self) -> None:
         """All records must have a known doc_type."""
-        # pylint: disable-next=import-outside-toplevel
         from scripts.data.import_deidentified_data import load_and_deidentify
 
         valid_types = {"resume", "job_posting", "qa"}
@@ -194,7 +187,6 @@ class TestImportPipeline:
 
     def test_verify_deidentification_passes(self) -> None:
         """Deidentification verification passes on sample data (no synthetic PII)."""
-        # pylint: disable-next=import-outside-toplevel
         from scripts.data.import_deidentified_data import (
             load_and_deidentify,
             verify_deidentification,

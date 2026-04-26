@@ -20,7 +20,7 @@
 - [ ] Criterion 2
 
 ### Code Quality
-- [ ] Code style complies with project standards (Black, isort)
+- [ ] Code style complies with project standards (Ruff)
 - [ ] Unit test coverage ≥ 80%
 - [ ] Integration tests pass
 - [ ] No lint errors

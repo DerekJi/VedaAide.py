@@ -45,7 +45,7 @@ poetry install
 This will:
 - Create a virtual environment
 - Install all dependencies listed in `pyproject.toml`
-- Install development tools (black, pylint, mypy, pytest, etc.)
+- Install development tools (ruff, mypy, pytest, etc.)
 
 ### 4. (Optional) Set up Pre-commit Hooks
 
@@ -62,12 +62,12 @@ poetry run pre-commit install
 ### Running Code Quality Checks
 
 ```bash
-# Run all checks (format + lint + type-check + test)
+# Run all checks (lint + format + type-check + test)
 make verify
 
 # Or run individually:
-make format       # Auto-format code (black + isort)
-make lint         # Check code style (pylint)
+make format       # Auto-format code (ruff format)
+make lint         # Check code style (ruff check)
 make type-check   # Check types (mypy)
 make test         # Run tests with coverage
 ```
@@ -163,8 +163,7 @@ poetry run mypy src/core/retrieval/deidentifier.py
 make format
 
 # Format specific files
-poetry run black src/core/data/
-poetry run isort src/core/data/
+poetry run ruff format src/core/data/
 ```
 
 ### Running Data Generation Scripts
@@ -266,25 +265,22 @@ poetry lock --no-cache
 Recommended extensions:
 - Python
 - Pylance
-- Black Formatter
-- isort
+- Ruff
 - autoDocstring
 
 Create `.vscode/settings.json`:
 ```json
 {
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintPath": "${workspaceFolder}/.venv/bin/pylint",
-    "python.formatting.provider": "black",
-    "editor.formatOnSave": true,
-    "editor.rulers": [100],
+    "python.linting.enabled": true,
+    "python.formatting.provider": "none",
     "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-            "source.organizeImports": true
+            "source.fixAll": "explicit"
         }
-    }
+    },
+    "editor.rulers": [100]
 }
 ```
 

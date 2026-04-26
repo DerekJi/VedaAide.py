@@ -17,8 +17,6 @@
     "Kubernetes",
     "pytest",
     "mypy",
-    "pylint",
-    "isort",
     "deidentification",
     "Redis",
     "MongoDB",

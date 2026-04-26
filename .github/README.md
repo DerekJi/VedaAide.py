@@ -50,7 +50,7 @@ All Python development must follow:
 - **OOP**: Abstract complex logic into classes; use inheritance/polymorphism; loose coupling
 - **Type Hints**: Mandatory on all functions and methods
 - **Docstrings**: Google-style for important functions/classes
-- **Style**: PEP 8 (4-space indent), ruff/pylint compatible
+- **Style**: PEP 8 (4-space indent), ruff enforced
 - **Tooling**: Prefer Ruff-based format/lint checks as default quality gate
 - **Architecture**: Think through module structure BEFORE coding
 

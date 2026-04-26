@@ -42,7 +42,7 @@ When developing or fixing issues, you MUST:
 
 ### Code Style
 - Strict PEP 8 compliance (4-space indentation)
-- Compatible with ruff/pylint
+- Compatible with Ruff
 
 ### Development Process
 - **Before writing code**: Think about module structure
