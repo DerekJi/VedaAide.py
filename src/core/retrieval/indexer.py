@@ -8,7 +8,13 @@ Supports multiple document formats:
 - JSON (structured documents with id, name, content)
 - Markdown (*.md files)
 - Plain text (*.txt files)
-- PDF (*.pdf files - requires llama-index-readers-file extra)
+- PDF (*.pdf files - text-based only, requires PyPDF)
+
+Note on PDF Support:
+    PDF files with extractable text are supported. However, scanned PDFs or PDFs
+    containing embedded images without text layers may not be processed correctly.
+    Images within PDFs may be silently ignored. For OCR support of scanned PDFs,
+    consider implementing Azure Computer Vision OCR separately.
 
 Usage:
     indexer = DocumentIndexer(collection_name="vedaaide")
@@ -27,6 +33,14 @@ from llama_index.core.text_splitter import SentenceSplitter
 from llama_index.embeddings.openai import OpenAIEmbedding
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, PointStruct, VectorParams
+
+# PDF support via PyPDF
+try:
+    from PyPDF2 import PdfReader
+
+    PYPDF_AVAILABLE = True
+except ImportError:
+    PYPDF_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
 
@@ -337,6 +351,79 @@ class DocumentIndexer:
             logger.error(f"Error loading text file {file_path}: {e}")
             return []
 
+    def _load_pdf_documents(self, file_path: Path) -> list[Document]:
+        """
+        Load document from PDF file (text-based).
+
+        Extracts text from PDF files using PyPDF2. Only works with PDFs that have
+        extractable text. Scanned PDFs, image-based PDFs, or PDFs with embedded
+        images without text layers may not work correctly - images will be silently
+        ignored and may result in missing or incomplete content.
+
+        For scanned PDF support with OCR capability, consider implementing
+        Azure Computer Vision API separately.
+
+        Args:
+            file_path: Path to PDF file
+
+        Returns:
+            List with single Document object (or empty list if extraction fails)
+        """
+        if not PYPDF_AVAILABLE:
+            logger.warning(
+                f"PyPDF2 not installed. Cannot load PDF file {file_path}. "
+                "Install with: pip install PyPDF2 or poetry add PyPDF2"
+            )
+            return []
+
+        try:
+            with open(file_path, "rb") as f:
+                pdf_reader = PdfReader(f)
+                text_content = ""
+
+                # Extract text from all pages
+                for page_num, page in enumerate(pdf_reader.pages):
+                    try:
+                        page_text = page.extract_text()
+                        if page_text:
+                            # Add page marker for reference
+                            text_content += f"\n[Page {page_num + 1}]\n{page_text}"
+                        else:
+                            logger.warning(
+                                f"Could not extract text from page {page_num + 1} in {file_path}. "
+                                "This page may be a scanned image or have a different encoding."
+                            )
+                    except Exception as e:
+                        logger.warning(
+                            f"Error extracting text from page {page_num + 1} in {file_path}: {e}"
+                        )
+                        continue
+
+            if not text_content.strip():
+                logger.warning(
+                    f"No text content could be extracted from {file_path}. "
+                    "This PDF may be scanned or image-based. OCR support not available."
+                )
+                return []
+
+            doc = Document(
+                doc_id=file_path.stem,
+                text=text_content,
+                metadata={
+                    "source": str(file_path),
+                    "format": "pdf",
+                    "pages": len(pdf_reader.pages),
+                    "chunk_index": 0,
+                },
+            )
+
+            logger.info(f"Loaded PDF document from {file_path} ({len(pdf_reader.pages)} pages)")
+            return [doc]
+
+        except Exception as e:
+            logger.error(f"Error loading PDF file {file_path}: {e}")
+            return []
+
     def load_documents(
         self,
         directory: Path,
@@ -345,7 +432,7 @@ class DocumentIndexer:
         """
         Load documents from directory supporting multiple formats.
 
-        Supported formats: JSON, Markdown, TXT
+        Supported formats: JSON, Markdown, TXT, PDF (text-based)
 
         Args:
             directory: Directory containing documents
@@ -362,7 +449,7 @@ class DocumentIndexer:
         documents = []
 
         # Determine file patterns to search
-        patterns = ["*.json", "*.md", "*.txt"]
+        patterns = ["*.json", "*.md", "*.txt", "*.pdf"]
         if recursive:
             patterns = [f"**/{p}" for p in patterns]
 
@@ -375,6 +462,8 @@ class DocumentIndexer:
                     documents.extend(self._load_markdown_documents(file_path))
                 elif file_path.suffix == ".txt":
                     documents.extend(self._load_text_documents(file_path))
+                elif file_path.suffix == ".pdf":
+                    documents.extend(self._load_pdf_documents(file_path))
 
         logger.info(f"Total documents loaded: {len(documents)}")
         return documents

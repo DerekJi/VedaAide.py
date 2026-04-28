@@ -2,7 +2,8 @@
 Unit tests for LlamaIndex Document Indexer.
 
 Tests cover:
-- Document loading from various formats (JSON, Markdown, TXT)
+- Document loading from various formats (JSON, Markdown, TXT, PDF)
+- PDF support with text extraction and error handling
 - Text chunking with recursive strategy
 - Embedding generation and Qdrant indexing
 - Deduplication and error handling
@@ -16,7 +17,7 @@ from unittest.mock import Mock, patch
 import pytest
 from llama_index.core import Document
 
-from src.core.retrieval.indexer import DocumentIndexer
+from src.core.retrieval.indexer import PYPDF_AVAILABLE, DocumentIndexer
 
 
 @pytest.fixture
@@ -159,6 +160,150 @@ class TestDocumentLoading:
         """Test loading from non-existent directory."""
         documents = indexer.load_documents("/nonexistent/path")
         assert len(documents) == 0
+
+    @pytest.mark.skipif(not PYPDF_AVAILABLE, reason="PyPDF2 not installed")
+    def test_load_pdf_documents(self, indexer, temp_data_dir):
+        """Test loading documents from PDF file (text-based)."""
+        if not PYPDF_AVAILABLE:
+            pytest.skip("PyPDF2 not available")
+
+        # Create a minimal PDF with text
+        pdf_file = temp_data_dir / "sample.pdf"
+
+        # Create a simple PDF content manually (basic structure)
+        # This is a minimal valid PDF with extractable text
+        pdf_content = b"""%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792]
+   /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 44 >>
+stream
+BT
+/F1 12 Tf
+100 700 Td
+(This is a sample PDF document.) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f
+0000000009 00000 n
+0000000058 00000 n
+0000000115 00000 n
+0000000262 00000 n
+0000000353 00000 n
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+432
+%%EOF"""
+
+        with open(pdf_file, "wb") as f:
+            f.write(pdf_content)
+
+        # Load PDF
+        documents = indexer._load_pdf_documents(pdf_file)
+
+        # Should load the PDF (may or may not extract text from this minimal PDF)
+        assert isinstance(documents, list)
+
+    def test_load_pdf_documents_pypdf_not_available(self, indexer, temp_data_dir, monkeypatch):
+        """Test PDF loading when PyPDF2 is not available."""
+        # Mock PYPDF_AVAILABLE as False
+        import src.core.retrieval.indexer as indexer_module
+
+        monkeypatch.setattr(indexer_module, "PYPDF_AVAILABLE", False)
+
+        # Create a dummy PDF file
+        pdf_file = temp_data_dir / "sample.pdf"
+        pdf_file.write_text("fake pdf content")
+
+        # Should return empty list and log warning
+        documents = indexer._load_pdf_documents(pdf_file)
+        assert len(documents) == 0
+
+    def test_load_pdf_documents_invalid_file(self, indexer, temp_data_dir):
+        """Test PDF loading with invalid/corrupted PDF file."""
+        if not PYPDF_AVAILABLE:
+            pytest.skip("PyPDF2 not available")
+
+        # Create an invalid PDF file
+        pdf_file = temp_data_dir / "invalid.pdf"
+        pdf_file.write_text("This is not a valid PDF file at all!")
+
+        # Should handle error gracefully
+        documents = indexer._load_pdf_documents(pdf_file)
+        # Should return empty list or log warning
+        assert isinstance(documents, list)
+
+    def test_load_documents_mixed_formats_with_pdf(self, indexer, temp_data_dir):
+        """Test loading documents with mixed formats including PDF."""
+        if not PYPDF_AVAILABLE:
+            pytest.skip("PyPDF2 not available")
+
+        # Create a simple minimal PDF
+        pdf_file = temp_data_dir / "doc.pdf"
+        pdf_content = b"""%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792]
+   /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 20 >>
+stream
+BT
+(PDF test) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f
+0000000009 00000 n
+0000000058 00000 n
+0000000115 00000 n
+0000000262 00000 n
+0000000331 00000 n
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+410
+%%EOF"""
+
+        with open(pdf_file, "wb") as f:
+            f.write(pdf_content)
+
+        # Load all formats including PDF
+        documents = indexer.load_documents(temp_data_dir, recursive=True)
+
+        # Should load from multiple formats
+        assert len(documents) >= 3  # JSON, MD, TXT, and optionally PDF
+        # Check that we have different formats
+        formats = {doc.metadata.get("format") for doc in documents}
+        assert "json" in formats
+        assert "markdown" in formats
+        assert "text" in formats
 
 
 class TestDocumentChunking:

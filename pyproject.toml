@@ -34,6 +34,9 @@ openai = "*"
 azure-identity = "*"
 ollama = "*"
 
+# Document Processing
+PyPDF2 = "*"
+
 # Observability
 langfuse = "*"
 
