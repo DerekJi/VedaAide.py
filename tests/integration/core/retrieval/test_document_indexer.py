@@ -140,21 +140,21 @@ class TestQdrantWithIsolatedCollections:
 
     def test_isolated_collection_naming(self, isolated_collection_name: str) -> None:
         """Verify isolated collection names follow convention."""
-        assert isolated_collection_name.startswith(
-            "test_vedaaide_"
-        ), "Collection name should have test_ prefix for isolation"
-        assert len(isolated_collection_name) > len(
-            "test_vedaaide_"
-        ), "Collection name should include unique ID"
+        assert isolated_collection_name.startswith("test_vedaaide_"), (
+            "Collection name should have test_ prefix for isolation"
+        )
+        assert len(isolated_collection_name) > len("test_vedaaide_"), (
+            "Collection name should include unique ID"
+        )
 
     def test_collection_cleaned_before_test(
         self, isolated_indexer, isolated_collection_name: str
     ) -> None:
         """Verify collection is cleaned before test starts."""
         # Collection should not exist after fixture setup
-        assert (
-            not isolated_indexer.collection_exists()
-        ), "Collection should be cleaned before test starts"
+        assert not isolated_indexer.collection_exists(), (
+            "Collection should be cleaned before test starts"
+        )
 
     def test_collection_cleaned_after_test(
         self, isolated_collection_name: str, qdrant_client
@@ -170,9 +170,9 @@ class TestQdrantWithIsolatedCollections:
                 c.name for c in collections.collections if c.name.startswith("test_vedaaide_")
             ]
             # May have some from concurrent tests, but should not be excessive
-            assert (
-                len(test_collections) <= 5
-            ), f"Too many test collections still present: {test_collections}"
+            assert len(test_collections) <= 5, (
+                f"Too many test collections still present: {test_collections}"
+            )
         except Exception:
             # If Qdrant is not available, this test will be skipped
             pass
