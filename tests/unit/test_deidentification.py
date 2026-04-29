@@ -18,7 +18,7 @@ import time
 
 import pytest
 
-from src.core.retrieval.deidentifier import (
+from src.core.data.deidentifier import (
     Deidentifier,
     SensitiveInfoType,
     deidentify_text,

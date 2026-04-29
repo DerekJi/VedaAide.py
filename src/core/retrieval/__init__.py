@@ -1,5 +1,5 @@
-"""Retrieval and deidentification modules."""
+"""Retrieval module."""
 
-from src.core.retrieval.indexer import DocumentIndexer
+from src.core.retrieval.document_indexer import DocumentIndexer
 
 __all__ = ["DocumentIndexer"]

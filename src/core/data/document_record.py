@@ -1,13 +1,11 @@
-"""Document indexer for VedaAide using LlamaIndex and Qdrant.
+"""Document record model for VedaAide.
 
-Builds a multi-dimensional data model from deidentified documents and
-indexes them into a Qdrant vector store for semantic retrieval.
+Provides normalized document representation with version control and indexing metadata.
 
 Usage:
-    >>> from src.core.data.indexer import DocumentIndexer
-    >>> indexer = DocumentIndexer()
-    >>> stats = indexer.index_documents(documents)
-    >>> print(stats)  # {"indexed": 10, "collection": "vedaaide_docs", ...}
+    >>> from src.core.data.document_record import DocumentRecord, IndexStats
+    >>> record = DocumentRecord(doc_id="r1", doc_type="resume", content="hello")
+    >>> print(record.version)  # Auto-computed hash
 """
 
 import hashlib
