@@ -34,9 +34,7 @@ def check_qdrant_availability(url: str = "http://localhost:6333", timeout: int =
         response = requests.get(f"{url}/health", timeout=timeout)
         return response.status_code == 200
     except requests.ConnectionError:
-        raise DependencyError(
-            f"❌ Qdrant not available at {url}. " "Please run: docker-compose up -d"
-        )
+        raise DependencyError(f"❌ Qdrant not available at {url}. Please run: docker-compose up -d")
     except requests.Timeout:
         raise DependencyError(
             f"❌ Qdrant connection timeout ({timeout}s) at {url}. "
@@ -97,8 +95,7 @@ def check_azure_openai_availability() -> bool:
 
     if missing:
         raise DependencyError(
-            f"❌ Azure OpenAI not configured. "
-            f"Missing environment variables: {', '.join(missing)}"
+            f"❌ Azure OpenAI not configured. Missing environment variables: {', '.join(missing)}"
         )
 
     return True
