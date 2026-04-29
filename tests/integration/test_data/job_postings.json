@@ -1,0 +1,20 @@
+[
+  {
+    "id": "job_001",
+    "title": "Senior Software Engineer",
+    "company": "TechCorp",
+    "content": "We are looking for a Senior Software Engineer to join our platform team.\n\nResponsibilities:\n- Design and implement scalable microservices\n- Lead technical discussions and code reviews\n- Mentor junior engineers\n- Contribute to architecture decisions\n\nRequirements:\n- 5+ years of software development experience\n- Strong understanding of distributed systems\n- Experience with containerization (Docker, Kubernetes)\n- Proficiency in Python, Java, or Go\n\nBenefits:\n- Competitive salary ($150-180K)\n- Remote work flexibility\n- Health insurance\n- Stock options\n- Professional development budget"
+  },
+  {
+    "id": "job_002",
+    "title": "Data Scientist",
+    "company": "DataCorp",
+    "content": "Join our Data Science team to build cutting-edge ML models.\n\nResponsibilities:\n- Develop and train machine learning models\n- Analyze large datasets using statistical methods\n- Create data visualizations and dashboards\n- Collaborate with product and engineering teams\n\nRequirements:\n- MS in Computer Science, Statistics, or related field\n- 3+ years of data science experience\n- Proficiency in Python and SQL\n- Experience with TensorFlow or PyTorch\n\nNice to have:\n- Experience with big data technologies (Spark, Hadoop)\n- Published research or Kaggle competition experience\n\nCompensation:\n- $120-150K salary\n- Comprehensive health benefits\n- 401(k) matching\n- Flexible work hours"
+  },
+  {
+    "id": "job_003",
+    "title": "Product Manager",
+    "company": "InnovateTech",
+    "content": "We seek an experienced Product Manager to lead our next generation platform.\n\nResponsibilities:\n- Define product strategy and roadmap\n- Conduct user research and competitive analysis\n- Work with design and engineering to build features\n- Track KPIs and measure product success\n\nRequirements:\n- 5+ years of product management experience\n- Proven track record of launching successful products\n- Strong analytical and communication skills\n- MBA or equivalent business experience\n\nWhat we offer:\n- Competitive salary ($140-170K)\n- Equity\n- Flexible work arrangement\n- Learning and development opportunities\n- Collaborative team environment"
+  }
+]

@@ -6,7 +6,7 @@ This module provides unified deidentification functionality for PII
 email addresses, and addresses.
 
 Usage:
-    >>> from src.core.retrieval.deidentifier import Deidentifier
+    >>> from src.core.data.deidentifier import Deidentifier
     >>> deidentifier = Deidentifier()
     >>> text = "John Doe, SSN: 123-45-6789, Phone: (555) 123-4567"
     >>> deidentified = deidentifier.deidentify(text)

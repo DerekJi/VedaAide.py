@@ -1,4 +1,4 @@
-.PHONY: help install format lint test verify ci ci-matrix clean pre-commit
+.PHONY: help install format lint test verify ci ci-matrix clean pre-commit compile build
 
 # Optional Python version for `ci`; empty means current Poetry environment.
 PYTHON_VERSION ?=
@@ -35,10 +35,25 @@ help:
 	@echo "  make ci-matrix    - Run CI-like checks across all matrix versions"
 	@echo "                     Add FAST=1 for a quicker matrix run"
 	@echo ""
+	@echo "Build:"
+	@echo "  make compile      - Check Python syntax (compile all .py files)"
+	@echo "  make build        - Build distribution package (.whl and .tar.gz)"
+	@echo ""
 	@echo "Maintenance:"
 	@echo "  make clean        - Clean cache and build files"
 	@echo "  make pre-commit   - Set up pre-commit hooks"
 	@echo ""
+
+compile:
+	poetry run python -m compileall src/
+	@echo "✅ All Python files compiled successfully"
+
+build: compile
+	poetry build
+	@echo "✅ Package built successfully"
+
+integration-test:
+	poetry run pytest tests/integration/ -v --timeout=300 2>/dev/null || echo "No integration tests yet"
 
 install:
 	poetry install

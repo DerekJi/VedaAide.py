@@ -10,7 +10,7 @@ import sys
 import time
 from pathlib import Path
 
-from src.core.retrieval.deidentifier import (
+from src.core.data.deidentifier import (
     Deidentifier,
     SensitiveInfoType,
     deidentify_text,
