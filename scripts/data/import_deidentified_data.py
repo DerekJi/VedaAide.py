@@ -25,12 +25,12 @@ from typing import Any, Dict, List
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from scripts.data.load_public_samples import PublicSampleLoader  # noqa: E402
-from src.core.data.indexer import (  # noqa: E402
+from src.core.data.document_record import (  # noqa: E402
     DEFAULT_COLLECTION_NAME,
     DocumentIndexer,
     DocumentRecord,
 )
-from src.core.retrieval.deidentifier import Deidentifier  # noqa: E402
+from src.core.data.deidentifier import Deidentifier  # noqa: E402
 
 logging.basicConfig(
     level=logging.INFO,

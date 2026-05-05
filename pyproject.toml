@@ -34,6 +34,9 @@ openai = "*"
 azure-identity = "*"
 ollama = "*"
 
+# Document Processing
+PyPDF2 = "*"
+
 # Observability
 langfuse = "*"
 
@@ -41,6 +44,7 @@ langfuse = "*"
 python-dotenv = "*"
 pydantic = "*"
 click = "*"
+reportlab = "^4.4.10"
 
 
 [tool.poetry.group.dev.dependencies]

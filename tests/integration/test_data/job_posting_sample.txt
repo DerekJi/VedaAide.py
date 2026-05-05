@@ -1,0 +1,47 @@
+PYTHON DEVELOPER JOB POSTING
+
+Company: TechVentures Inc.
+Location: New York, NY (Remote)
+Salary: $120,000 - $150,000
+Employment Type: Full-time
+
+ABOUT THE COMPANY
+TechVentures Inc. is a fast-growing fintech startup focused on revolutionizing financial services through innovative technology solutions. We have a team of 50+ talented engineers working on cutting-edge projects.
+
+POSITION DESCRIPTION
+We are looking for a talented Python Developer to join our backend team. You will work on building scalable APIs, data processing pipelines, and microservices that power our financial platform.
+
+KEY RESPONSIBILITIES
+- Design and implement Python-based backend services
+- Develop RESTful APIs and WebSocket-based real-time services
+- Optimize database queries and improve system performance
+- Participate in code reviews and contribute to technical documentation
+- Collaborate with product and frontend teams to deliver features
+- Write automated tests and maintain high code coverage
+
+REQUIRED QUALIFICATIONS
+- 3+ years of professional Python development experience
+- Strong understanding of REST APIs and database design
+- Experience with AWS or Google Cloud
+- Proficiency with Git and CI/CD pipelines
+- Excellent problem-solving skills
+- Strong communication and teamwork abilities
+
+PREFERRED QUALIFICATIONS
+- Experience with FastAPI or Django
+- Knowledge of Docker and Kubernetes
+- Understanding of financial systems or fintech
+- Experience with message queues (RabbitMQ, Kafka)
+- Bachelor's degree in Computer Science or related field
+
+WHAT WE OFFER
+- Competitive salary and equity package
+- Health insurance, 401(k) matching
+- Unlimited PTO
+- Professional development budget
+- Collaborative and inclusive work environment
+- Flexible work arrangements
+
+TO APPLY
+Please submit your resume and GitHub profile link to careers@techventures.com
+Application Deadline: May 15, 2026

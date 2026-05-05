@@ -1,0 +1,17 @@
+[
+  {
+    "id": "resume_001",
+    "name": "Software Engineer Resume",
+    "content": "John Smith\n\nExperience:\n- Senior Software Engineer at TechCorp (2020-2024)\n  - Led development of microservices architecture\n  - Managed team of 5 engineers\n  - Improved system performance by 40%\n\n- Software Engineer at StartupXYZ (2018-2020)\n  - Developed full-stack web applications\n  - Implemented CI/CD pipelines\n\nSkills: Python, Java, Go, Kubernetes, Docker, AWS\n\nEducation:\nBS Computer Science, State University (2018)"
+  },
+  {
+    "id": "resume_002",
+    "name": "Data Scientist Resume",
+    "content": "Jane Doe\n\nExperience:\n- Data Scientist at DataCorp (2021-2024)\n  - Built ML models for fraud detection\n  - Improved model accuracy from 85% to 94%\n  - Analyzed large datasets (500GB+)\n\n- Junior Data Scientist at AnalyticsInc (2019-2021)\n  - Conducted data exploration and visualization\n  - Created dashboards for business insights\n\nSkills: Python, R, SQL, TensorFlow, PyTorch, Spark\n\nEducation:\nMS Data Science, Tech University (2019)"
+  },
+  {
+    "id": "resume_003",
+    "name": "Product Manager Resume",
+    "content": "Michael Johnson\n\nExperience:\n- Product Manager at InnovateTech (2020-2024)\n  - Launched 3 new products generating $50M revenue\n  - Led cross-functional teams (engineering, design, marketing)\n  - Increased user engagement by 60%\n\n- Associate PM at GrowthCo (2018-2020)\n  - Conducted user research and competitive analysis\n  - Defined product roadmap and OKRs\n\nSkills: Product Strategy, Roadmap Planning, Data Analysis, Leadership\n\nEducation:\nMBA, Business School (2018)"
+  }
+]
